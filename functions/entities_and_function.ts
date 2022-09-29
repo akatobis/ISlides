@@ -9,7 +9,7 @@ function savePresentation(presentation: Presentation): boolean {
 function createPresentation(): Presentation {
    return {
       namePresentation: 'My presentation',
-      extension: pdf,
+      extension: Extension.pdf,
       slides: [],
       numbersSelectedSlides: [],
    };
@@ -30,6 +30,20 @@ function showNavigate(): boolean {
 function moveElemInArraySlide(oldSlides: Slide[], movableSlides: Slide[], insertionIndex: number): [] {
    let newSlides: [] = [];
    return newSlides;
+}
+
+function addSlide(oldPresentation: Presentation): Presentation {
+   let numberNewSlide: number = oldPresentation.slides.length;
+   let newSlide: Slide = {
+      number: numberNewSlide,
+      background: '#fff',
+      blocks: [],
+      numbersSelectedBlocks: [],
+   }
+   return {
+      ...oldPresentation,
+      slides: [...oldPresentation.slides, newSlide]
+   }
 }
 
 function moveSlide(oldPresentation: Presentation, movableSlides: Slide[], insertionIndex: number): Presentation {
@@ -69,7 +83,7 @@ function ChangeBackground(oldPresentantion: Presentation, oldSlide: Slide, backg
 
 function addBlock(oldPresentantion: Presentation, oldSlide: Slide, typeBlock: TypeBlock): Presentation {
    let newBlock: Block = {
-         type: typeBlock,
+         type: TypeBlock.image,
          coordinatX: '500px',
          coordinatY: '500px',
          width: '400px',
@@ -124,15 +138,12 @@ function changeBorderColorText(oldPresentantion: Presentation, oldSlide: Slide, 
    }
 }
 
+// type Navigation = {
+//    previewSlides: [],
+// }
 
-type Editor = {}
-
-type Navigation = {
-   previewSlides: [],
-}
-
-type PreviewSlide = {
-}
+// type PreviewSlide = {
+// }
 
 type Presentation = {
    namePresentation: string,
@@ -144,7 +155,7 @@ type Presentation = {
 enum Extension {
    pdf,
    ppt,
-   pptx
+   pptx,
 }
 
 type Slide = {
@@ -172,12 +183,6 @@ type TextBlock = {
    innerString: string,
    editStatus: true,
    font: string,
-   // typeStyle: {
-   //    italic: true,
-   //    bold: true,
-   //    strikethrough: false,
-   //    underline: false,
-   // }
    isItalic: boolean,
    isBold: boolean,
    isStrikethrough: boolean,
