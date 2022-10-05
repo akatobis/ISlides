@@ -1,4 +1,5 @@
 const editor = {
+   document,
    saveDocument() {
 
    },
@@ -8,22 +9,16 @@ const editor = {
    downloadDocument() {
 
    },
-   slideShow() {
+   readingMode() {
       
    },
 }
 
-const navigation = {
-   previewSlides: [],
-   showNavigate() {
-
-   },
-   hideNavigate() {
-
-   },
-}
-
-const previewSlide = {
+const document = {
+   nameDocument: 'My presentation',
+   slides: [],
+   idsSelectedSlides: [],
+   mode: 'preview'| 'edit',
    moveSlide() {
 
    },
@@ -35,32 +30,16 @@ const previewSlide = {
    },
 }
 
-const document = {
-   nameDocument: 'My presentation',
-   slides: [],
-   numbersSelectedSlides: [],
-}
-
 const slide = {
-   selectionStatus: true,
    background: "#fff",
    blocks: [],
-   numbersSelectedBlocks: [],
+   idsSelectedBlocks: [],
    ChangeBackground() {
 
    },
    addBlock() {
 
    },
-}
-
-const block = {
-   selectionStatus: true,
-   type: 'image',
-   coordinatX: '500px',
-   coordinatY: '500px',
-   width: '400px',
-   higth: '250px',
    move() {
 
    },
@@ -69,16 +48,19 @@ const block = {
    },
 }
 
+const block = {
+   type: 'image',
+   coordinatX: 500,
+   coordinatY: 500,
+   width: 400,
+   higth: 250,
+}
+
 const text = {
    innerString: 'my first presentation',
    editStatus: true,
+   fontSize: 18,
    font: 'Arial',
-   // typeStyle: {
-   //    italic: true,
-   //    bold: true,
-   //    strikethrough: false,
-   //    underline: false,
-   // }
    isItalic: true,
    isBold: true,
    isStrikethrough: false,
@@ -87,6 +69,7 @@ const text = {
 }
 
 const image = {
+   src: "",
    crop() { // Обрезать
 
    },
@@ -95,6 +78,7 @@ const image = {
 const figure = {
    colorFill: '#fff',
    colorBorder: '#999',
+   type: 'rectangle',
    changeFillColor(){
 
    },

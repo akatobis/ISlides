@@ -16,15 +16,12 @@ function createPresentation(): Presentation {
 }
 
 function uploadPresentation(): Presentation {
+   let presentantion: Presentation;
    return presentation;
 }
 
 function readingMode(presentantion: Presentation): number {
    return 5;
-}
-
-function showNavigate(): boolean {
-   return true;
 }
 
 function moveElemInArraySlide(oldSlides: Slide[], movableSlides: Slide[], insertionIndex: number): [] {
@@ -83,7 +80,8 @@ function ChangeBackground(oldPresentantion: Presentation, oldSlide: Slide, backg
 
 function addBlock(oldPresentantion: Presentation, oldSlide: Slide, typeBlock: TypeBlock): Presentation {
    let newBlock: Block = {
-         type: TypeBlock.image,
+         type: typeBlock,
+         content: ,
          coordinatX: '500px',
          coordinatY: '500px',
          width: '400px',
@@ -110,8 +108,17 @@ function moveBlock(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Bl
    }
 }
 
-function resizeBlock(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block): Presentation {
-   let newBlock: Block;
+function resizeBlock(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, newWidth: string, newHeigth: string): Presentation {
+   let newBlock: Block = {
+      ...oldBlock,
+      width: newWidth,
+      higth: newHeigth,
+   };
+
+   let newSlide: Slide = {
+      ...oldSlide,
+   }
+
    return {
       ...oldPresentantion,
    }
@@ -124,26 +131,45 @@ function cropImage(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Bl
    }
 }
 
-function changeFillColorText(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldText: TextBlock): Presentation {
-   let newTextBlock: TextBlock;
+function changeFillColorFigure(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldFigure: Figure, color: string): Presentation {
+   let newFigure: Figure = {
+      ...oldFigure,
+      colorBorder: color,
+   };
+   
+   let newBlock: Block = {
+      ...oldBlock,
+      content: newFigure,
+   }
+
+   let newSlide: Slide = {
+      ...oldSlide,
+   }
+
    return {
       ...oldPresentantion,
    }
 }
 
-function changeBorderColorText(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldText: TextBlock): Presentation {
-   let newTextBlock: TextBlock;
+function changeBorderColorFigure(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldFigure: Figure, color: string): Presentation {
+   let newFigure: Figure = {
+      ...oldFigure,
+      colorFill: color,
+   };
+
+   let newBlock: Block = {
+      ...oldBlock,
+      content: newFigure,
+   }
+
+   let newSlide: Slide = {
+      ...oldSlide,
+   }
+
    return {
       ...oldPresentantion,
    }
 }
-
-// type Navigation = {
-//    previewSlides: [],
-// }
-
-// type PreviewSlide = {
-// }
 
 type Presentation = {
    namePresentation: string,
@@ -167,6 +193,7 @@ type Slide = {
 
 type Block = {
    type: TypeBlock,
+   content: TextBlock | Image | Figure,
    coordinatX: string,
    coordinatY: string,
    width: string,
@@ -191,6 +218,7 @@ type TextBlock = {
 }
 
 type Image = {
+   stringImage: string,
 }
 
 type Figure = {
