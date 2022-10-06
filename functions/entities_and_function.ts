@@ -16,7 +16,7 @@ function createPresentation(): Presentation {
 }
 
 function uploadPresentation(): Presentation {
-   let presentantion: Presentation;
+   const presentantion: Presentation
    return presentation;
 }
 
@@ -25,13 +25,13 @@ function readingMode(presentantion: Presentation): number {
 }
 
 function moveElemInArraySlide(oldSlides: Slide[], movableSlides: Slide[], insertionIndex: number): [] {
-   let newSlides: [] = [];
+   const newSlides: [] = [];
    return newSlides;
 }
 
 function addSlide(oldPresentation: Presentation): Presentation {
-   let numberNewSlide: number = oldPresentation.slides.length;
-   let newSlide: Slide = {
+   const numberNewSlide: number = oldPresentation.slides.length;
+   const newSlide: Slide = {
       number: numberNewSlide,
       background: '#fff',
       blocks: [],
@@ -51,15 +51,14 @@ function moveSlide(oldPresentation: Presentation, movableSlides: Slide[], insert
 }
 
 function deleteSlide(oldPresentation: Presentation, deletedSlides: Slide[]): Presentation {
-   let newSlides: [] = [];
    return {
       ...oldPresentation,
-      slides: newSlides,
+      slides: [],
    };
 }
 
 function switchSlide(oldPresentation: Presentation, oldSlide: Slide): Presentation {
-   let newNumbersSelectedSlides: number[] = []
+   const newNumbersSelectedSlides: number[] = []
    return {
       ...oldPresentation,
       numbersSelectedSlides: newNumbersSelectedSlides
@@ -67,11 +66,11 @@ function switchSlide(oldPresentation: Presentation, oldSlide: Slide): Presentati
 }
 
 function ChangeBackground(oldPresentantion: Presentation, oldSlide: Slide, background: string): Presentation {
-   let newSlide = {
+   const newSlide = {
       ...oldSlide,
       background: background
    }
-   let newSlides: [] = []
+   const newSlides: [] = []
    return {
       ...oldPresentantion,
       slides: newSlides
@@ -79,95 +78,103 @@ function ChangeBackground(oldPresentantion: Presentation, oldSlide: Slide, backg
 }
 
 function addBlock(oldPresentantion: Presentation, oldSlide: Slide, typeBlock: TypeBlock): Presentation {
-   let newBlock: Block = {
+   const newBlock: Block = {
          type: typeBlock,
          content: ,
-         coordinatX: '500px',
-         coordinatY: '500px',
-         width: '400px',
-         higth: '250px',
+         coordinatX: 500,
+         coordinatY: 500,
+         width: 400,
+         higth: 250,
    }
 
-   let newSlide: Slide = {
+   const newSlide: Slide = {
       ...oldSlide,
       blocks: [...oldSlide.blocks, newBlock]
    }
 
-   let newSlides: Slide[] = []
+   const newSlides: Slide[] = []
 
    return {
       ...oldPresentantion,
-      slides: newSlides
+      slides: newSlides,
    }
 }
 
-function moveBlock(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block): Presentation {
-   let newBlock: Block;
+function moveBlock(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, newCoordinatX: number, newCoordinatY: number): Presentation {
+   const newBlock: Block = {
+      ...oldBlock,
+      coordinatX: newCoordinatX,
+      coordinatY: newCoordinatY,
+   };
+   const newSlide = {
+      ...oldSlide,
+      blocks: [],
+   }
    return {
       ...oldPresentantion,
+      slides: []
    }
 }
 
-function resizeBlock(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, newWidth: string, newHeigth: string): Presentation {
-   let newBlock: Block = {
+function resizeBlock(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, newWidth: number, newHeigth: number): Presentation {
+   const newBlock: Block = {
       ...oldBlock,
       width: newWidth,
       higth: newHeigth,
    };
 
-   let newSlide: Slide = {
+   const newSlide: Slide = {
       ...oldSlide,
+      blocks: [],
    }
 
    return {
       ...oldPresentantion,
-   }
-}
-
-function cropImage(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldImage: Image): Presentation { // Обрезать
-   let newImage: Image;
-   return {
-      ...oldPresentantion,
+      slides: [],
    }
 }
 
 function changeFillColorFigure(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldFigure: Figure, color: string): Presentation {
-   let newFigure: Figure = {
+   const newFigure: Figure = {
       ...oldFigure,
       colorBorder: color,
    };
    
-   let newBlock: Block = {
+   const newBlock: Block = {
       ...oldBlock,
       content: newFigure,
    }
 
-   let newSlide: Slide = {
+   const newSlide: Slide = {
       ...oldSlide,
+      blocks: [],
    }
 
    return {
       ...oldPresentantion,
+      slides: [],
    }
 }
 
 function changeBorderColorFigure(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldFigure: Figure, color: string): Presentation {
-   let newFigure: Figure = {
+   const newFigure: Figure = {
       ...oldFigure,
       colorFill: color,
-   };
+   }
 
-   let newBlock: Block = {
+   const newBlock: Block = {
       ...oldBlock,
       content: newFigure,
    }
 
-   let newSlide: Slide = {
+   const newSlide: Slide = {
       ...oldSlide,
+      blocks: [],
    }
 
    return {
       ...oldPresentantion,
+      slides: [],
    }
 }
 
@@ -194,10 +201,10 @@ type Slide = {
 type Block = {
    type: TypeBlock,
    content: TextBlock | Image | Figure,
-   coordinatX: string,
-   coordinatY: string,
-   width: string,
-   higth: string,
+   coordinatX: number,
+   coordinatY: number,
+   width: number,
+   higth: number,
 }
 
 enum TypeBlock {
@@ -209,6 +216,12 @@ enum TypeBlock {
 type TextBlock = {
    innerString: string,
    editStatus: true,
+   textStyle: TextStyle[],
+}
+
+type TextStyle = {
+   begin: number,
+   end: number,
    font: string,
    isItalic: boolean,
    isBold: boolean,
@@ -218,7 +231,7 @@ type TextBlock = {
 }
 
 type Image = {
-   stringImage: string,
+  urlToImage: string,
 }
 
 type Figure = {

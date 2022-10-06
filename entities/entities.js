@@ -59,13 +59,30 @@ const block = {
 const text = {
    innerString: 'my first presentation',
    editStatus: true,
-   fontSize: 18,
-   font: 'Arial',
-   isItalic: true,
-   isBold: true,
-   isStrikethrough: false,
-   isUnderline: false,
-   color: "#000",
+   textStyle: [
+      {
+         start: 0, 
+         end: 5,
+         fontSize: 18,
+         font: 'Arial',
+         isItalic: true,
+         isBold: true,
+         isStrikethrough: false,
+         isUnderline: false,
+         color: "#000",
+      },
+      {
+         start: 6, 
+         end: 100,
+         fontSize: 30,
+         font: 'Calibri',
+         isItalic: false,
+         isBold: false,
+         isStrikethrough: true,
+         isUnderline: true,
+         color: "#888",
+      }
+   ]
 }
 
 const image = {
