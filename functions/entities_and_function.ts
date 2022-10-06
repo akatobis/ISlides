@@ -16,7 +16,7 @@ function createPresentation(): Presentation {
 }
 
 function uploadPresentation(): Presentation {
-   const presentantion: Presentation
+   const presentation: Presentation
    return presentation;
 }
 
@@ -27,6 +27,13 @@ function readingMode(presentantion: Presentation): number {
 function moveElemInArraySlide(oldSlides: Slide[], movableSlides: Slide[], insertionIndex: number): [] {
    const newSlides: [] = [];
    return newSlides;
+}
+
+function moveSlide(oldPresentation: Presentation, movableSlides: Slide[], insertionIndex: number): Presentation {
+   return {
+      ...oldPresentation,
+      slides: moveElemInArraySlide(oldPresentation.slides, movableSlides, insertionIndex),
+   };
 }
 
 function addSlide(oldPresentation: Presentation): Presentation {
@@ -43,13 +50,6 @@ function addSlide(oldPresentation: Presentation): Presentation {
    }
 }
 
-function moveSlide(oldPresentation: Presentation, movableSlides: Slide[], insertionIndex: number): Presentation {
-   return {
-      ...oldPresentation,
-      slides: moveElemInArraySlide(oldPresentation.slides, movableSlides, insertionIndex),
-   };
-}
-
 function deleteSlide(oldPresentation: Presentation, deletedSlides: Slide[]): Presentation {
    return {
       ...oldPresentation,
@@ -58,10 +58,9 @@ function deleteSlide(oldPresentation: Presentation, deletedSlides: Slide[]): Pre
 }
 
 function switchSlide(oldPresentation: Presentation, oldSlide: Slide): Presentation {
-   const newNumbersSelectedSlides: number[] = []
    return {
       ...oldPresentation,
-      numbersSelectedSlides: newNumbersSelectedSlides
+      numbersSelectedSlides: [],
    }
 }
 
@@ -79,8 +78,8 @@ function ChangeBackground(oldPresentantion: Presentation, oldSlide: Slide, backg
 
 function addBlock(oldPresentantion: Presentation, oldSlide: Slide, typeBlock: TypeBlock): Presentation {
    const newBlock: Block = {
-         type: typeBlock,
-         content: ,
+         id: 1562, 
+         content: TextBlock,
          coordinatX: 500,
          coordinatY: 500,
          width: 400,
@@ -137,7 +136,7 @@ function resizeBlock(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: 
 function changeFillColorFigure(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldFigure: Figure, color: string): Presentation {
    const newFigure: Figure = {
       ...oldFigure,
-      colorBorder: color,
+      colorFill: color,
    };
    
    const newBlock: Block = {
@@ -159,7 +158,7 @@ function changeFillColorFigure(oldPresentantion: Presentation, oldSlide: Slide, 
 function changeBorderColorFigure(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldFigure: Figure, color: string): Presentation {
    const newFigure: Figure = {
       ...oldFigure,
-      colorFill: color,
+      colorBorder: color,
    }
 
    const newBlock: Block = {
@@ -170,6 +169,168 @@ function changeBorderColorFigure(oldPresentantion: Presentation, oldSlide: Slide
    const newSlide: Slide = {
       ...oldSlide,
       blocks: [],
+   }
+
+   return {
+      ...oldPresentantion,
+      slides: [],
+   }
+}
+
+function changeBoldText(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldTextBlock: TextBlock, begin: number, end: number): Presentation {
+   const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextBlock.textStyle],
+   }
+
+   const newBlock: Block = {
+      ...oldBlock,
+      content: newTextBlock,
+   }
+
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [...oldSlide.blocks],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentantion,
+      slides: [...oldPresentantion.slides]
+   }
+
+   return {
+      ...oldPresentantion,
+      slides: [],
+   }
+}
+
+function changeItalicText(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldTextBlock: TextBlock, begin: number, end: number): Presentation {
+   const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextBlock.textStyle],
+   }
+
+   const newBlock: Block = {
+      ...oldBlock,
+      content: newTextBlock,
+   }
+
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [...oldSlide.blocks],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentantion,
+      slides: [...oldPresentantion.slides]
+   }
+
+   return {
+      ...oldPresentantion,
+      slides: [],
+   }
+}
+
+function changeUnderlineText(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldTextBlock: TextBlock, begin: number, end: number): Presentation {
+   const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextBlock.textStyle],
+   }
+
+   const newBlock: Block = {
+      ...oldBlock,
+      content: newTextBlock,
+   }
+
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [...oldSlide.blocks],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentantion,
+      slides: [...oldPresentantion.slides]
+   }
+
+   return {
+      ...oldPresentantion,
+      slides: [],
+   }
+}
+
+function changeStrikethroughText(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldTextBlock: TextBlock, begin: number, end: number): Presentation {
+   const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextBlock.textStyle],
+   }
+
+   const newBlock: Block = {
+      ...oldBlock,
+      content: newTextBlock,
+   }
+
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [...oldSlide.blocks],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentantion,
+      slides: [...oldPresentantion.slides]
+   }
+
+   return {
+      ...oldPresentantion,
+      slides: [],
+   }
+}
+
+function changeFontText(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldTextBlock: TextBlock, begin: number, end: number): Presentation {
+   const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextBlock.textStyle],
+   }
+
+   const newBlock: Block = {
+      ...oldBlock,
+      content: newTextBlock,
+   }
+
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [...oldSlide.blocks],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentantion,
+      slides: [...oldPresentantion.slides]
+   }
+
+   return {
+      ...oldPresentantion,
+      slides: [],
+   }
+}
+
+function changeColorText(oldPresentantion: Presentation, oldSlide: Slide, oldBlock: Block, oldTextBlock: TextBlock, begin: number, end: number): Presentation {
+   const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextBlock.textStyle],
+   }
+
+   const newBlock: Block = {
+      ...oldBlock,
+      content: newTextBlock,
+   }
+
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [...oldSlide.blocks],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentantion,
+      slides: [...oldPresentantion.slides]
    }
 
    return {
@@ -192,6 +353,7 @@ enum Extension {
 }
 
 type Slide = {
+   id: number,
    number: number,
    background: string,
    blocks: Block[],
@@ -199,7 +361,7 @@ type Slide = {
 }
 
 type Block = {
-   type: TypeBlock,
+   id: number,
    content: TextBlock | Image | Figure,
    coordinatX: number,
    coordinatY: number,
