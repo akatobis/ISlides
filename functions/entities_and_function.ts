@@ -1,72 +1,95 @@
-function savePresentation(presentation: Presentation): boolean {
+function savePresentation(oldPresentationMaker: PresentationMaker): boolean {
    return true;
 }
 
-function createPresentation(): Presentation {
-   return {
+function createPresentation(oldPresentationMaker: PresentationMaker): PresentationMaker {
+   const newPresentation: Presentation = {
       namePresentation: 'My presentation',
       extension: Extension.pdf,
       slides: [],
-      idsSelectedSlides: [],
+   }
+
+   return {
+      ...oldPresentationMaker,
+      presentation: newPresentation,
    }
 }
 
-function uploadPresentation(path: string): Presentation {
-   const presentation: Presentation
-   return presentation;
-}
-
-function moveElemInArraySlide(oldSlides: Slide[], insertionIndex: number): [] {
-   const newSlides: [] = [];
-   return newSlides;
-}
-
-function moveSlide(oldPresentation: Presentation, insertionIndex: number): Presentation {
+function uploadPresentation(oldPresentationMaker: PresentationMaker, path: string): PresentationMaker {
+   const newPresentation: Presentation;
    return {
-      ...oldPresentation,
-      slides: moveElemInArraySlide(oldPresentation.slides, insertionIndex),
+      ...oldPresentationMaker,
+      presentation: newPresentation,
    };
 }
 
-function addSlide(oldPresentation: Presentation): Presentation {
+function moveSlide(oldPresentationMaker: PresentationMaker, insertionIndex: number): PresentationMaker {
+   const newPresentation: Presentation = {
+      ...oldPresentantion,
+      idsSelectedObjects = [],
+   }
+
+   return {
+      ...oldPresentationMaker,
+      presentation: newPresentation,
+   };
+}
+
+function addSlide(oldPresentationMaker: PresentationMaker): PresentationMaker {
    const newSlide: Slide = {
       id: idNewSlide,
       background: '#fff',
       blocks: [],
       idsSelectedBlocks: [],
    }
+
+   const newPresentation: Presentation = {
+      ...oldPresentantion,
+      slides: [...oldSlides, newSlide],
+   }
+
    return {
-      ...oldPresentation,
-      slides: [...oldPresentation.slides, newSlide]
+      ...oldPresentationMaker,
+      presentation: newPresentation,
    }
 }
 
-function deleteSlide(oldPresentation: Presentation): Presentation {
+function deleteSlide(oldPresentationMaker: PresentationMaker): PresentationMaker {
+   const newPresentation: Presentation = {
+      ...oldPresentantion,
+      slides: newSlides,
+   }
+
    return {
-      ...oldPresentation,
-      slides: [],
+      ...oldPresentationMaker,
+      presentation: newPresentation,
    }
 }
 
-function switchSlide(oldPresentation: Presentation, idNewSlide: number): Presentation {
+function switchSlide(oldPresentationMaker: PresentationMaker, idNewSlide: number): PresentationMaker {
    return {
       ...oldPresentation,
       idsSelectedSlides: [idNewSlide],
    }
 }
 
-function ChangeBackground(oldPresentantion: Presentation, background: string): Presentation {
-   const newSlide = {
+function ChangeBackground(oldPresentationMaker: PresentationMaker, background: string): PresentationMaker {
+   const newSlide: Slide = {
       background: background,
    }
 
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: [...oldSlides, newSlide],
+   }
+
    return {
-      ...oldPresentantion,
-      slides: [],
+      ...oldPresentationMaker,
+      presentation: newPresentation,
    }
 }
 
-function addBlock(oldPresentantion: Presentation, typeBlock: TypeBlock): Presentation {
+function addBlock(oldPresentationMaker: PresentationMaker, typeBlock: TypeBlock): PresentationMaker {
    const newBlock: Block = {
          id: idNewBlock, 
          content: TextBlock,
@@ -77,187 +100,351 @@ function addBlock(oldPresentantion: Presentation, typeBlock: TypeBlock): Present
    }
 
    const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [...oldBlocks, newBlock],
    }
 
-   const newSlides: Slide[] = []
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: [...oldSlides, newSlide],
+   }
 
    return {
-      ...oldPresentantion,
-      slides: newSlides,
+      ...oldPresentationMaker,
+      presentation: newPresentation,
    }
 }
 
-function moveBlock(oldPresentantion: Presentation, newCoordinatX: number, newCoordinatY: number): Presentation {
+function moveBlock(oldPresentationMaker: PresentationMaker, newCoordinatX: number, newCoordinatY: number): PresentationMaker {
    const newBlock: Block = {
       coordinatX: newCoordinatX,
       coordinatY: newCoordinatY,
    };
 
-   const newSlide = {
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [...oldBlocks, newBlock],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: [],
    }
 
    return {
-      ...oldPresentantion,
-      slides: []
+      ...oldPresentationMaker,
+      presentation: newPresentation,
    }
 }
 
-function resizeBlock(oldPresentantion: Presentation, newWidth: number, newHeigth: number): Presentation {
+function resizeBlock(oldPresentationMaker: PresentationMaker, newWidth: number, newHeigth: number): PresentationMaker {
    const newBlock: Block = {
       width: newWidth,
       higth: newHeigth,
    }
 
    const newSlide: Slide = {
+      ...oldSlides,
+      blocks: [],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: [],
    }
 
    return {
-      ...oldPresentantion,
-      slides: [],
+      ...oldPresentationMaker,
+      presentation: newPresentation,
    }
 }
 
-function changeFillColorFigure(oldPresentantion: Presentation, color: string): Presentation {
+function changeFillColorFigure(oldPresentationMaker: PresentationMaker, color: string): PresentationMaker {
    const newFigure: Figure = {
+      ...oldFigure,
+      colorFill: color,
    }
    
    const newBlock: Block = {
+      ...oldBlock,
+      content: newFigure,
    }
 
    const newSlide: Slide = {
+      ...oldBlock,
+      blocks: [],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: [],
    }
 
    return {
-      ...oldPresentantion,
-      slides: [],
+      ...oldPresentationMaker,
+      presentation: newPresentation,
    }
 }
 
-function changeBorderColorFigure(oldPresentantion: Presentation, color: string): Presentation {
+function changeBorderColorFigure(oldPresentationMaker: PresentationMaker, color: string): PresentationMaker {
    const newFigure: Figure = {
+      ...oldFigure,
+      colorBorder: color,
    }
-
+   
    const newBlock: Block = {
-   }
-
-   return {
-      ...oldPresentantion,
-      slides: [],
-   }
-}
-
-function changeBoldText(oldPresentantion: Presentation): Presentation {
-   const newTextBlock: TextBlock = {
-   }
-
-   const newBlock: Block = {
+      ...oldBlock,
+      content: newFigure,
    }
 
    const newSlide: Slide = {
+      ...oldBlock,
+      blocks: [],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: [],
    }
 
    return {
-      ...oldPresentantion,
-      slides: [],
+      ...oldPresentationMaker,
+      presentation: newPresentation,
    }
 }
 
-function changeItalicText(oldPresentantion: Presentation): Presentation {
-   const newTextBlock: TextBlock = {
-   }
-
-   const newBlock: Block = {
-   }
-
-   const newSlide: Slide = {
-   }
-
+function changeText(oldPresentationMaker: PresentationMaker): PresentationMaker {
    return {
-      ...oldPresentantion,
-      slides: [],
+      ...oldPresentantionMaker,
+      presentation: newPresentation,
    }
 }
 
-function changeUnderlineText(oldPresentantion: Presentation): Presentation {
+function changeBoldText(oldPresentationMaker: PresentationMaker): PresentationMaker {
+   const newTextStyle: TextStyle = {
+      style: bold,
+      font: undefined,
+      colour: undefined,
+      begin: 0,
+      end: 0,
+   }
+
    const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextStyle, newTextStyle],
    }
 
    const newBlock: Block = {
-   }
-
-   const newSlide: Slide = {
-   }
-
-   return {
-      ...oldPresentantion,
-      slides: [],
-   }
-}
-
-function changeStrikethroughText(oldPresentantion: Presentation): Presentation {
-   const newTextBlock: TextBlock = {
-   }
-
-   const newBlock: Block = {
-   }
-
-   const newSlide: Slide = {
-   }
-
-   return {
-      ...oldPresentantion,
-      slides: [],
-   }
-}
-
-function changeFontText(oldPresentantion: Presentation, font: string): Presentation { // подобные функции сделать в один
-   const newTextBlock: TextBlock = {
-   }
-
-   const newBlock: Block = {
-   }
-
-   const newSlide: Slide = {
-   }
-
-   return {
-      ...oldPresentantion,
-      slides: [],
-   }
-}
-
-function changeColorText(oldPresentantion: Presentation, color: string): Presentation {
-   const newTextBlock: TextBlock = {
-   }
-
-   const newBlock: Block = {
+      ...oldBlock,
       content: newTextBlock,
    }
 
    const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: [],
    }
 
    return {
-      ...oldPresentantion,
-      slides: [],
+      ...oldPresentationMaker,
+      presentation: newPresentation,
    }
 }
 
-type PresentationMaker = {//Сделать объекты выделенных слайдов или блоков, выделенный текущий слайд
+function changeItalicText(oldPresentationMaker: PresentationMaker): PresentationMaker {
+   const newTextStyle: TextStyle = {
+      style: italic,
+      font: undefined,
+      colour: undefined,
+      begin: 0,
+      end: 0,
+   }
+
+   const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextStyle, newTextStyle],
+   }
+
+   const newBlock: Block = {
+      ...oldBlock,
+      content: newTextBlock,
+   }
+
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: [],
+   }
+
+   return {
+      ...oldPresentationMaker,
+      presentation: newPresentation,
+   }
+}
+
+function changeUnderlineText(oldPresentationMaker: PresentationMaker): PresentationMaker {
+  const newTextStyle: TextStyle = {
+      style: underline,
+      font: undefined,
+      colour: undefined,
+      begin: 0,
+      end: 0,
+   }
+
+   const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextStyle, newTextStyle],
+   }
+
+   const newBlock: Block = {
+      ...oldBlock,
+      content: newTextBlock,
+   }
+
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: [],
+   }
+
+   return {
+      ...oldPresentationMaker,
+      presentation: newPresentation,
+   }
+}
+
+function changeStrikethroughText(oldPresentationMaker: PresentationMaker): PresentationMaker {
+  const newTextStyle: TextStyle = {
+      style: strike,
+      font: undefined,
+      colour: undefined,
+      begin: 0,
+      end: 0,
+   }
+
+   const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextStyle, newTextStyle]
+   }
+
+   const newBlock: Block = {
+      ...oldBlock,
+      content: newTextBlock,
+   }
+
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: [],
+   }
+
+   return {
+      ...oldPresentationMaker,
+      presentation: newPresentation,
+   }
+}
+
+function changeFontText(oldPresentationMaker: PresentationMaker, font: string): PresentationMaker { // подобные функции сделать в один
+    const newTextStyle: TextStyle = {
+      style: undefined,
+      font: font,
+      colour: undefined,
+      begin: 0,
+      end: 0,
+   }
+
+   const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextStyle, newTextStyle],
+   }
+
+   const newBlock: Block = {
+      ...oldBlock,
+      content: newTextBlock,
+   }
+
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: [],
+   }
+
+   return {
+      ...oldPresentationMaker,
+      presentation: newPresentation,
+   }
+}
+
+function changeColorText(oldPresentationMaker: PresentationMaker, colour: string): PresentationMaker {
+  const newTextStyle: TextStyle = {
+      style: undefined,
+      font: undefined,
+      colour: colour,
+      begin: 0,
+      end: 0
+   }
+
+   const newTextBlock: TextBlock = {
+      ...oldTextBlock,
+      textStyle: [...oldTextStyle, newTextStyle]
+   }
+
+   const newBlock: Block = {
+      ...oldBlock,
+      content: newTextBlock,
+   }
+
+   const newSlide: Slide = {
+      ...oldSlide,
+      blocks: [],
+   }
+
+   const newPresentation: Presentation = {
+      ...oldPresentation,
+      slides: []
+   }
+
+   return {
+      ...oldPresentationMaker,
+      presentation: newPresentation,
+   }
+}
+
+type PresentationMaker = {
    presentation: Presentation,
    currSlide: number,
-   idsSelectedObjects: idsSelectedSlides | idsSelectedBlock,
+   idsSelectedObjects: IdsSelectedSlides | IdsSelectedBlock,
    selectedText: {
       begin: 5,
       end: 10,
    }
 }
 
-type idsSelectedSlides = {
+type IdsSelectedSlides = {
    ids: string[],
 }
 
-type idsSelectedBlock = {
+type IdsSelectedBlock = {
    ids: string[],
 }
 
@@ -306,7 +493,11 @@ type TextBlock = {
 // }
 
 type TextStyle = {
-   style: TextStyles,
+   style?: TextStyles,
+   colour?: string,
+   font?: string,
+   begin: number,
+   end: number,
 }
 
 enum TextStyles  {
@@ -314,18 +505,16 @@ enum TextStyles  {
    italic,
    strikethrough,
    underline,
-   color,
-   font,
 }
 
 type Image = {
-   imageBase64: string, // скорее всего тут в будущем будет только base64
+   imageBase64: string,
 }
 
 type Figure = {
    type: TypeFigure,
-   colorFill: string,
-   colorBorder: string,
+   colourFill: string,
+   colourBorder: string,
 }
 
 enum TypeFigure {
@@ -348,9 +537,8 @@ type line = {
 }
 
 type rectangle = {
-   topX: number;
 }
 
 type triangle = {
-
+   topX: number;
 }
