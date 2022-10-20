@@ -30,7 +30,7 @@ function moveSlide(oldPresentation: Presentation, insertionIndex: number): Prese
 
 function addSlide(oldPresentation: Presentation): Presentation {
    const newSlide: Slide = {
-      id: numberNewSlide,
+      id: idNewSlide,
       background: '#fff',
       blocks: [],
       idsSelectedBlocks: [],
@@ -68,7 +68,7 @@ function ChangeBackground(oldPresentantion: Presentation, background: string): P
 
 function addBlock(oldPresentantion: Presentation, typeBlock: TypeBlock): Presentation {
    const newBlock: Block = {
-         id: 1562, 
+         id: idNewBlock, 
          content: TextBlock,
          coordinatX: 500,
          coordinatY: 500,
@@ -146,7 +146,7 @@ function changeBorderColorFigure(oldPresentantion: Presentation, color: string):
    }
 }
 
-function changeBoldText(oldPresentantion: Presentation, begin: number, end: number): Presentation {
+function changeBoldText(oldPresentantion: Presentation): Presentation {
    const newTextBlock: TextBlock = {
    }
 
@@ -162,7 +162,7 @@ function changeBoldText(oldPresentantion: Presentation, begin: number, end: numb
    }
 }
 
-function changeItalicText(oldPresentantion: Presentation, begin: number, end: number): Presentation {
+function changeItalicText(oldPresentantion: Presentation): Presentation {
    const newTextBlock: TextBlock = {
    }
 
@@ -178,7 +178,7 @@ function changeItalicText(oldPresentantion: Presentation, begin: number, end: nu
    }
 }
 
-function changeUnderlineText(oldPresentantion: Presentation, begin: number, end: number): Presentation {
+function changeUnderlineText(oldPresentantion: Presentation): Presentation {
    const newTextBlock: TextBlock = {
    }
 
@@ -194,7 +194,7 @@ function changeUnderlineText(oldPresentantion: Presentation, begin: number, end:
    }
 }
 
-function changeStrikethroughText(oldPresentantion: Presentation, begin: number, end: number): Presentation {
+function changeStrikethroughText(oldPresentantion: Presentation): Presentation {
    const newTextBlock: TextBlock = {
    }
 
@@ -210,7 +210,7 @@ function changeStrikethroughText(oldPresentantion: Presentation, begin: number, 
    }
 }
 
-function changeFontText(oldPresentantion: Presentation, font: string, begin: number, end: number): Presentation {
+function changeFontText(oldPresentantion: Presentation, font: string): Presentation { // подобные функции сделать в один
    const newTextBlock: TextBlock = {
    }
 
@@ -226,7 +226,7 @@ function changeFontText(oldPresentantion: Presentation, font: string, begin: num
    }
 }
 
-function changeColorText(oldPresentantion: Presentation, color: string, begin: number, end: number): Presentation {
+function changeColorText(oldPresentantion: Presentation, color: string): Presentation {
    const newTextBlock: TextBlock = {
    }
 
@@ -243,11 +243,28 @@ function changeColorText(oldPresentantion: Presentation, color: string, begin: n
    }
 }
 
+type PresentationMaker = {//Сделать объекты выделенных слайдов или блоков, выделенный текущий слайд
+   presentation: Presentation,
+   currSlide: number,
+   idsSelectedObjects: idsSelectedSlides | idsSelectedBlock,
+   selectedText: {
+      begin: 5,
+      end: 10,
+   }
+}
+
+type idsSelectedSlides = {
+   ids: string[],
+}
+
+type idsSelectedBlock = {
+   ids: string[],
+}
+
 type Presentation = {
    namePresentation: string,
    extension: Extension,
    slides: Slide[],
-   idsSelectedSlides: number[],
 }
 
 enum Extension {
@@ -257,14 +274,13 @@ enum Extension {
 }
 
 type Slide = {
-   id: number,
+   id: string,
    background: string,
    blocks: Block[],
-   idsSelectedBlocks: number[],
 }
 
 type Block = {
-   id: number,
+   id: string,
    content: TextBlock | Image | Figure,
    coordinatX: number,
    coordinatY: number,
@@ -280,23 +296,30 @@ enum TypeBlock {
 
 type TextBlock = {
    innerString: string,
-   editStatus: true,
    textStyle: TextStyle[],
 }
 
+// type TextBlock = Block & { //расширение типа
+//    innerString: string,
+//    editStatus: true,
+//    textStyle: TextStyle[],
+// }
+
 type TextStyle = {
-   begin: number,
-   end: number,
-   font: string,
-   isItalic: boolean,
-   isBold: boolean,
-   isStrikethrough: boolean,
-   isUnderline: boolean,
-   color: string,
+   style: TextStyles,
+}
+
+enum TextStyles  {
+   bold,
+   italic,
+   strikethrough,
+   underline,
+   color,
+   font,
 }
 
 type Image = {
-  urlToImage: string,
+   imageBase64: string, // скорее всего тут в будущем будет только base64
 }
 
 type Figure = {
@@ -306,9 +329,28 @@ type Figure = {
 }
 
 enum TypeFigure {
-   elipse,
+   elipse, 
    line,
    rectangle,
    triangle,
 }
 
+type elipse = {
+   rx: number,
+   ry: number,
+}
+
+type line = {
+   bx: number,
+   by: number,
+   ex: number,
+   ey: number,
+}
+
+type rectangle = {
+   topX: number;
+}
+
+type triangle = {
+
+}
