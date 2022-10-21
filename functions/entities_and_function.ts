@@ -1,7 +1,9 @@
+// пока оставим
 function savePresentation(oldPresentationMaker: PresentationMaker): boolean {
    return true;
 }
 
+// пока оставим
 function createPresentation(oldPresentationMaker: PresentationMaker): PresentationMaker {
    const newPresentation: Presentation = {
       namePresentation: 'My presentation',
@@ -15,6 +17,7 @@ function createPresentation(oldPresentationMaker: PresentationMaker): Presentati
    }
 }
 
+// пока оставим
 function uploadPresentation(oldPresentationMaker: PresentationMaker, path: string): PresentationMaker {
    const newPresentation: Presentation;
    return {
@@ -23,24 +26,20 @@ function uploadPresentation(oldPresentationMaker: PresentationMaker, path: strin
    };
 }
 
+// Артем
 function moveSlide(oldPresentationMaker: PresentationMaker, insertionIndex: number): PresentationMaker {
-   const newPresentation: Presentation = {
-      ...oldPresentantion,
-      idsSelectedObjects = [],
-   }
-
    return {
       ...oldPresentationMaker,
-      presentation: newPresentation,
+      idsSelectedSlides: [],
    };
 }
 
+// Артем 
 function addSlide(oldPresentationMaker: PresentationMaker): PresentationMaker {
    const newSlide: Slide = {
       id: idNewSlide,
       background: '#fff',
       blocks: [],
-      idsSelectedBlocks: [],
    }
 
    const newPresentation: Presentation = {
@@ -51,9 +50,11 @@ function addSlide(oldPresentationMaker: PresentationMaker): PresentationMaker {
    return {
       ...oldPresentationMaker,
       presentation: newPresentation,
+      idsSelectedSlides: [],
    }
 }
 
+// Артем 
 function deleteSlide(oldPresentationMaker: PresentationMaker): PresentationMaker {
    const newPresentation: Presentation = {
       ...oldPresentantion,
@@ -63,17 +64,20 @@ function deleteSlide(oldPresentationMaker: PresentationMaker): PresentationMaker
    return {
       ...oldPresentationMaker,
       presentation: newPresentation,
+      idsSelectedSlides: [],
    }
 }
 
-function switchSlide(oldPresentationMaker: PresentationMaker, idNewSlide: number): PresentationMaker {
+// Артем 
+function selectSlide(oldPresentationMaker: PresentationMaker, idNewSlide: number): PresentationMaker { // переименова ть
    return {
-      ...oldPresentation,
-      idsSelectedSlides: [idNewSlide],
+      ...oldPresentationMaker,
+      idsSelectedSlides: [],
    }
 }
 
-function ChangeBackground(oldPresentationMaker: PresentationMaker, background: string): PresentationMaker {
+// Артем 
+function ChangeBackgroundSlide(oldPresentationMaker: PresentationMaker, background: string): PresentationMaker {
    const newSlide: Slide = {
       background: background,
    }
@@ -89,6 +93,7 @@ function ChangeBackground(oldPresentationMaker: PresentationMaker, background: s
    }
 }
 
+// Артем 
 function addBlock(oldPresentationMaker: PresentationMaker, typeBlock: TypeBlock): PresentationMaker {
    const newBlock: Block = {
          id: idNewBlock, 
@@ -112,9 +117,19 @@ function addBlock(oldPresentationMaker: PresentationMaker, typeBlock: TypeBlock)
    return {
       ...oldPresentationMaker,
       presentation: newPresentation,
+      idsSelectedBlocks: [],
    }
 }
 
+// Артем 
+function selectBlock(oldPresentationMaker: PresentationMaker, idSelectedBlock: string): PresentationMaker {
+   return {
+      ...oldPresentationMaker,
+      idsSelectedBlocks: [],
+   }
+}
+
+// Артем 
 function moveBlock(oldPresentationMaker: PresentationMaker, newCoordinatX: number, newCoordinatY: number): PresentationMaker {
    const newBlock: Block = {
       coordinatX: newCoordinatX,
@@ -137,6 +152,7 @@ function moveBlock(oldPresentationMaker: PresentationMaker, newCoordinatX: numbe
    }
 }
 
+// Артем 
 function resizeBlock(oldPresentationMaker: PresentationMaker, newWidth: number, newHeigth: number): PresentationMaker {
    const newBlock: Block = {
       width: newWidth,
@@ -159,6 +175,7 @@ function resizeBlock(oldPresentationMaker: PresentationMaker, newWidth: number, 
    }
 }
 
+// Кирилл
 function changeFillColorFigure(oldPresentationMaker: PresentationMaker, color: string): PresentationMaker {
    const newFigure: Figure = {
       ...oldFigure,
@@ -186,6 +203,7 @@ function changeFillColorFigure(oldPresentationMaker: PresentationMaker, color: s
    }
 }
 
+// Кирилл
 function changeBorderColorFigure(oldPresentationMaker: PresentationMaker, color: string): PresentationMaker {
    const newFigure: Figure = {
       ...oldFigure,
@@ -213,6 +231,7 @@ function changeBorderColorFigure(oldPresentationMaker: PresentationMaker, color:
    }
 }
 
+// Я
 function changeText(oldPresentationMaker: PresentationMaker): PresentationMaker {
    return {
       ...oldPresentantionMaker,
@@ -220,6 +239,7 @@ function changeText(oldPresentationMaker: PresentationMaker): PresentationMaker 
    }
 }
 
+// Я
 function changeBoldText(oldPresentationMaker: PresentationMaker): PresentationMaker {
    const newTextStyle: TextStyle = {
       style: bold,
@@ -255,6 +275,7 @@ function changeBoldText(oldPresentationMaker: PresentationMaker): PresentationMa
    }
 }
 
+// Я
 function changeItalicText(oldPresentationMaker: PresentationMaker): PresentationMaker {
    const newTextStyle: TextStyle = {
       style: italic,
@@ -290,6 +311,7 @@ function changeItalicText(oldPresentationMaker: PresentationMaker): Presentation
    }
 }
 
+// Я
 function changeUnderlineText(oldPresentationMaker: PresentationMaker): PresentationMaker {
   const newTextStyle: TextStyle = {
       style: underline,
@@ -325,6 +347,7 @@ function changeUnderlineText(oldPresentationMaker: PresentationMaker): Presentat
    }
 }
 
+// Я
 function changeStrikethroughText(oldPresentationMaker: PresentationMaker): PresentationMaker {
   const newTextStyle: TextStyle = {
       style: strike,
@@ -360,6 +383,7 @@ function changeStrikethroughText(oldPresentationMaker: PresentationMaker): Prese
    }
 }
 
+// Я
 function changeFontText(oldPresentationMaker: PresentationMaker, font: string): PresentationMaker { // подобные функции сделать в один
     const newTextStyle: TextStyle = {
       style: undefined,
@@ -395,6 +419,7 @@ function changeFontText(oldPresentationMaker: PresentationMaker, font: string): 
    }
 }
 
+// Я
 function changeColorText(oldPresentationMaker: PresentationMaker, colour: string): PresentationMaker {
   const newTextStyle: TextStyle = {
       style: undefined,
@@ -432,20 +457,12 @@ function changeColorText(oldPresentationMaker: PresentationMaker, colour: string
 
 type PresentationMaker = {
    presentation: Presentation,
-   currSlide: number,
-   idsSelectedObjects: IdsSelectedSlides | IdsSelectedBlock,
+   idsSelectedBlocks: string[],
+   idsSelectedSlides: string[],
    selectedText: {
       begin: 5,
       end: 10,
    }
-}
-
-type IdsSelectedSlides = {
-   ids: string[],
-}
-
-type IdsSelectedBlock = {
-   ids: string[],
 }
 
 type Presentation = {
@@ -468,7 +485,7 @@ type Slide = {
 
 type Block = {
    id: string,
-   content: TextBlock | Image | Figure,
+   // content: TextBlock | Image | Figure,
    coordinatX: number,
    coordinatY: number,
    width: number,
@@ -481,21 +498,21 @@ enum TypeBlock {
    figure,
 }
 
-type TextBlock = {
+// type TextBlock = {
+//    typeBlock: TypeBlock,
+//    innerString: string,
+//    textStyle: TextStyle[],
+// }
+
+type TextBlock = Block & { // объединение типа
    innerString: string,
    textStyle: TextStyle[],
 }
 
-// type TextBlock = Block & { //расширение типа
-//    innerString: string,
-//    editStatus: true,
-//    textStyle: TextStyle[],
-// }
-
 type TextStyle = {
    style?: TextStyles,
-   colour?: string,
-   font?: string,
+   colour: string,
+   font: string,
    begin: number,
    end: number,
 }
@@ -507,38 +524,76 @@ enum TextStyles  {
    underline,
 }
 
-type Image = {
+type Image = Block & {
    imageBase64: string,
 }
 
-type Figure = {
-   type: TypeFigure,
+type Figure = Block & {
    colourFill: string,
    colourBorder: string,
 }
 
-enum TypeFigure {
-   elipse, 
-   line,
-   rectangle,
-   triangle,
-}
-
-type elipse = {
+type Elipse = Figure & {
    rx: number,
    ry: number,
 }
 
-type line = {
+type Line = Figure & {
    bx: number,
    by: number,
    ex: number,
    ey: number,
 }
 
-type rectangle = {
+type Rectangle = Figure & {
 }
 
-type triangle = {
+type Triangle = Figure & {
    topX: number;
 }
+
+
+// type Image = {
+//    typeBlock: TypeBlock,
+//    imageBase64: string,
+// }
+
+// type Figure = {
+//    typeBlock: TypeBlock,
+//    type: Elipse | Line | Rectangle | Triangle,
+//    colourFill: string,
+//    colourBorder: string,
+// }
+
+// type Elipse = {
+//    figureType: figureType,
+//    rx: number,
+//    ry: number,
+// }
+
+// type Line = {
+//    figureType: figureType,
+//    bx: number,
+//    by: number,
+//    ex: number,
+//    ey: number,
+// }
+
+// type Rectangle = {
+//    figureType: figureType,
+// }
+
+// type Triangle = {
+//    figureType: figureType,
+//    topX: number;
+// }
+
+
+enum figureType {
+   elipse,
+   line,
+   rectangle,
+   triangle
+}
+
+
