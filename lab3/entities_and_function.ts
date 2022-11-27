@@ -1,19 +1,19 @@
-function savePresentation(oldPresentationMaker: PresentationMaker): boolean {
-    return true;
-}
+// function savePresentation(oldPresentationMaker: PresentationMaker): boolean {
+//     return true;
+// }
 
-function createPresentation(oldPresentationMaker: PresentationMaker): PresentationMaker {
-    const newPresentation: Presentation = {
-        namePresentation: 'My presentation',
-        extension: Extension.pdf,
-        slides: [],
-    }
+// function createPresentation(oldPresentationMaker: PresentationMaker): PresentationMaker {
+//     const newPresentation: Presentation = {
+//         namePresentation: 'My presentation',
+//         extension: Extension.pdf,
+//         slides: [],
+//     }
 
-    return {
-        ...oldPresentationMaker,
-        presentation: newPresentation,
-    }
-}
+//     return {
+//         ...oldPresentationMaker,
+//         presentation: newPresentation,
+//     }
+// }
 
 // function uploadPresentation(oldPresentationMaker: PresentationMaker, path: string): PresentationMaker {
 //    const newPresentation: Presentation;
@@ -30,7 +30,6 @@ function moveSlides(oldPresentationMaker: PresentationMaker, insertionIndex: num
         return oldPresentationMaker.idsSelectedSlides.indexOf(slide.id) !== -1;
     })
 
-   //  let newSlides: Slide[] = [];
     let inIndex: number = insertionIndex;
 
     movableSlides.forEach((slide) => {
@@ -457,28 +456,28 @@ function changeColorFigure(oldPresentationMaker: PresentationMaker, {colorFill, 
 
    const newBlocks: Block[] = oldBlocks.map(block => {
       if (elemInArray(idsSelectedBlocks, block.id)) {
-
+         let oldFigure: Figure;
          if (block.content.typeBlock === TypeBlock.figure) {
-            let newFigure: Figure = {
-            ...block.content,
-            };
-         }
-         
-         if (colorFill){
-            newFigure = {
-              ...newFigure,
-              colorFill: colorFill,
-            };
-         }
-         if (colorBorder) {
-           newFigure = {
-             ...newFigure,
-             colorBorder: colorBorder,
+           oldFigure = {
+             ...block.content,
            };
-         }
-         return {
-            ...block,
-            content: newFigure,
+           let newFigure: Figure = {...oldFigure};
+           if (colorFill) {
+             newFigure = {
+               ...oldFigure,
+               colorFill: colorFill,
+             };
+           }
+           if (colorBorder) {
+             newFigure = {
+               ...oldFigure,
+               colorBorder: colorBorder,
+             };
+           }
+           return {
+             ...block,
+             content: newFigure,
+           };
          }
       }
       return block;
@@ -561,7 +560,6 @@ type PresentationMaker = {
 
 type Presentation = {
    namePresentation: string,
-   extension: Extension,
    slides: Slide[],
 }
 
