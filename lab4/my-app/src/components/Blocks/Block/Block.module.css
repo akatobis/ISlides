@@ -1,0 +1,7 @@
+.block {
+    width: 150px;
+    height: 75px;
+    background-color: #61dafb;
+    margin: 0 auto;
+    cursor: pointer;
+}

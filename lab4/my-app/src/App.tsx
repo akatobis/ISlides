@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Slide } from './components/Slide/Slide'
 import { ToolsPanal } from './components/ToolsPanal/ToolsPanal';

@@ -1,5 +1,7 @@
 import styles from "./Slide.module.css"
 import { SlideType } from "../../types"
+import {Blocks} from "../Blocks/Blocks";
+import React from "react";
 
 type SlideProps = {
    slide: SlideType,
@@ -21,7 +23,9 @@ function Slide(props: SlideProps) {
    }
 
    return (
-      <div className={styles.slide} style={slideStyle}></div>
+       <div className={styles.slide} style={slideStyle}>
+          <Blocks blocks={props.slide.blocks} />
+       </div>
    )
 }
 

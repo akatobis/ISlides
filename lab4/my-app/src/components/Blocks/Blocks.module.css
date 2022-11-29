@@ -1,0 +1,19 @@
+.blockButton {
+    margin-left: 10px;
+    padding: 0;
+    border: none;
+    background-color: #fff;
+}
+
+.blockBorderOn {
+    box-sizing: border-box;
+    border: #000 2px solid;
+}
+
+.blockCanvas {
+    display: flex;
+}
+
+.block {
+    margin: 0 auto;
+}
