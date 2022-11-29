@@ -12,6 +12,7 @@
 
 .blockCanvas {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .block {
