@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { addChangePresentationMakerHandler, getState, setState } from './state';
-import { TextBlock, TypeBlock, BlockType, Presentation, PresentationMaker } from './types';
+import { TextBlock, TypeBlock, Block, Presentation, PresentationMaker } from './types';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,7 +22,7 @@ const deleteTextBlock: TextBlock = {
   font: "Calibri",
 };
 
-const deletBlocks: BlockType[] = [
+const deletBlocks: Block[] = [
   {
     id: "1",
     content: deleteTextBlock,
@@ -88,7 +88,7 @@ const deletePresentation: Presentation = {
       id: "1",
       backgroundColor: "#111",
       backgroundImage: "",
-      blocks: [],
+      blocks: deletBlocks,
     },
     {
       id: "2",
@@ -125,7 +125,7 @@ const deletePresentation: Presentation = {
 
 const deleteOpm: PresentationMaker = {
   presentation: deletePresentation,
-  idsSelectedSlides: ["1"],
+  idsSelectedSlides: [],
   idsSelectedBlocks: ["1", "5"],
 };
 setState(deleteOpm);

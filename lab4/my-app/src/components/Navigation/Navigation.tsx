@@ -17,9 +17,10 @@ const Navigation = (props: NavigationProps) => {
                         className={styles.slideButton}
                         key={slide.id}
                         onClick={(e) => {
-                            if (getState().idsSelectedSlides.length > 1 || !e.target.classList.contains(styles.slideBorderOn))
+                            const target  = e.target as Element;
+                            if (getState().idsSelectedSlides.length > 1 || !target.classList.contains(styles.slideBorderOn))
                             {
-                                e.target.classList.toggle(styles.slideBorderOn);
+                                target.classList.toggle(styles.slideBorderOn);
                             }
                             dispatch(selectSlides, slide.id);
                         }}

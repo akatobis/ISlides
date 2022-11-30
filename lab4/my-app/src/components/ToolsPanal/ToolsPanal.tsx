@@ -15,9 +15,9 @@ function ToolsPanal() {
          <div className={style.changeBackgroundSlide}>
             <button onClick={() => dispatch(changeBackgroundSlide, {color: color})}>Change Background Slide</button>
             <HexColorPicker color={color} onChange={setColor} />
-            <input type="file" onChange={() => dispatch(changeBackgroundSlide, {image: event.target})}></input>
+            <input type="file" onChange={(e) => {const target  = e.target as Element; dispatch(changeBackgroundSlide, {image: target})}}></input>
          </div>
-         <input type="file" onChange={() => dispatch(addBlock, {image: event.target})}>Add Image</input>
+         {/* <input type="file" onChange={(e) => {const target  = e.target as Element; dispatch(addBlock, {image: target})} }>Add Image</input> */}
          <button>Create Text Block</button>
          <button>Change Text</button>
       </div>

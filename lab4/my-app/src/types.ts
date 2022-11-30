@@ -13,10 +13,10 @@ type SlideType = {
   id: string;
   backgroundColor: string;
   backgroundImage: string;
-  blocks: BlockType[];
+  blocks: Block[];
 };
 
-type BlockType = {
+type Block = {
   id: string;
   content: TextBlock | Image | Figure;
   coordinatesX: number;
@@ -81,7 +81,7 @@ export {
   type PresentationMaker,
   type Presentation,
   type SlideType,
-  type BlockType,
+  type Block,
   type TextBlock,
   type Image,
   type Figure,

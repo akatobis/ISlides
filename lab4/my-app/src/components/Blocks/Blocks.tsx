@@ -17,8 +17,9 @@ const Blocks = (props: BlocksProps) => {
                     <button
                         className={styles.blockButton}
                         onClick={(e) => {
+                            const target  = e.target as Element;
                             dispatch(selectBlock, block.id);
-                            e.target.classList.toggle(styles.blockBorderOn);
+                            target.classList.toggle(styles.blockBorderOn);
                         }}
                     >
                         <SlideBlock block={block}/>
