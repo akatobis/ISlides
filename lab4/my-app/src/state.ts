@@ -15,7 +15,11 @@ function setState(newPresentationMaker: PresentationMaker) {
 }
 
 function dispatch(modifyFn: Function, payload: Object) {
-  setState(modifyFn(presentationMaker, payload));
+  if (payload !== '') {
+    setState(modifyFn(presentationMaker, payload));
+  } else {
+    setState(modifyFn(presentationMaker));
+  }
   console.log(presentationMaker);
 }
 

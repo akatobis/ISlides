@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { addChangePresentationMakerHandler, getState, setState } from './state';
-import { TextBlock, TypeBlock, Block, Presentation, PresentationMaker } from './types';
+import { TextBlock, TypeBlock, BlockType, Presentation, PresentationMaker } from './types';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,14 +22,14 @@ const deleteTextBlock: TextBlock = {
   font: "Calibri",
 };
 
-const deletBlocks: Block[] = [
+const deletBlocks: BlockType[] = [
   {
     id: "1",
     content: deleteTextBlock,
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    higth: 250,
+    heigth: 250,
   },
   {
     id: "2",
@@ -37,7 +37,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    higth: 250,
+    heigth: 250,
   },
   {
     id: "3",
@@ -45,7 +45,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    higth: 250,
+    heigth: 250,
   },
   {
     id: "4",
@@ -53,7 +53,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    higth: 250,
+    heigth: 250,
   },
   {
     id: "5",
@@ -61,7 +61,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    higth: 250,
+    heigth: 250,
   },
   {
     id: "6",
@@ -69,7 +69,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    higth: 250,
+    heigth: 250,
   },
   {
     id: "7",
@@ -77,7 +77,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    higth: 250,
+    heigth: 250,
   },
 ];
 
@@ -88,7 +88,7 @@ const deletePresentation: Presentation = {
       id: "1",
       backgroundColor: "#111",
       backgroundImage: "",
-      blocks: deletBlocks,
+      blocks: [],
     },
     {
       id: "2",

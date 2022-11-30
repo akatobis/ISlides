@@ -69,7 +69,6 @@ function converImageToBase64(input: any): any {
 }
 
 function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color, image }: {color?: string, image?: any}): PresentationMaker {
-  console.log(color);
   const idsSelectedSlides: string[] = oldPresentantionMaker.idsSelectedSlides;
   const oldSlides: SlideType[] = oldPresentantionMaker.presentation.slides;
   const selectedSlides: SlideType[] = oldSlides.filter((slide) => {
@@ -87,7 +86,7 @@ function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color
       }
 
       let imageBase64: string = converImageToBase64(image);
-      image.files[0] = {};
+      image.value = '';
       return {
         ...slide,
         backgroundColor: '',
