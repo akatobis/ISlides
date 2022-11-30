@@ -1,4 +1,4 @@
-import { FigureType, Figure, TypeBlock, PresentationMaker, TextBlock, Presentation, SlideType, Image, BlockType } from "../types";
+import { FigureType, Figure, TypeBlock, PresentationMaker, TextBlock, Presentation, SlideType, Image, Block } from "../types";
 
 function addImage(img: string): Image {
   return {
@@ -72,7 +72,7 @@ function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: 
   }
 
   const idNewBlock: string = "";
-  const newBlock: BlockType = {
+  const newBlock: Block = {
     id: idNewBlock,
     content: contentNewBlock,
     coordinatesX: 500,
@@ -89,7 +89,7 @@ function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: 
     return idSelectedSlide === slide.id;
   })[0];
 
-  const oldBlocks: BlockType[] = selectedSlide.blocks;
+  const oldBlocks: Block[] = selectedSlide.blocks;
 
   const newSlides: SlideType[] = oldSlides.map((slide) => {
     if (slide.id === idSelectedSlide) {
