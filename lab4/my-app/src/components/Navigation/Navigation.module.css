@@ -1,0 +1,15 @@
+.navigation {
+    margin-top: 10px;
+    display: flex;
+}
+
+.slideButton {
+    border: none;
+    color: #fff;
+    background-color: #fff;
+}
+
+.slideBorderOn {
+    box-sizing: border-box;
+    border: #000 2px solid;
+}

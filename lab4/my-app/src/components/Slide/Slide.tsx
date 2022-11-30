@@ -1,6 +1,7 @@
 import styles from "./Slide.module.css"
-import { BlockType, SlideType } from "../../types"
-import { Block } from "../Block/Block";
+import { SlideType } from "../../types"
+import {Blocks} from "../Blocks/Blocks";
+import React from "react";
 
 type SlideProps = {
    slide: SlideType,
@@ -21,14 +22,10 @@ function Slide(props: SlideProps) {
       }
    }
 
-   const blocks: BlockType[] = props.slide.blocks;
-
    return (
-      <div className={styles.slide} style={slideStyle}>
-         {/* {blocks.map(block => (
-            <Block key={block.id} block={block}/>
-         ))} */}
-      </div>
+       <div className={styles.slide} style={slideStyle}>
+          <Blocks blocks={props.slide.blocks} />
+       </div>
    )
 }
 
