@@ -4,6 +4,7 @@ import style from "./ToolsPanal.module.css"
 import { changeBackgroundSlide, deleteSlides } from "../../actions/slide";
 import { dispatch } from "../../state";
 import { addBlock, deleteBlocks } from "../../actions/block";
+import { addNewSlide} from "../../actions/navigation/navigation";
 import {FigureType} from "../../types";
 
 function ToolsPanal() {
@@ -11,6 +12,9 @@ function ToolsPanal() {
 
    return (
       <div>
+         <button className={style.button} onClick={() => {
+            dispatch(addNewSlide,'')
+        }}>add slide</button>
          <button onClick={() => dispatch(deleteSlides, '')}>Delete Slide</button>
          <button onClick={() => dispatch(deleteBlocks, '')}>Delete Block</button>
          <div className={style.changeBackgroundSlide}>
