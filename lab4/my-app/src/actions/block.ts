@@ -1,4 +1,5 @@
 import { elemInArray } from "../auxiliaryFunctions";
+import { v4 as uuidv4 } from "uuid";
 import { FigureType, Figure, TypeBlock, PresentationMaker, TextBlock, Presentation, SlideType, Image, Block } from "../types";
 
 function addImage(img: string): Image {
@@ -61,8 +62,7 @@ function createFigure(figureType: FigureType): Figure {
   };
 }
 
-function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: { img?: string; figureType?: FigureType }
-): PresentationMaker {
+function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: { img?: string; figureType?: FigureType }): PresentationMaker {
   let contentNewBlock!: Image | TextBlock | Figure;
   if (img) {
     contentNewBlock = addImage(img);
@@ -72,14 +72,14 @@ function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: 
     contentNewBlock = createTextBlock();
   }
 
-  const idNewBlock: string = "";
+  const idNewBlock: string = uuidv4();
   const newBlock: Block = {
     id: idNewBlock,
     content: contentNewBlock,
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    heigth: 250,
+    height: 250,
   };
 
   const oldPresentation: Presentation = oldPresentationMaker.presentation;
@@ -110,7 +110,7 @@ function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: 
   return {
     ...oldPresentationMaker,
     presentation: newPresentation,
-    idsSelectedBlocks: [],
+    idsSelectedBlocks: [idNewBlock],
   };
 }
 

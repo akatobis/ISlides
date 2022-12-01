@@ -1,7 +1,14 @@
 .block {
     width: 150px;
     height: 75px;
-    background-color: #61dafb;
+    background-color: transparent;
     margin: 0 auto;
-    cursor: pointer;
 }
+
+.textBlock {
+    all: unset;
+    width: 300px;
+    height: 30px;
+    border: none;
+}
+

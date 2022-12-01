@@ -29,7 +29,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    heigth: 250,
+    height: 250,
   },
   {
     id: "2",
@@ -37,7 +37,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    heigth: 250,
+    height: 250,
   },
   {
     id: "3",
@@ -45,7 +45,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    heigth: 250,
+    height: 250,
   },
   {
     id: "4",
@@ -53,7 +53,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    heigth: 250,
+    height: 250,
   },
   {
     id: "5",
@@ -61,7 +61,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    heigth: 250,
+    height: 250,
   },
   {
     id: "6",
@@ -69,7 +69,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    heigth: 250,
+    height: 250,
   },
   {
     id: "7",
@@ -77,7 +77,7 @@ const deletBlocks: Block[] = [
     coordinatesX: 500,
     coordinatesY: 500,
     width: 400,
-    heigth: 250,
+    height: 250,
   },
 ];
 
@@ -86,7 +86,7 @@ const deletePresentation: Presentation = {
   slides: [
     {
       id: "1",
-      backgroundColor: "#111",
+      backgroundColor: "#fff",
       backgroundImage: "",
       blocks: deletBlocks,
     },
