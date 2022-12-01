@@ -22,7 +22,7 @@ type Block = {
   coordinatesX: number;
   coordinatesY: number;
   width: number;
-  heigth: number;
+  height: number;
 };
 
 type TextBlock = {
