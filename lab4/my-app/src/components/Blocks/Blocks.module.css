@@ -5,10 +5,10 @@
     background-color: #fff;
 }
 
-.blockBorderOn {
+/* .blockBorderOn {
     box-sizing: border-box;
     border: #000 2px solid;
-}
+} */
 
 .blockCanvas {
     display: flex;
