@@ -43,7 +43,12 @@ function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMake
 
 function verifyExtentionImg(file: any): boolean {
   const extensionSelectedFile = file.type.split("/").pop();
-  return extensionSelectedFile === "png" || extensionSelectedFile === "jpg" || extensionSelectedFile === "jpeg" || extensionSelectedFile === "svg";
+  return (
+    extensionSelectedFile === "png" ||
+    extensionSelectedFile === "jpg" ||
+    extensionSelectedFile === "jpeg" ||
+    extensionSelectedFile === "svg"
+  );
 }
 
 function converImageToBase64(input: any): any {

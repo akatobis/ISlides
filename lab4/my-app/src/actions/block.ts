@@ -1,11 +1,31 @@
 import { elemInArray } from "../auxiliaryFunctions";
 import { v4 as uuidv4 } from "uuid";
-import { FigureType, Figure, TypeBlock, PresentationMaker, TextBlock, Presentation, SlideType, Image, Block } from "../types";
+import { FigureType, Figure, TypeBlock, PresentationMaker, TextBlock, Presentation, SlideType, Image, Block, TextStyles } from "../types";
 
-function addImage(img: string): Image {
+
+function verifyExtentionImg(file: any): boolean {
+  const extensionSelectedFile = file.type.split("/").pop();
+  return (
+    extensionSelectedFile === "png" ||
+    extensionSelectedFile === "jpg" ||
+    extensionSelectedFile === "jpeg" ||
+    extensionSelectedFile === "svg"
+  );
+}
+
+function addImage(input: any): Image {
+  const imgFile = input.files[0];
+
+  if (!verifyExtentionImg(imgFile)) {
+    return {
+      typeBlock: TypeBlock.image,
+      imageBase64: '',
+    };
+  }
+
   return {
     typeBlock: TypeBlock.image,
-    imageBase64: img,
+    imageBase64: URL.createObjectURL(imgFile),
   };
 }
 
@@ -62,10 +82,12 @@ function createFigure(figureType: FigureType): Figure {
   };
 }
 
-function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: { img?: string; figureType?: FigureType }): PresentationMaker {
+function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: { img?: any; figureType?: FigureType }): PresentationMaker {
+  console.log(img);
   let contentNewBlock!: Image | TextBlock | Figure;
   if (img) {
     contentNewBlock = addImage(img);
+    console.log(img);
   } else if (figureType) {
     contentNewBlock = createFigure(figureType);
   } else {
@@ -149,7 +171,101 @@ function deleteBlocks(oldPresentationMaker: PresentationMaker): PresentationMake
   };
 }
 
+function changeText(oldPresentationMaker: PresentationMaker, text: string): PresentationMaker {
+  const oldSlides: SlideType[] = oldPresentationMaker.presentation.slides;
+  const idSelectedSlide: string = oldPresentationMaker.idsSelectedSlides[0];
+  const selectedSlide: SlideType = oldSlides.filter((slide) => {
+    return idSelectedSlide === slide.id;
+  })[0];
+
+  let idSelectedBlock: string[] = oldPresentationMaker.idsSelectedBlocks;
+  let oldBlocks: Block[] = selectedSlide.blocks;
+  let newBlocks: Block[] = oldBlocks.map((block) => {
+    if (elemInArray(idSelectedBlock, block.id)) {
+      const oldTextBlock = block.content
+      return {
+        ...block,
+        content: {
+          ...oldTextBlock,
+          innerString: text,
+        }
+      }
+    }
+    return block;
+  });
+
+  const newSlides: SlideType[] = oldSlides.map((slide) => {
+    if (slide.id === idSelectedSlide) {
+      return {
+        ...slide,
+        blocks: newBlocks,
+      };
+    }
+    return slide;
+  });
+
+  const newPresentation: Presentation = {
+    ...oldPresentationMaker.presentation,
+    slides: newSlides,
+  };
+
+  return {
+    ...oldPresentationMaker,
+    presentation: newPresentation,
+  };
+}
+
+function changeStyleText(oldTextBlock: TextBlock, { newTextStyle, newColor, newFont, newFontSize }: { newTextStyle?: TextStyles, newColor?: string, newFont?: string, newFontSize?: number }): TextBlock | undefined {
+   if (newTextStyle) {
+      if (newTextStyle = TextStyles.bold) {
+         return {
+            ...oldTextBlock,
+            isBold: !oldTextBlock.isBold,
+         }
+      }
+      if (newTextStyle = TextStyles.italic) {
+         return {
+            ...oldTextBlock,
+            isItalic: !oldTextBlock.isItalic,
+         }
+      }
+      if (newTextStyle = TextStyles.strikethrough) {
+         return {
+            ...oldTextBlock,
+            isUnderline: !oldTextBlock.isUnderline,
+         }
+      }
+      if (newTextStyle = TextStyles.underline) {
+         return {
+            ...oldTextBlock,
+            isStrikethrough: !oldTextBlock.isStrikethrough,
+         }
+      }
+   }
+   if (newColor) {
+      return {
+         ...oldTextBlock,
+         color: newColor,
+      }
+   }
+   if (newFont) {
+      return {
+         ...oldTextBlock,
+         font: newFont,
+      }
+   }
+   if (newFontSize) {
+      return {
+         ...oldTextBlock,
+         fontSize: newFontSize,
+      }
+   }
+   return undefined;
+}
+
 export {
    addBlock,
-   deleteBlocks
+   deleteBlocks,
+   changeText,
+   changeStyleText
 }
