@@ -125,7 +125,7 @@ const deletePresentation: Presentation = {
 
 const deleteOpm: PresentationMaker = {
   presentation: deletePresentation,
-  idsSelectedSlides: [],
+  idsSelectedSlides: ['1'],
   idsSelectedBlocks: ["1", "5"],
 };
 setState(deleteOpm);

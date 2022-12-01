@@ -1,3 +1,4 @@
+import { elemInArray } from "../auxiliaryFunctions";
 import { FigureType, Figure, TypeBlock, PresentationMaker, TextBlock, Presentation, SlideType, Image, Block } from "../types";
 
 function addImage(img: string): Image {
@@ -113,6 +114,42 @@ function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: 
   };
 }
 
+function deleteBlocks(oldPresentationMaker: PresentationMaker): PresentationMaker {
+  const oldSlides: SlideType[] = oldPresentationMaker.presentation.slides;
+  const idSelectedSlide: string = oldPresentationMaker.idsSelectedSlides[0];
+  const selectedSlide: SlideType = oldSlides.filter((slide) => {
+    return idSelectedSlide === slide.id;
+  })[0];
+
+  let idsSelectedBlocks: string[] = oldPresentationMaker.idsSelectedBlocks;
+  let oldBlocks: Block[] = selectedSlide.blocks;
+  let newBlocks: Block[] = oldBlocks.filter((block) => {
+    return !elemInArray(idsSelectedBlocks, block.id);
+  });
+
+  const newSlides: SlideType[] = oldSlides.map((slide) => {
+    if (slide.id === idSelectedSlide) {
+      return {
+        ...slide,
+        blocks: newBlocks,
+      };
+    }
+    return slide;
+  });
+
+  const newPresentation: Presentation = {
+    ...oldPresentationMaker.presentation,
+    slides: newSlides,
+  };
+
+  return {
+    ...oldPresentationMaker,
+    presentation: newPresentation,
+    idsSelectedBlocks: [],
+  };
+}
+
 export {
    addBlock,
+   deleteBlocks
 }

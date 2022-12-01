@@ -1,8 +1,5 @@
 import { Presentation, PresentationMaker, SlideType } from '../types'
-
-function elemInArray<T>(array: T[], elem: T): boolean {
-  return array.indexOf(elem) !== -1;
-}
+import { elemInArray } from '../auxiliaryFunctions'
 
 function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMaker {
    const oldIdsSelectedSlides: string[] = oldPresentationMaker.idsSelectedSlides;
@@ -25,6 +22,13 @@ function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMake
       });
    }
 
+   let newIdsSelectedSlides: string[];
+   if (newSlides.length === 0) {
+    newIdsSelectedSlides = [];
+   } else {
+    newIdsSelectedSlides = [newSlides[indexLastSelectedSlide - oldIdsSelectedSlides.length + 1].id]
+   }
+
    const newPresentation: Presentation = {
       ...oldPresentationMaker.presentation,
       slides: newSlides,
@@ -33,9 +37,7 @@ function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMake
    return {
      ...oldPresentationMaker,
      presentation: newPresentation,
-     idsSelectedSlides: [
-       newSlides[indexLastSelectedSlide - oldIdsSelectedSlides.length + 1].id,
-     ],
+     idsSelectedSlides: newIdsSelectedSlides,
    };
 }
 
@@ -65,7 +67,7 @@ function converImageToBase64(input: any): any {
   reader.onerror = () => {
     console.log("Ошибка открытия файла");
   };
-  return "a";
+  return "";
 }
 
 function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color, image }: {color?: string, image?: any}): PresentationMaker {

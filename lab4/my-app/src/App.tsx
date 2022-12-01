@@ -18,7 +18,12 @@ function App(props: AppProps) {
             <ToolsPanal/>
             <div>
                 {slides.map(slide => (
-                    <Slide key={slide.id} slide={slide}/>
+                    <Slide 
+                        key={slide.id} 
+                        slide={slide} 
+                        idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
+                        idsSelectedBlocks={props.presentationMaker.idsSelectedBlocks}
+                    />
                 ))}
             </div>
         </div>
