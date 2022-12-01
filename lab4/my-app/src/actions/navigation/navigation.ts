@@ -1,5 +1,5 @@
 import {PresentationMaker, SlideType, Presentation} from "../../types";
-import {createNewSlide} from './../slide'
+import {createNewSlide} from "../slide";
 
 export function addNewSlide(oldPresentationMaker: PresentationMaker): PresentationMaker {
     const newSlide: SlideType = createNewSlide()

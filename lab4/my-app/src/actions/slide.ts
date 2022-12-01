@@ -2,7 +2,7 @@ import { Presentation, PresentationMaker, SlideType } from '../types'
 import { elemInArray } from '../auxiliaryFunctions'
 import { v4 as uuidv4 } from "uuid";
 
-export const createNewSlide = () => {
+function createNewSlide(): SlideType {
     return {
         id : uuidv4(),
         backgroundColor: "color",
@@ -127,6 +127,7 @@ function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color
 }
 
 export {
+    createNewSlide,
     removeBlockSelection,
     deleteSlides,
     changeBackgroundSlide,
