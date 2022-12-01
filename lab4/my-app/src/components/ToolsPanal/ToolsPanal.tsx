@@ -6,11 +6,13 @@ import { dispatch } from "../../state";
 import { addBlock, changeStyleText, deleteBlocks } from "../../actions/block";
 import { addNewSlide} from "../../actions/navigation/navigation";
 import {FigureType} from "../../types";
-
+import { changeColorFigure } from "../../actions/figure/figure";
 
 function ToolsPanal() {
    const [colorBackgroundSlide, setColorBackgroundSlide] = useState("#fff");
    const [colorTextBlock, setColorTextBlock] = useState("#fff");
+   const [colorFigureFill, setColorFigureFill] = useState("#fff");
+   const [colorFigureBorder, setColorFigureBorder] = useState("#000");
 
    return (
       <div>
@@ -37,6 +39,14 @@ function ToolsPanal() {
           <button onClick={() => dispatch(addBlock, {figureType: FigureType.ellipse})}>Add Ellipse</button>
           <button onClick={() => dispatch(addBlock, {figureType: FigureType.triangle})}>Add Triangle</button>
           <button onClick={() => dispatch(addBlock, {figureType: FigureType.rectangle})}>Add Rectangle</button>
+          <HexColorPicker color={colorFigureFill} onChange={setColorFigureFill} />
+          <button
+              onClick={() => {dispatch(changeColorFigure, {colorFill: colorFigureFill})}}
+          >Change Fill Color</button>
+          <HexColorPicker color={colorFigureBorder} onChange={setColorFigureBorder} />
+          <button
+              onClick={() => {dispatch(changeColorFigure, {colorBorder: colorFigureBorder})}}
+          >Change Border Color</button>
       </div>
    )
 }
