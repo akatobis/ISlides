@@ -9,6 +9,7 @@ import {
   PresentationMaker,
   SlideType,
   TextBlock,
+  TextStyles,
   TypeBlock
 } from "../types";
 
@@ -92,21 +93,12 @@ function createFigure(figureType: FigureType): Figure {
   };
 }
 
-<<<<<<< HEAD
 function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: { img?: string; figureType?: FigureType }): PresentationMaker {
   console.log(figureType);
   let contentNewBlock!: Image | TextBlock | Figure;
   if (img) {
     contentNewBlock = addImage(img);
   } else if (figureType === 0 || figureType === 1 || figureType === 2) {
-=======
-function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: { img?: string; figureType?: FigureType }): PresentationMaker {
-  console.log(figureType);
-  let contentNewBlock!: Image | TextBlock | Figure;
-  if (img) {
-    contentNewBlock = addImage(img);
-  } else if (figureType === 0 || figureType === 1 || figureType === 2) {
->>>>>>> 86fc5b4dbcb9d6e55c861df66bd14b8bebef3da1
     contentNewBlock = createFigure(figureType);
   } else {
     contentNewBlock = createTextBlock();

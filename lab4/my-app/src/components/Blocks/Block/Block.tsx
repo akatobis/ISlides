@@ -1,8 +1,12 @@
 import {elemInArray} from "../../../auxiliaryFunctions";
 import {Block, FigureType, TypeBlock, Figure} from "../../../types";
 import {Ellipse} from "./Figures/Ellipse";
+import {Rectangle} from "./Figures/Rectangle";
+import {Triangle} from "./Figures/Triangle";
 import { useState } from "react";
 import { changeText } from "../../../actions/block";
+import { dispatch } from "../../../state";
+import styles from "./Block.module.css"
 
 type BlockProps = {
     block: Block,
