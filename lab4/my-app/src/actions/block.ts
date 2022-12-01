@@ -1,6 +1,16 @@
-import { elemInArray } from "../auxiliaryFunctions";
-import { v4 as uuidv4 } from "uuid";
-import { FigureType, Figure, TypeBlock, PresentationMaker, TextBlock, Presentation, SlideType, Image, Block } from "../types";
+import {elemInArray} from "../auxiliaryFunctions";
+import {v4 as uuidv4} from "uuid";
+import {
+  Block,
+  Figure,
+  FigureType,
+  Image,
+  Presentation,
+  PresentationMaker,
+  SlideType,
+  TextBlock,
+  TypeBlock
+} from "../types";
 
 function addImage(img: string): Image {
   return {
@@ -63,10 +73,11 @@ function createFigure(figureType: FigureType): Figure {
 }
 
 function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: { img?: string; figureType?: FigureType }): PresentationMaker {
+  console.log(figureType);
   let contentNewBlock!: Image | TextBlock | Figure;
   if (img) {
     contentNewBlock = addImage(img);
-  } else if (figureType) {
+  } else if (figureType === 0 || figureType === 1 || figureType === 2) {
     contentNewBlock = createFigure(figureType);
   } else {
     contentNewBlock = createTextBlock();

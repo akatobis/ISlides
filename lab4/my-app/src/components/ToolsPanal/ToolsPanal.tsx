@@ -4,6 +4,7 @@ import style from "./ToolsPanal.module.css"
 import { changeBackgroundSlide, deleteSlides } from "../../actions/slide";
 import { dispatch } from "../../state";
 import { addBlock, deleteBlocks } from "../../actions/block";
+import {FigureType} from "../../types";
 
 function ToolsPanal() {
    const [color, setColor] = useState("#fff");
@@ -20,6 +21,9 @@ function ToolsPanal() {
          {/* <input type="file" onChange={(e) => {const target  = e.target as Element; dispatch(addBlock, {image: target})} }>Add Image</input> */}
          <button onClick={() => dispatch(addBlock, {})}>Create Text Block</button>
          <button>Change Text</button>
+          <button onClick={() => dispatch(addBlock, {figureType: FigureType.ellipse})}>Add Ellipse</button>
+          <button onClick={() => dispatch(addBlock, {figureType: FigureType.triangle})}>Add Triangle</button>
+          <button onClick={() => dispatch(addBlock, {figureType: FigureType.rectangle})}>Add Rectangle</button>
       </div>
    )
 }
