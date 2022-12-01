@@ -1,8 +1,5 @@
-import {Presentation, PresentationMaker, SlideType} from '../types'
-
-function elemInArray<T>(array: T[], elem: T): boolean {
-    return array.indexOf(elem) !== -1;
-}
+import { Presentation, PresentationMaker, SlideType } from '../types'
+import { elemInArray } from '../auxiliaryFunctions'
 
 function removeBlockSelection(oldPresentationMaker: PresentationMaker): PresentationMaker {
     return {
@@ -32,18 +29,23 @@ function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMake
         });
     }
 
-    const newPresentation: Presentation = {
-        ...oldPresentationMaker.presentation,
-        slides: newSlides,
-    }
+   let newIdsSelectedSlides: string[];
+   if (newSlides.length === 0) {
+    newIdsSelectedSlides = [];
+   } else {
+    newIdsSelectedSlides = [newSlides[indexLastSelectedSlide - oldIdsSelectedSlides.length + 1].id]
+   }
 
-    return {
-        ...oldPresentationMaker,
-        presentation: newPresentation,
-        idsSelectedSlides: [
-            newSlides[indexLastSelectedSlide - oldIdsSelectedSlides.length + 1].id,
-        ],
-    };
+   const newPresentation: Presentation = {
+      ...oldPresentationMaker.presentation,
+      slides: newSlides,
+   }
+
+   return {
+     ...oldPresentationMaker,
+     presentation: newPresentation,
+     idsSelectedSlides: newIdsSelectedSlides,
+   };
 }
 
 function verifyExtentionImg(file: any): boolean {
@@ -60,30 +62,27 @@ function converImageToBase64(input: any): any {
 
     return URL.createObjectURL(imgFile);
 
-    const reader = new FileReader();
-    reader.readAsDataURL(imgFile);
-    reader.onload = () => {
-        if (reader.result) {
-            return reader.result.toString();
-        } else {
-            console.log("Ошибка обработки файла");
-        }
-    };
-    reader.onerror = () => {
-        console.log("Ошибка открытия файла");
-    };
-    return "a";
+  const reader = new FileReader();
+  reader.readAsDataURL(imgFile);
+  reader.onload = () => {
+    if (reader.result) {
+      return reader.result.toString();
+    } else {
+      console.log("Ошибка обработки файла");
+    }
+  };
+  reader.onerror = () => {
+    console.log("Ошибка открытия файла");
+  };
+  return "";
 }
 
-function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, {
-    color,
-    image
-}: { color?: string, image?: any }): PresentationMaker {
-    const idsSelectedSlides: string[] = oldPresentantionMaker.idsSelectedSlides;
-    const oldSlides: SlideType[] = oldPresentantionMaker.presentation.slides;
-    const selectedSlides: SlideType[] = oldSlides.filter((slide) => {
-        return elemInArray(idsSelectedSlides, slide.id);
-    });
+function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color, image }: {color?: string, image?: any}): PresentationMaker {
+  const idsSelectedSlides: string[] = oldPresentantionMaker.idsSelectedSlides;
+  const oldSlides: SlideType[] = oldPresentantionMaker.presentation.slides;
+  const selectedSlides: SlideType[] = oldSlides.filter((slide) => {
+    return elemInArray(idsSelectedSlides, slide.id);
+  });
 
     let newSlides: SlideType[] = oldSlides.map((slide) => {
         if (elemInArray(selectedSlides, slide)) {

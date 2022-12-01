@@ -5,7 +5,8 @@ import {selectBlock} from "../../actions/blocks/blocks";
 import {dispatch} from "../../state";
 
 type BlocksProps = {
-    blocks: Block[];
+    blocks: Block[],
+    idsSelectedBlocks: string[],
 }
 
 const Blocks = (props: BlocksProps) => {
@@ -16,13 +17,9 @@ const Blocks = (props: BlocksProps) => {
                 <div key={block.id} className={styles.block}>
                     <button
                         className={styles.blockButton}
-                        onClick={(e) => {
-                            const target  = e.target as Element;
-                            dispatch(selectBlock, block.id);
-                            target.classList.toggle(styles.blockBorderOn);
-                        }}
+                        onClick={() => {dispatch(selectBlock, block.id);}}
                     >
-                        <SlideBlock block={block}/>
+                        <SlideBlock block={block} idsSelectedBlocks={props.idsSelectedBlocks}/>
                     </button>
                 </div>
             ))}
