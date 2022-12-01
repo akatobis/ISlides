@@ -1,5 +1,15 @@
 import { Presentation, PresentationMaker, SlideType } from '../types'
 import { elemInArray } from '../auxiliaryFunctions'
+import { v4 as uuidv4 } from "uuid";
+
+export const createNewSlide = () => {
+    return {
+        id : uuidv4(),
+        backgroundColor: "color",
+        backgroundImage: "image",
+        blocks: [],
+    }
+}
 
 function removeBlockSelection(oldPresentationMaker: PresentationMaker): PresentationMaker {
     return {
