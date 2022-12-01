@@ -1,6 +1,9 @@
-import { elemInArray } from "../../../auxiliaryFunctions";
-import {Block, TypeBlock} from "../../../types";
+import {elemInArray} from "../../../auxiliaryFunctions";
+import {Block, FigureType, TypeBlock, Figure} from "../../../types";
+import {Ellipse} from "./Figures/Ellipse";
 import styles from "./Block.module.css";
+import {Rectangle} from "./Figures/Rectangle";
+import {Triangle} from "./Figures/Triangle";
 
 type BlockProps = {
     block: Block,
@@ -23,6 +26,25 @@ const SlideBlock = (props: BlockProps) => {
         );
     }
     if (props.block.content.typeBlock === TypeBlock.figure) {
+        const figure: Figure = props.block.content;
+
+        if (figure.type.figureType === FigureType.ellipse) {
+            return (
+                <Ellipse block={props.block} figure={figure}/>
+            );
+        }
+
+        if (figure.type.figureType === FigureType.rectangle) {
+            return (
+                <Rectangle block={props.block} figure={figure}/>
+            );
+        }
+
+        if (figure.type.figureType === FigureType.triangle) {
+            return (
+                <Triangle block={props.block} figure={figure}/>
+            );
+        }
          return (
             <div className={styles.block} ></div>
         );
