@@ -1,9 +1,8 @@
+import {elemInArray} from "../../../auxiliaryFunctions";
+import {Block, FigureType, TypeBlock, Figure} from "../../../types";
+import {Ellipse} from "./Figures/Ellipse";
 import { useState } from "react";
 import { changeText } from "../../../actions/block";
-import { elemInArray } from "../../../auxiliaryFunctions";
-import { dispatch } from "../../../state";
-import {Block, TypeBlock} from "../../../types";
-import styles from "./Block.module.css";
 
 type BlockProps = {
     block: Block,
@@ -45,6 +44,25 @@ const SlideBlock = (props: BlockProps) => {
         );
     }
     if (props.block.content.typeBlock === TypeBlock.figure) {
+        const figure: Figure = props.block.content;
+
+        if (figure.type.figureType === FigureType.ellipse) {
+            return (
+                <Ellipse block={props.block} figure={figure}/>
+            );
+        }
+
+        if (figure.type.figureType === FigureType.rectangle) {
+            return (
+                <Rectangle block={props.block} figure={figure}/>
+            );
+        }
+
+        if (figure.type.figureType === FigureType.triangle) {
+            return (
+                <Triangle block={props.block} figure={figure}/>
+            );
+        }
          return (
             <div className={styles.block} ></div>
         );

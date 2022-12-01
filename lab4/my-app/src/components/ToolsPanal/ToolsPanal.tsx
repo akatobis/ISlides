@@ -4,6 +4,9 @@ import style from "./ToolsPanal.module.css"
 import { changeBackgroundSlide, deleteSlides } from "../../actions/slide";
 import { dispatch } from "../../state";
 import { addBlock, changeStyleText, deleteBlocks } from "../../actions/block";
+import { addNewSlide} from "../../actions/navigation/navigation";
+import {FigureType} from "../../types";
+
 
 function ToolsPanal() {
    const [colorBackgroundSlide, setColorBackgroundSlide] = useState("#fff");
@@ -11,6 +14,9 @@ function ToolsPanal() {
 
    return (
       <div>
+         <button className={style.button} onClick={() => {
+            dispatch(addNewSlide,'')
+        }}>add slide</button>
          <button onClick={() => dispatch(deleteSlides, '')}>Delete Slide</button>
          <button onClick={() => dispatch(deleteBlocks, '')}>Delete Block</button>
          <div className={style.changeBackgroundSlide}>
@@ -27,6 +33,10 @@ function ToolsPanal() {
             <button onClick={() => dispatch(changeStyleText, {newColor: colorTextBlock})}>Change Color Text</button>
             <HexColorPicker color={colorTextBlock} onChange={setColorTextBlock} />
          </div>
+         <button>Change Text</button>
+          <button onClick={() => dispatch(addBlock, {figureType: FigureType.ellipse})}>Add Ellipse</button>
+          <button onClick={() => dispatch(addBlock, {figureType: FigureType.triangle})}>Add Triangle</button>
+          <button onClick={() => dispatch(addBlock, {figureType: FigureType.rectangle})}>Add Rectangle</button>
       </div>
    )
 }

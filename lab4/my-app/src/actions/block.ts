@@ -1,6 +1,16 @@
-import { elemInArray } from "../auxiliaryFunctions";
-import { v4 as uuidv4 } from "uuid";
-import { FigureType, Figure, TypeBlock, PresentationMaker, TextBlock, Presentation, SlideType, Image, Block, TextStyles } from "../types";
+import {elemInArray} from "../auxiliaryFunctions";
+import {v4 as uuidv4} from "uuid";
+import {
+  Block,
+  Figure,
+  FigureType,
+  Image,
+  Presentation,
+  PresentationMaker,
+  SlideType,
+  TextBlock,
+  TypeBlock
+} from "../types";
 
 
 function verifyExtentionImg(file: any): boolean {
@@ -82,13 +92,21 @@ function createFigure(figureType: FigureType): Figure {
   };
 }
 
-function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: { img?: any; figureType?: FigureType }): PresentationMaker {
-  console.log(img);
+<<<<<<< HEAD
+function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: { img?: string; figureType?: FigureType }): PresentationMaker {
+  console.log(figureType);
   let contentNewBlock!: Image | TextBlock | Figure;
   if (img) {
     contentNewBlock = addImage(img);
-    console.log(img);
-  } else if (figureType) {
+  } else if (figureType === 0 || figureType === 1 || figureType === 2) {
+=======
+function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: { img?: string; figureType?: FigureType }): PresentationMaker {
+  console.log(figureType);
+  let contentNewBlock!: Image | TextBlock | Figure;
+  if (img) {
+    contentNewBlock = addImage(img);
+  } else if (figureType === 0 || figureType === 1 || figureType === 2) {
+>>>>>>> 86fc5b4dbcb9d6e55c861df66bd14b8bebef3da1
     contentNewBlock = createFigure(figureType);
   } else {
     contentNewBlock = createTextBlock();

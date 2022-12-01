@@ -1,26 +1,43 @@
 import { Presentation, PresentationMaker, SlideType } from '../types'
 import { elemInArray } from '../auxiliaryFunctions'
+import { v4 as uuidv4 } from "uuid";
+
+function createNewSlide(): SlideType {
+    return {
+        id : uuidv4(),
+        backgroundColor: "color",
+        backgroundImage: "image",
+        blocks: [],
+    }
+}
+
+function removeBlockSelection(oldPresentationMaker: PresentationMaker): PresentationMaker {
+    return {
+        ...oldPresentationMaker,
+        idsSelectedBlocks: [],
+    }
+}
 
 function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMaker {
-   const oldIdsSelectedSlides: string[] = oldPresentationMaker.idsSelectedSlides;
-   const idLastSelectedSlide: string = oldIdsSelectedSlides[oldIdsSelectedSlides.length - 1];
-   const oldSlides: SlideType[] = oldPresentationMaker.presentation.slides;
+    const oldIdsSelectedSlides: string[] = oldPresentationMaker.idsSelectedSlides;
+    const idLastSelectedSlide: string = oldIdsSelectedSlides[oldIdsSelectedSlides.length - 1];
+    const oldSlides: SlideType[] = oldPresentationMaker.presentation.slides;
 
-   let newSlides: SlideType[] = oldSlides.filter((slide) => {
-     return !elemInArray(oldIdsSelectedSlides, slide.id);
-   });
+    let newSlides: SlideType[] = oldSlides.filter((slide) => {
+        return !elemInArray(oldIdsSelectedSlides, slide.id);
+    });
 
-   let indexLastSelectedSlide: number = 0;
-   const idLastSlide: string = oldSlides[oldSlides.length - 1].id;
-   if (idLastSelectedSlide === idLastSlide) {
-      indexLastSelectedSlide = oldSlides.length - 2;
-   } else {
-      oldSlides.forEach((slide) => {
-        if (slide.id === idLastSelectedSlide) {
-          indexLastSelectedSlide = oldSlides.indexOf(slide);
-        }
-      });
-   }
+    let indexLastSelectedSlide: number = 0;
+    const idLastSlide: string = oldSlides[oldSlides.length - 1].id;
+    if (idLastSelectedSlide === idLastSlide) {
+        indexLastSelectedSlide = oldSlides.length - 2;
+    } else {
+        oldSlides.forEach((slide) => {
+            if (slide.id === idLastSelectedSlide) {
+                indexLastSelectedSlide = oldSlides.indexOf(slide);
+            }
+        });
+    }
 
    let newIdsSelectedSlides: string[];
    if (newSlides.length === 0) {
@@ -42,23 +59,18 @@ function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMake
 }
 
 function verifyExtentionImg(file: any): boolean {
-  const extensionSelectedFile = file.type.split("/").pop();
-  return (
-    extensionSelectedFile === "png" ||
-    extensionSelectedFile === "jpg" ||
-    extensionSelectedFile === "jpeg" ||
-    extensionSelectedFile === "svg"
-  );
+    const extensionSelectedFile = file.type.split("/").pop();
+    return extensionSelectedFile === "png" || extensionSelectedFile === "jpg" || extensionSelectedFile === "jpeg" || extensionSelectedFile === "svg";
 }
 
 function converImageToBase64(input: any): any {
-  const imgFile = input.files[0];
+    const imgFile = input.files[0];
 
-  if (!verifyExtentionImg(imgFile)) {
-    return "";
-  }
+    if (!verifyExtentionImg(imgFile)) {
+        return "";
+    }
 
-  return URL.createObjectURL(imgFile);
+    return URL.createObjectURL(imgFile);
 
   const reader = new FileReader();
   reader.readAsDataURL(imgFile);
@@ -82,39 +94,41 @@ function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color
     return elemInArray(idsSelectedSlides, slide.id);
   });
 
-  let newSlides: SlideType[] = oldSlides.map((slide) => {
-    if (elemInArray(selectedSlides, slide)) {
-      if (color) {
-        return {
-          ...slide,
-          backgroundColor: color,
-          backgroundImage: "",
-        };
-      }
+    let newSlides: SlideType[] = oldSlides.map((slide) => {
+        if (elemInArray(selectedSlides, slide)) {
+            if (color) {
+                return {
+                    ...slide,
+                    backgroundColor: color,
+                    backgroundImage: "",
+                };
+            }
 
-      let imageBase64: string = converImageToBase64(image);
-      image.value = '';
-      return {
-        ...slide,
-        backgroundColor: '',
-        backgroundImage: "url(" + imageBase64 + ")",
-      };
-    }
-    return slide;
-  });
+            let imageBase64: string = converImageToBase64(image);
+            image.value = '';
+            return {
+                ...slide,
+                backgroundColor: '',
+                backgroundImage: "url(" + imageBase64 + ")",
+            };
+        }
+        return slide;
+    });
 
-  const newPresentation: Presentation = {
-    ...oldPresentantionMaker.presentation,
-    slides: newSlides,
-  };
+    const newPresentation: Presentation = {
+        ...oldPresentantionMaker.presentation,
+        slides: newSlides,
+    };
 
-  return {
-    ...oldPresentantionMaker,
-    presentation: newPresentation,
-  };
+    return {
+        ...oldPresentantionMaker,
+        presentation: newPresentation,
+    };
 }
 
 export {
-   deleteSlides,
-   changeBackgroundSlide,
+    createNewSlide,
+    removeBlockSelection,
+    deleteSlides,
+    changeBackgroundSlide,
 }

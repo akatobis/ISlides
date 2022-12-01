@@ -1,5 +1,5 @@
 import styles from "./Slide.module.css"
-import { SlideType } from "../../types"
+import {SlideType} from "../../types"
 import {Blocks} from "../Blocks/Blocks";
 import React from "react";
 import { elemInArray } from "../../auxiliaryFunctions";
@@ -39,5 +39,5 @@ function Slide(props: SlideProps) {
 }
 
 export {
-   Slide,
+    Slide,
 }

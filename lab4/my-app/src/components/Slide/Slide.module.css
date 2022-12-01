@@ -5,3 +5,8 @@
    width: 800px;
    height: 400px;
 }
+
+.slideButton {
+   padding: 0;
+   border: none;
+}
