@@ -35,8 +35,34 @@ const SlideBlock = (props: BlockProps) => {
             fontSize: textBlock.fontSize.toString() + 'px',
         }
 
+        if (textBlock.isBold) {
+            textBlockStyle = {
+                ...textBlockStyle,
+                fontWeight: 'bold',
+            }
+        }
+        if (textBlock.isItalic) {
+            textBlockStyle = {
+                ...textBlockStyle,
+                fontStyle: 'italic',
+            }
+        }
+        if (textBlock.isStrikethrough) {
+            textBlockStyle = {
+                ...textBlockStyle,
+                textDecoration: 'line-through',
+            }
+        }
+        if (textBlock.isUnderline) {
+            textBlockStyle = {
+                ...textBlockStyle,
+                textDecoration: 'underline ' + textBlock.color,
+            }
+        }
+
         if (elemInArray(props.idsSelectedBlocks, props.block.id) || props.block.content.innerString === '' || props.block.content.innerString === undefined) {
             textBlockStyle = {
+                ...textBlockStyle,
                 border: '1px solid #000',
             }
         }
