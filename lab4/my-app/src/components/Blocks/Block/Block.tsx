@@ -26,11 +26,16 @@ type BlockProps = {
 // };
 
 const SlideBlock = (props: BlockProps) => {
+    const imageStyle = {
+        width: props.block.width,
+        height: props.block.height,
+    };
+
     let textBlockStyle = {};
     if (props.block.content.typeBlock === TypeBlock.text) {
         const textBlock = props.block.content;
         textBlockStyle = {
-            fontFace: textBlock.font,
+            fontFamily: textBlock.font,
             color: textBlock.color,
             fontSize: textBlock.fontSize.toString() + 'px',
         }
@@ -99,7 +104,7 @@ const SlideBlock = (props: BlockProps) => {
     }
     if (props.block.content.typeBlock === TypeBlock.image) {
          return (
-            <img className={styles.image} src={props.block.content.imageBase64}></img>
+            <img style={imageStyle} src={props.block.content.imageBase64}></img>
         );
     }
     return (

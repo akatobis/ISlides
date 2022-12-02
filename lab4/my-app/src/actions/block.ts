@@ -13,30 +13,10 @@ import {
    TypeBlock
 } from "../types";
 
-
-function verifyExtentionImg(file: any): boolean {
-   const extensionSelectedFile = file.type.split("/").pop();
-   return (
-      extensionSelectedFile === "png" ||
-      extensionSelectedFile === "jpg" ||
-      extensionSelectedFile === "jpeg" ||
-      extensionSelectedFile === "svg"
-   );
-}
-
-function addImage(input: any): Image {
-   const imgFile = input.files[0];
-
-   if (!verifyExtentionImg(imgFile)) {
-      return {
-         typeBlock: TypeBlock.image,
-         imageBase64: '',
-      };
-   }
-
+function addImage(img: string): Image {
    return {
-      typeBlock: TypeBlock.image,
-      imageBase64: URL.createObjectURL(imgFile),
+     typeBlock: TypeBlock.image,
+     imageBase64: img,
    };
 }
 
@@ -110,8 +90,8 @@ function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: 
       content: contentNewBlock,
       coordinatesX: 500,
       coordinatesY: 500,
-      width: 400,
-      height: 250,
+      width: 100,
+      height: 100,
    };
 
    const oldPresentation: Presentation = oldPresentationMaker.presentation;

@@ -12,19 +12,24 @@ type AppProps = {
 function App(props: AppProps) {
     const slides: SlideType[] = props.presentationMaker.presentation.slides
 
+    const idsSelectedSlides = props.presentationMaker.idsSelectedSlides;
+    const idCurrSlide: string = idsSelectedSlides[idsSelectedSlides.length - 1]
+
     return (
         <div>
             <Navigation presentationMaker={props.presentationMaker}/>
             <ToolsPanal/>
             <div>
-                {slides.map(slide => (
-                    <Slide 
-                        key={slide.id} 
-                        slide={slide} 
-                        idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
-                        idsSelectedBlocks={props.presentationMaker.idsSelectedBlocks}
-                    />
-                ))}
+                {slides.map(slide => {
+                    if (slide.id === idCurrSlide) {
+                        return <Slide 
+                            key={slide.id} 
+                            slide={slide} 
+                            idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
+                            idsSelectedBlocks={props.presentationMaker.idsSelectedBlocks}
+                        />
+                    }
+                })}
             </div>
         </div>
     );
