@@ -1,20 +1,73 @@
 import {elemInArray} from "../../../auxiliaryFunctions";
 import {Block, FigureType, TypeBlock, Figure} from "../../../types";
 import {Ellipse} from "./Figures/Ellipse";
-import styles from "./Block.module.css";
 import {Rectangle} from "./Figures/Rectangle";
 import {Triangle} from "./Figures/Triangle";
+import { useState } from "react";
+import { changeText } from "../../../actions/block";
+import { dispatch } from "../../../state";
+import styles from "./Block.module.css"
 
 type BlockProps = {
     block: Block,
     idsSelectedBlocks: string[],
 }
 
+// type TextBlock = {
+//   typeBlock: TypeBlock.text;
+//   innerString: string;
+//   isBold: boolean;
+//   isItalic: boolean;
+//   isStrikethrough: boolean;
+//   isUnderline: boolean;
+//   color: string;
+//   font: string;
+//   fontSize: number;
+// };
+
 const SlideBlock = (props: BlockProps) => {
+    const imageStyle = {
+        width: props.block.width,
+        height: props.block.height,
+    };
+
     let textBlockStyle = {};
     if (props.block.content.typeBlock === TypeBlock.text) {
-        if (elemInArray(props.idsSelectedBlocks, props.block.id) || props.block.content.innerString === '') {
+        const textBlock = props.block.content;
+        textBlockStyle = {
+            fontFamily: textBlock.font,
+            color: textBlock.color,
+            fontSize: textBlock.fontSize.toString() + 'px',
+        }
+
+        if (textBlock.isBold) {
             textBlockStyle = {
+                ...textBlockStyle,
+                fontWeight: 'bold',
+            }
+        }
+        if (textBlock.isItalic) {
+            textBlockStyle = {
+                ...textBlockStyle,
+                fontStyle: 'italic',
+            }
+        }
+        if (textBlock.isStrikethrough) {
+            textBlockStyle = {
+                ...textBlockStyle,
+                textDecoration: 'line-through',
+            }
+        }
+        if (textBlock.isUnderline) {
+            textBlockStyle = {
+                ...textBlockStyle,
+                textDecoration: 'underline ' + textBlock.color,
+            }
+        }
+
+        if (elemInArray(props.idsSelectedBlocks, props.block.id) || props.block.content.innerString === '' || props.block.content.innerString === undefined) {
+            textBlockStyle = {
+                ...textBlockStyle,
                 border: '1px solid #000',
             }
         }
@@ -22,7 +75,7 @@ const SlideBlock = (props: BlockProps) => {
 
     if (props.block.content.typeBlock === TypeBlock.text) {
          return (
-            <input className={styles.textBlock} style={textBlockStyle}></input>
+            <input className={styles.textBlock} style={textBlockStyle} onChange={(e) => dispatch(changeText, e.target.value)}></input>
         );
     }
     if (props.block.content.typeBlock === TypeBlock.figure) {
@@ -47,6 +100,11 @@ const SlideBlock = (props: BlockProps) => {
         }
          return (
             <div className={styles.block} ></div>
+        );
+    }
+    if (props.block.content.typeBlock === TypeBlock.image) {
+         return (
+            <img style={imageStyle} src={props.block.content.imageBase64}></img>
         );
     }
     return (

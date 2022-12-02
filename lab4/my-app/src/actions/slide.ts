@@ -1,5 +1,15 @@
 import { Presentation, PresentationMaker, SlideType } from '../types'
 import { elemInArray } from '../auxiliaryFunctions'
+import { v4 as uuidv4 } from "uuid";
+
+function createNewSlide(): SlideType {
+    return {
+        id : uuidv4(),
+        backgroundColor: "color",
+        backgroundImage: "image",
+        blocks: [],
+    }
+}
 
 function removeBlockSelection(oldPresentationMaker: PresentationMaker): PresentationMaker {
     return {
@@ -60,7 +70,7 @@ function converImageToBase64(input: any): any {
         return "";
     }
 
-    return URL.createObjectURL(imgFile);
+    // return URL.createObjectURL(imgFile);
 
   const reader = new FileReader();
   reader.readAsDataURL(imgFile);
@@ -74,10 +84,9 @@ function converImageToBase64(input: any): any {
   reader.onerror = () => {
     console.log("Ошибка открытия файла");
   };
-  return "";
 }
 
-function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color, image }: {color?: string, image?: any}): PresentationMaker {
+function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color, image }: {color?: string, image?: string}): PresentationMaker {
   const idsSelectedSlides: string[] = oldPresentantionMaker.idsSelectedSlides;
   const oldSlides: SlideType[] = oldPresentantionMaker.presentation.slides;
   const selectedSlides: SlideType[] = oldSlides.filter((slide) => {
@@ -93,13 +102,10 @@ function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color
                     backgroundImage: "",
                 };
             }
-
-            let imageBase64: string = converImageToBase64(image);
-            image.value = '';
             return {
                 ...slide,
                 backgroundColor: '',
-                backgroundImage: "url(" + imageBase64 + ")",
+                backgroundImage: "url(" + image + ")",
             };
         }
         return slide;
@@ -117,6 +123,7 @@ function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color
 }
 
 export {
+    createNewSlide,
     removeBlockSelection,
     deleteSlides,
     changeBackgroundSlide,

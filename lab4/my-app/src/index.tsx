@@ -17,7 +17,7 @@ const deleteTextBlock: TextBlock = {
   isItalic: false,
   isStrikethrough: false,
   isUnderline: false,
-  color: "000",
+  color: "#000",
   fontSize: 16,
   font: "Calibri",
 };
@@ -179,7 +179,7 @@ const deletePresentation: Presentation = {
 
 const deleteOpm: PresentationMaker = {
   presentation: deletePresentation,
-  idsSelectedSlides: [],
+  idsSelectedSlides: ['1'],
   idsSelectedBlocks: [],
 };
 setState(deleteOpm);

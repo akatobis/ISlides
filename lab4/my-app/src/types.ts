@@ -37,6 +37,13 @@ type TextBlock = {
   fontSize: number;
 };
 
+enum TextStyles {
+  bold,
+  italic,
+  strikethrough,
+  underline,
+}
+
 type Image = {
   typeBlock: TypeBlock.image;
   imageBase64: string;
@@ -88,6 +95,7 @@ export {
   type Ellipse,
   type Rectangle,
   type Triangle,
+  TextStyles,
   TypeBlock,
   FigureType,
 };

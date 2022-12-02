@@ -7,6 +7,7 @@
 
 .textBlock {
     all: unset;
+    background: transparent;
     width: 300px;
     height: 30px;
     border: none;
