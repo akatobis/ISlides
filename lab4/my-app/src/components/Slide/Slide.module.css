@@ -1,9 +1,18 @@
+.workZone {
+   width: 89%;
+   height: calc(100% - 130px);
+   background-color: #F9F9F9;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
 .slide {
-   margin: 0 auto;
-   margin-top: 100px;
-   border: 1px solid #000;
-   width: 800px;
-   height: 400px;
+   max-width: 94%;
+   max-height: 94%;
+   aspect-ratio: 18/10;
+   background-color: #fff;
+   box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.05);
 }
 
 .slideButton {
