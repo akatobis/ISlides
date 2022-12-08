@@ -1,6 +1,11 @@
+import logo from "../../images/logoISlides.svg";
+import rollBack from "../../images/rollBack.svg";
+import returnCancel from "../../images/returnCancel.svg";
+import view from "../../images/view.svg";
+import file from "../../images/file.svg";
 import {HexColorPicker} from "react-colorful";
 import {useState} from "react";
-import style from "./ToolsPanel.module.css"
+import styles from "./ToolsPanel.module.css"
 import {changeBackgroundSlide, deleteSlides} from "../../actions/slide";
 import {dispatch} from "../../state";
 import {addBlock, changeStyleText, deleteBlocks} from "../../actions/block";
@@ -46,8 +51,31 @@ function ToolsPanel() {
     }
 
     return (
-        <div>
-            <button className={style.button} onClick={() => {
+        <div className={styles.header}>
+            <div className={styles.infoLine}>
+                <img src={logo} alt="" width="157px" height="46px" className={styles.logo}/>
+                <div className={styles.historyCommands}>
+                    <button className={styles.historyCommandsButton}>
+                        <img src={rollBack} width="20px" height="8px" alt=""/>
+                    </button>
+                    <button className={styles.historyCommandsButton}>
+                        <img src={returnCancel} width="20px" height="8px" alt=""/>
+                    </button>
+                </div>
+                <input placeholder="Название презентации" className={styles.presentationTitle}/>
+                <button className={styles.viewButton}>
+                    Просмотр
+                    <img src={view} alt="" width="7px" height="10px" className={styles.viewButtonImg}/>
+                </button>
+                <button className={styles.fileButton}>
+                    Файл
+                    <img src={file} alt="" width="17px" height="17px" className={styles.fileButtonImg}/>
+                </button>
+            </div>
+            <div className={styles.toolsLine}>
+
+            </div>
+            <button className={styles.button} onClick={() => {
                 dispatch(addNewSlide, '')
             }}>add slide
             </button>
@@ -55,7 +83,7 @@ function ToolsPanel() {
             <button onClick={() => dispatch(deleteSlides, '')}>Delete Slide</button>
             <button onClick={() => dispatch(deleteBlocks, '')}>Delete Block</button>
 
-            <div className={style.changeBackgroundSlide}>
+            <div className={styles.changeBackgroundSlide}>
                 <button onClick={() => dispatch(changeBackgroundSlide, {color: colorBackgroundSlide})}>Change Background
                     Slide
                 </button>
@@ -66,7 +94,7 @@ function ToolsPanel() {
                 }}></input>
             </div>
 
-            <div className={style.changeBackgroundSlide}>
+            <div className={styles.changeBackgroundSlide}>
                 <p>Add Image</p>
                 <input type="file" onChange={(e) => {
                     const target = e.target as Element;
@@ -76,7 +104,7 @@ function ToolsPanel() {
 
             <button onClick={() => dispatch(addBlock, {})}>Create Text Block</button>
 
-            <div className={style.changeBackgroundSlide}>
+            <div className={styles.changeBackgroundSlide}>
                 <button onClick={() => dispatch(changeStyleText, {newColor: colorTextBlock})}>Change Color Text</button>
                 <HexColorPicker color={colorTextBlock} onChange={setColorTextBlock}/>
 

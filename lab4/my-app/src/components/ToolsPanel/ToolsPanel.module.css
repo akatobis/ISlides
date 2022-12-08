@@ -1,3 +1,80 @@
+.header {
+   width: 100%;
+   height: 130px;
+}
+
+.infoLine {
+   border-bottom: 1px solid #FFEBFD;
+   display: flex;
+   width: 100%;
+   height: 72px;
+   align-items: center;
+}
+
+.logo {
+   margin-left: 25px;
+}
+
+.historyCommands {
+   margin-left: 33px;
+   width: 52px;
+   display: flex;
+   justify-content: space-between;
+}
+
+.historyCommandsButton {
+   padding: 0;
+   cursor: pointer;
+   border: none;
+   background-color: inherit;
+}
+
+.presentationTitle {
+   font-weight: 400;
+   font-size: 15px;
+   border: 1px solid #D9D9D9;
+   width: 230px;
+   height: 28px;
+   margin-left: 28px;
+}
+
+.viewButton {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+   padding: 0;
+   width: 155px;
+   height: 28px;
+   margin-left: 20px;
+   border: none;
+   background-color: #D29CFF;
+}
+
+.viewButtonImg {
+   margin-left: 10px;
+}
+
+.fileButton {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 124px;
+   height: 28px;
+   border: 1px solid #D29CFF;
+   background-color: #FFDDFC;
+   margin-left: 20px;
+}
+
+.fileButtonImg {
+   margin-left: 6px;
+}
+
+.toolsLine {
+   width: 100%;
+   height: 44px;
+}
+
 .changeBackgroundSlide {
    display: flex;
 }
