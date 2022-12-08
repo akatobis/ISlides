@@ -1,8 +1,4 @@
 import logo from "../../images/logoISlides.svg";
-import rollBack from "../../images/rollBack.svg";
-import returnCancel from "../../images/returnCancel.svg";
-import view from "../../images/view.svg";
-import file from "../../images/file.svg";
 import {HexColorPicker} from "react-colorful";
 import {useState} from "react";
 import styles from "./ToolsPanel.module.css"
@@ -54,26 +50,21 @@ function ToolsPanel() {
         <div className={styles.header}>
             <div className={styles.infoLine}>
                 <img src={logo} alt="" width="157px" height="46px" className={styles.logo}/>
-                <div className={styles.historyCommands}>
-                    <button className={styles.historyCommandsButton}>
-                        <img src={rollBack} width="20px" height="8px" alt=""/>
-                    </button>
-                    <button className={styles.historyCommandsButton}>
-                        <img src={returnCancel} width="20px" height="8px" alt=""/>
-                    </button>
-                </div>
+                <button className={[styles.historyCommandsButton, styles.rollBack].join(" ")}></button>
+                <button className={[styles.historyCommandsButton, styles.returnCancel].join(" ")}></button>
                 <input placeholder="Название презентации" className={styles.presentationTitle}/>
-                <button className={styles.viewButton}>
-                    Просмотр
-                    <img src={view} alt="" width="7px" height="10px" className={styles.viewButtonImg}/>
-                </button>
-                <button className={styles.fileButton}>
-                    Файл
-                    <img src={file} alt="" width="17px" height="17px" className={styles.fileButtonImg}/>
-                </button>
+                <button className={styles.viewButton}>Просмотр</button>
+                <button className={styles.fileButton}>Файл</button>
             </div>
             <div className={styles.toolsLine}>
-
+                <button className={[styles.slideButtons, styles.addSlide].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.deleteSlide].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.changeColor].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.rectangle].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.ellipse].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.triangle].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.ellipseBorder].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.ellipseFill].join(" ")}></button>
             </div>
             <button className={styles.button} onClick={() => {
                 dispatch(addNewSlide, '')

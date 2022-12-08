@@ -4,6 +4,8 @@
 }
 
 .infoLine {
+   font-weight: 400;
+   font-size: 15px;
    border-bottom: 1px solid #FFEBFD;
    display: flex;
    width: 100%;
@@ -15,23 +17,30 @@
    margin-left: 25px;
 }
 
-.historyCommands {
-   margin-left: 33px;
-   width: 52px;
-   display: flex;
-   justify-content: space-between;
-}
-
 .historyCommandsButton {
    padding: 0;
    cursor: pointer;
    border: none;
+   width: 20px;
+   height: 8px;
+   background-repeat: no-repeat;
+   background-position: center center;
    background-color: inherit;
 }
 
+.rollBack {
+   margin-left: 33px;
+   background-image: url("../../images/back.svg");
+}
+
+.returnCancel {
+   margin-left: 12px;
+   background-image: url("../../images/forward.svg");
+}
+
 .presentationTitle {
-   font-weight: 400;
-   font-size: 15px;
+   font-weight: inherit;
+   font-size: inherit;
    border: 1px solid #D9D9D9;
    width: 230px;
    height: 28px;
@@ -39,31 +48,47 @@
 }
 
 .viewButton {
+   font-weight: inherit;
+   font-size: inherit;
+   padding: 0 0 0 32px;
    display: flex;
-   justify-content: center;
    align-items: center;
    cursor: pointer;
-   padding: 0;
-   width: 155px;
+   width: 140px;
    height: 28px;
    margin-left: 20px;
    border: none;
    background-color: #D29CFF;
+   background-image: url("../../images/view.svg");
+   background-repeat: no-repeat;
+   background-size: 7px 10px;
+   background-position: 110px 9px;
 }
 
-.viewButtonImg {
-   margin-left: 10px;
+.viewButton:hover {
+   background-color: #FFDDFC;
 }
 
 .fileButton {
+   border: none;
+   font-weight: inherit;
+   font-size: inherit;
+   padding: 0 0 0 31px;
+   cursor: pointer;
    display: flex;
-   justify-content: center;
    align-items: center;
    width: 124px;
    height: 28px;
-   border: 1px solid #D29CFF;
    background-color: #FFDDFC;
    margin-left: 20px;
+   background-image: url("../../images/file.svg");
+   background-repeat: no-repeat;
+   background-size: 17px 17px;
+   background-position: 76px 5px;
+}
+
+.fileButton:hover {
+   background-color: #D29CFF;
 }
 
 .fileButtonImg {
@@ -73,6 +98,68 @@
 .toolsLine {
    width: 100%;
    height: 44px;
+   display: flex;
+   align-items: center;
+   border-bottom: 1px solid #D29CFF;
+}
+
+.slideButtons {
+   border-radius: 2px;
+   border: none;
+   width: 52px;
+   height: 24px;
+   background-color: #F1EFF1;
+   background-repeat: no-repeat;
+   background-position: center center;
+   cursor: pointer;
+}
+
+.slideButtons:hover {
+   background-color: #FFDDFC;
+}
+
+.slideButtons:active {
+   background-color: #D29CFF;
+}
+
+.addSlide {
+   margin-left: 25px;
+   background-image: url("../../images/plus.svg");
+}
+
+.deleteSlide {
+   margin-left: 8px;
+   background-image: url("../../images/minus.svg");
+}
+
+.changeColor {
+   margin-left: 8px;
+   background-image: url("../../images/waterDrop.svg");
+}
+
+.rectangle {
+   margin-left: 43px;
+   background-image: url("../../images/rectangle.svg");
+}
+
+.ellipse {
+   margin-left: 1px;
+   background-image: url("../../images/ellipse.svg");
+}
+
+.triangle {
+   margin-left: 1px;
+   background-image: url("../../images/triangle.svg");
+}
+
+.ellipseBorder {
+   margin-left: 15px;
+   background-image: url("../../images/ellipseBorder.svg");
+}
+
+.ellipseFill {
+   margin-left: 1px;
+   background-image: url("../../images/ellipseFill.svg");
 }
 
 .changeBackgroundSlide {
