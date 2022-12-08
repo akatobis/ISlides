@@ -66,7 +66,7 @@ function ToolsPanel() {
                 <button className={[styles.slideButtons, styles.ellipseBorder].join(" ")}></button>
                 <button className={[styles.slideButtons, styles.ellipseFill].join(" ")}></button>
             </div>
-            <button className={styles.button} onClick={() => {
+            {/*<button className={styles.button} onClick={() => {
                 dispatch(addNewSlide, '')
             }}>add slide
             </button>
@@ -129,7 +129,7 @@ function ToolsPanel() {
                     dispatch(changeColorFigure, {colorBorder: colorFigureBorder})
                 }}
             >Change Border Color
-            </button>
+            </button>*/}
 
         </div>
     )

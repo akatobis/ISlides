@@ -18,19 +18,21 @@ function App(props: AppProps) {
 
     return (
         <div className="app">
-            <Navigation presentationMaker={props.presentationMaker}/>
             <ToolsPanel/>
-            <div className={styles.workZone}>
-                {slides.map(slide => {
-                    if (slide.id === idCurrSlide) {
-                        return <Slide
-                            key={slide.id}
-                            slide={slide}
-                            idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
-                            idsSelectedBlocks={props.presentationMaker.idsSelectedBlocks}
-                        />
-                    }
-                })}
+            <div className="bebra">
+                <Navigation presentationMaker={props.presentationMaker}/>
+                <div className={styles.workZone}>
+                    {slides.map(slide => {
+                        if (slide.id === idCurrSlide) {
+                            return <Slide
+                                key={slide.id}
+                                slide={slide}
+                                idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
+                                idsSelectedBlocks={props.presentationMaker.idsSelectedBlocks}
+                            />
+                        }
+                    })}
+                </div>
             </div>
         </div>
     );
