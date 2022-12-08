@@ -25,7 +25,7 @@ function Slide(props: SlideProps) {
    }
 
    return (
-       <div className={styles.slide} style={slideStyle}>
+       <div className={styles.slide} style={slideStyle} id="slide">
           <Blocks blocks={props.slide.blocks} idsSelectedBlocks={props.idsSelectedBlocks}/>
        </div>
    )

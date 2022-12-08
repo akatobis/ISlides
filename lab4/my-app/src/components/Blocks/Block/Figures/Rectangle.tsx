@@ -1,5 +1,6 @@
 import {Block, Figure} from "../../../../types";
 
+
 type FigureProps = {
     block: Block;
     figure: Figure;

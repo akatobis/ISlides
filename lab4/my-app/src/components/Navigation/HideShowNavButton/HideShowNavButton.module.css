@@ -1,0 +1,24 @@
+.buttonHideNav {
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 200px;
+    height: 38px;
+    left: 0px;
+    op: 924px;
+
+    background: #FFEBFD;
+    border-top: 1px solid #D29CFF;
+}
+
+.buttonShowNav {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 0px;
+    op: 924px;
+
+    background: #FFEBFD;
+    border-top: 1px solid #D29CFF;
+    border-radius: 50%;
+}
