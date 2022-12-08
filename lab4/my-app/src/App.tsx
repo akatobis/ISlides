@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import styles from "./components/Slide/Slide.module.css"
 import {Slide} from './components/Slide/Slide'
-import {ToolsPanal} from './components/ToolsPanal/ToolsPanal';
+import {ToolsPanel} from './components/ToolsPanel/ToolsPanel';
 import {PresentationMaker, SlideType} from './types';
 import {Navigation} from "./components/Navigation/Navigation";
 
@@ -19,7 +19,7 @@ function App(props: AppProps) {
     return (
         <div className="app">
             <Navigation presentationMaker={props.presentationMaker}/>
-            <ToolsPanal/>
+            <ToolsPanel/>
             <div className={styles.workZone}>
                 {slides.map(slide => {
                     if (slide.id === idCurrSlide) {

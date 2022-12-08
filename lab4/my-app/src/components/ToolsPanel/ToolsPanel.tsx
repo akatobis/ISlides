@@ -1,6 +1,6 @@
 import {HexColorPicker} from "react-colorful";
 import {useState} from "react";
-import style from "./ToolsPanal.module.css"
+import style from "./ToolsPanel.module.css"
 import {changeBackgroundSlide, deleteSlides} from "../../actions/slide";
 import {dispatch} from "../../state";
 import {addBlock, changeStyleText, deleteBlocks} from "../../actions/block";
@@ -8,7 +8,7 @@ import {addNewSlide} from "../../actions/navigation/navigation";
 import {FigureType, TextStyles} from "../../types";
 import {changeColorFigure} from "../../actions/figure/figure";
 
-function ToolsPanal() {
+function ToolsPanel() {
     const [colorBackgroundSlide, setColorBackgroundSlide] = useState("#fff");
     const [colorTextBlock, setColorTextBlock] = useState("#fff");
     const [colorFigureFill, setColorFigureFill] = useState("#fff");
@@ -117,5 +117,5 @@ function ToolsPanal() {
 }
 
 export {
-    ToolsPanal,
+    ToolsPanel,
 }
