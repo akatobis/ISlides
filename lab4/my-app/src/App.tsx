@@ -19,7 +19,7 @@ function App(props: AppProps) {
     return (
         <div className="app">
             <ToolsPanel/>
-            <div className="bebra">
+            <div className="navAndSlides">
                 <Navigation presentationMaker={props.presentationMaker}/>
                 <div className={styles.workZone}>
                     {slides.map(slide => {

@@ -1,6 +1,7 @@
 .workZone {
+   margin-right: 10px;
    width: 89%;
-   height: calc(100% - 130px);
+   height: calc(100% - 20px);
    background-color: #F9F9F9;
    display: flex;
    align-items: center;
@@ -8,7 +9,7 @@
 }
 
 .slide {
-   max-width: 94%;
+   width: 94%;
    max-height: 94%;
    aspect-ratio: 18/10;
    background-color: #fff;
