@@ -6,6 +6,7 @@ type FigureProps = {
 }
 
 const Triangle = (props: FigureProps) => {
+    
     return (
         <svg width={props.block.width} height={props.block.height}>
             <polygon
