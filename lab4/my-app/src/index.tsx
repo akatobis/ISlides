@@ -142,7 +142,7 @@ const deletePresentation: Presentation = {
       id: "1",
       backgroundColor: "#fff",
       backgroundImage: "",
-      blocks: deletBlocks,
+      blocks: [],
     },
     {
       id: "2",
