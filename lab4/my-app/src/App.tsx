@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
-import styles from "./components/Slide/Slide.module.css"
-import {Slide} from './components/Slide/Slide'
+import styles from "./App.module.css";
+import stylesSlide from "./components/Slide/Slide.module.css";
+import {Slide} from './components/Slide/Slide';
 import {ToolsPanel} from './components/ToolsPanel/ToolsPanel';
 import {PresentationMaker, SlideType} from './types';
-import {Navigation} from "./components/Navigation/Navigation";
+import { Navigation } from './components/Navigation/Navigation';
 
 type AppProps = {
     presentationMaker: PresentationMaker,
@@ -17,11 +17,11 @@ function App(props: AppProps) {
     const idCurrSlide: string = idsSelectedSlides[0]
 
     return (
-        <div className="app">
+        <div className={styles.app}>
             <ToolsPanel/>
-            <div className="navAndSlides">
+            <div className={styles.navAndSlides}>
                 <Navigation presentationMaker={props.presentationMaker}/>
-                <div className={styles.workZone}>
+                <div className={stylesSlide.workZone}>
                     {slides.map(slide => {
                         if (slide.id === idCurrSlide) {
                             return <Slide

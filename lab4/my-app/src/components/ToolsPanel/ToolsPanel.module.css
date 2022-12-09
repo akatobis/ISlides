@@ -85,7 +85,7 @@
    align-items: center;
    width: 124px;
    height: 28px;
-   background-color: #F1EFF1;
+   background-color: #FFDDFC;
    margin-left: 20px;
    background-image: url("../../images/file.svg");
    background-repeat: no-repeat;
@@ -232,6 +232,10 @@
    width: 45px;
    height: 24px;
    font-size: 14px;
+}
+
+.fontSize:focus {
+   background-color: #FFDDFC;
 }
 
 .decreaseSizeText {
