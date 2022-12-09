@@ -1,4 +1,5 @@
 import logo from "../../images/logoISlides.svg";
+import arrowDown from "../../images/arrow_down.svg";
 import {HexColorPicker} from "react-colorful";
 import {useState} from "react";
 import styles from "./ToolsPanel.module.css"
@@ -8,12 +9,17 @@ import {addBlock, changeStyleText, deleteBlocks} from "../../actions/block";
 import {addNewSlide} from "../../actions/navigation/navigation";
 import {FigureType, TextStyles} from "../../types";
 import {changeColorFigure} from "../../actions/figure/figure";
+import Dropdown from 'react-dropdown';
 
 function ToolsPanel() {
     const [colorBackgroundSlide, setColorBackgroundSlide] = useState("#fff");
     const [colorTextBlock, setColorTextBlock] = useState("#fff");
     const [colorFigureFill, setColorFigureFill] = useState("#fff");
     const [colorFigureBorder, setColorFigureBorder] = useState("#000");
+    const [fontSize, setFontSize] = useState('16');
+
+    const [isFontOpen, setFontOpen] = useState(false);
+    const handleFontOpen = () => setFontOpen(true);
 
     function verifyExtensionImg(file: any): boolean {
         const extensionSelectedFile = file.type.split("/").pop();
@@ -46,6 +52,10 @@ function ToolsPanel() {
         };
     }
 
+    const options = [
+  'one', 'two', 'three'
+];
+
     return (
         <div className={styles.header}>
             <div className={styles.infoLine}>
@@ -56,16 +66,44 @@ function ToolsPanel() {
                 <button className={styles.viewButton}>Просмотр</button>
                 <button className={styles.fileButton}>Файл</button>
             </div>
+
             <div className={styles.toolsLine}>
                 <button className={[styles.slideButtons, styles.addSlide].join(" ")}></button>
                 <button className={[styles.slideButtons, styles.deleteSlide].join(" ")}></button>
                 <button className={[styles.slideButtons, styles.changeColor].join(" ")}></button>
+
                 <button className={[styles.slideButtons, styles.rectangle].join(" ")}></button>
                 <button className={[styles.slideButtons, styles.ellipse].join(" ")}></button>
                 <button className={[styles.slideButtons, styles.triangle].join(" ")}></button>
+
                 <button className={[styles.slideButtons, styles.ellipseBorder].join(" ")}></button>
                 <button className={[styles.slideButtons, styles.ellipseFill].join(" ")}></button>
+
+                <button className={[styles.slideButtons, styles.addImage].join(" ")}></button>
+
+                <button className={[styles.slideButtons, styles.addText].join(" ")}></button>
+
+                <button className={[styles.slideButtons, styles.changeBold].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.changeItalic].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.changeUnderline].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.changeStrikethrought].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.changeColorText].join(" ")}></button>
+
+                <button className={[styles.slideButtons, styles.increaseSizeText].join(" ")}></button>
+                <input type="text" value={fontSize} onChange={(e) => setFontSize(e.target.value)} className={[styles.slideButtons, styles.fontSize].join(" ")} />
+                <button className={[styles.slideButtons, styles.decreaseSizeText].join(" ")}></button>
+
+                <button onClick={handleFontOpen} className={[styles.slideButtons, styles.fontFamily].join(" ")}>
+                    <p>Arial</p>
+                    <img src={arrowDown} alt="" />
+                </button>
+                {/* {
+                    isFontOpen && (
+                        <Fonts></Fonts>
+                    )
+                } */}
             </div>
+
             {/*<button className={styles.button} onClick={() => {
                 dispatch(addNewSlide, '')
             }}>add slide

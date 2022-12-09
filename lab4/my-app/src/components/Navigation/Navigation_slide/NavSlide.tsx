@@ -20,11 +20,13 @@ const NavSlide = (props: NavigationSlideProps) => {
         backgroundColor:'#fff',
         border:'none',
         color:'#fff',
+        margin:'0px 0px 0px 5px',
     }
     let buttonNavSlideStyle = {
         backgroundColor:'#fff',
         color:'#fff',
         border:'none',
+        margin:'0px 0px 0px 10px',
     }
     if ( elemInArray(props.idsSelectedSlides, props.slide.id)) {
         navSlideStyle = {
@@ -34,11 +36,13 @@ const NavSlide = (props: NavigationSlideProps) => {
             backgroundColor:'#FFF6FD',
             border:'none',
             color:'#fff',
+            margin:'0px 0px 0px 5px',
         }
         buttonNavSlideStyle = {
             backgroundColor:'#FFF6FD',
             color:'#FFF6FD',
             border:'none',
+            margin:'0px 0px 0px 10px',
         }
     }
 
@@ -64,7 +68,7 @@ const NavSlide = (props: NavigationSlideProps) => {
     }
     
     return(
-        <div className={styles.numberSlide} style={parentNavSlideStyle} id={props.slide.id}>
+        <div className='container' style={parentNavSlideStyle} id={props.slide.id}>
             <button
                 className={styles.slideButton}
                 style={buttonNavSlideStyle}
