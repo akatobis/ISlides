@@ -1,30 +1,29 @@
 import styles from "./Navigation.module.css"
 import {PresentationMaker} from "../../types";
 import {NavSlide} from "./Navigation_slide/NavSlide"
-import {selectSlides} from "../../actions/navigation/navigation";
-import {dispatch} from "../../state";
+import { useState } from "react";
+import {HideShowNavButton} from './HideShowNavButton/HideShowNavButton'
 
 type NavigationProps = {
     presentationMaker: PresentationMaker;
 }
 
 const Navigation = (props: NavigationProps) => {
+    const [countSlide, setCountSlide] = useState(0)
     return (
-        <div className={styles.navigation}>
-            {props.presentationMaker.presentation.slides.map(slide => {
-                return (
-                    <button
-                        className={styles.slideButton}
-                        key={slide.id}
-                        onClick={() => {dispatch(selectSlides, slide.id);}}
-                    >
+        <div>
+            <ol className={styles.navigation}>
+                {props.presentationMaker.presentation.slides.map(slide => {
+                    return (
                         <NavSlide
-                            slide={slide} idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
+                            key={slide.id} slide={slide} idsSelectedSlides={props.presentationMaker.idsSelectedSlides} countSlide={countSlide}
                         />
-                    </button>
-                )
-            })}
+                    )
+                })}
+            </ol>
+            <HideShowNavButton/>
         </div>
+
     )
 };
 

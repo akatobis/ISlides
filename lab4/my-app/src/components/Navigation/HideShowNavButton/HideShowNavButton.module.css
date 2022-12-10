@@ -1,0 +1,28 @@
+.buttonHideNav {
+    all: unset;
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 212px;
+    height: 5%;
+
+    background: #FFEBFD;
+    border-top: 1px solid #D29CFF;
+    bottom:0;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url("../../../images/arrow_left.svg");
+}
+
+.buttonShowNav {
+    all: unset;
+    position: absolute;
+    width: 50px;
+    height: 5%;
+    background: #FFEBFD;
+    border-radius: 0 40% 40% 0;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url("../../../images/arrow_rigth.svg");
+    bottom:0;
+}
