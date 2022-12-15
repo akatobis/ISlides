@@ -114,7 +114,7 @@ function ToolsPanel() {
                     <p>Arial</p>
                     <img src={arrowDown} alt="" />
                 </button>
-                {isFontOpen && <Fonts></Fonts>}
+                {isFontOpen && <Fonts />}
             </div>
 
             {/*<button className={styles.button} onClick={() => {
