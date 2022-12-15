@@ -177,6 +177,13 @@
    margin-left: 20px;
    background-image: url("../../images/add_img.svg");
    width: 24px;
+   height: 24px;
+}
+
+.addImageInput {
+   opacity: 0;
+   width: 24px;
+   height: 24px;
 }
 
 .addText {

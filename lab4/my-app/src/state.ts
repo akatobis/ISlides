@@ -14,14 +14,14 @@ function getState(): PresentationMaker {
 
 function setState(newPresentationMaker: PresentationMaker) {
   presentationMaker = newPresentationMaker;
-  console.log(rollBackCount);
-  console.log(historyCommand);
   if (!cancelled) {
     historyCommand.splice(historyCommand.length - rollBackCount, rollBackCount, presentationMaker)
     rollBackCount = 0;
   }
   changePresentationMakerHandler();
   setPresentationMakerToStorage();
+  console.log(rollBackCount);
+  console.log(historyCommand);
 }
 
 function dispatch(modifyFn: Function, payload: Object) {

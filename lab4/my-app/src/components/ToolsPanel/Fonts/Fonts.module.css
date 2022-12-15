@@ -1,0 +1,16 @@
+.backgroundFonts {
+   width: 100vw;
+   height: 100vh;
+   position: absolute;
+   z-index: 4;
+}
+
+.fonts {
+   width: 600px;
+   height: 400px;
+   z-index: 5;
+}
+
+.font {
+   font-size: 18px;
+}

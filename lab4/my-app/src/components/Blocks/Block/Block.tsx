@@ -13,18 +13,6 @@ type BlockProps = {
     idsSelectedBlocks: string[],
 }
 
-// type TextBlock = {
-//   typeBlock: TypeBlock.text;
-//   innerString: string;
-//   isBold: boolean;
-//   isItalic: boolean;
-//   isStrikethrough: boolean;
-//   isUnderline: boolean;
-//   color: string;
-//   font: string;
-//   fontSize: number;
-// };
-
 const SlideBlock = (props: BlockProps) => {
     const imageStyle = {
         width: props.block.width,
@@ -43,7 +31,7 @@ const SlideBlock = (props: BlockProps) => {
         if (textBlock.isBold) {
             textBlockStyle = {
                 ...textBlockStyle,
-                fontWeight: 'bold',
+                fontWeight: 700,
             }
         }
         if (textBlock.isItalic) {
@@ -55,7 +43,7 @@ const SlideBlock = (props: BlockProps) => {
         if (textBlock.isStrikethrough) {
             textBlockStyle = {
                 ...textBlockStyle,
-                textDecoration: 'line-through',
+                textDecoration: 'line-through ' + textBlock.color,
             }
         }
         if (textBlock.isUnderline) {
