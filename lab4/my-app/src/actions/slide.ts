@@ -58,34 +58,6 @@ function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMake
    };
 }
 
-function verifyExtentionImg(file: any): boolean {
-    const extensionSelectedFile = file.type.split("/").pop();
-    return extensionSelectedFile === "png" || extensionSelectedFile === "jpg" || extensionSelectedFile === "jpeg" || extensionSelectedFile === "svg";
-}
-
-function converImageToBase64(input: any): any {
-    const imgFile = input.files[0];
-
-    if (!verifyExtentionImg(imgFile)) {
-        return "";
-    }
-
-    // return URL.createObjectURL(imgFile);
-
-  const reader = new FileReader();
-  reader.readAsDataURL(imgFile);
-  reader.onload = () => {
-    if (reader.result) {
-      return reader.result.toString();
-    } else {
-      console.log("Ошибка обработки файла");
-    }
-  };
-  reader.onerror = () => {
-    console.log("Ошибка открытия файла");
-  };
-}
-
 function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color, image }: {color?: string, image?: string}): PresentationMaker {
   const idsSelectedSlides: string[] = oldPresentantionMaker.idsSelectedSlides;
   const oldSlides: SlideType[] = oldPresentantionMaker.presentation.slides;
@@ -122,9 +94,39 @@ function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color
     };
 }
 
-export {
-    createNewSlide,
-    removeBlockSelection,
-    deleteSlides,
-    changeBackgroundSlide,
+function changeBackgroundAllSlide(oldPresentantionMaker: PresentationMaker, { color, image }: {color?: string, image?: string}): PresentationMaker {
+  const oldSlides: SlideType[] = oldPresentantionMaker.presentation.slides;
+
+    let newSlides: SlideType[] = oldSlides.map((slide) => {
+        if (color) {
+            return {
+                ...slide,
+                backgroundColor: color,
+                backgroundImage: "",
+            };
+        }
+        return {
+            ...slide,
+            backgroundColor: '',
+            backgroundImage: "url(" + image + ")",
+        };
+    });
+
+    const newPresentation: Presentation = {
+        ...oldPresentantionMaker.presentation,
+        slides: newSlides,
+    };
+
+    return {
+        ...oldPresentantionMaker,
+        presentation: newPresentation,
+    };
 }
+
+export {
+  createNewSlide,
+  removeBlockSelection,
+  deleteSlides,
+  changeBackgroundSlide,
+  changeBackgroundAllSlide,
+};

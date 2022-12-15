@@ -9,24 +9,33 @@ import {addBlock, changeStyleText, deleteBlocks} from "../../actions/block";
 import {addNewSlide} from "../../actions/navigation/navigation";
 import {FigureType, TextStyles} from "../../types";
 import {changeColorFigure} from "../../actions/figure/figure";
-import Dropdown from 'react-dropdown';
+import { PopupBackgroundColor } from "./PopupBackgroundColor/PopupBackgroundColor";
+import SetColor from "./SetColor/SetColor";
+import Fonts from "./Fonts/Fonts";
 
 function ToolsPanel() {
-    const [colorBackgroundSlide, setColorBackgroundSlide] = useState("#fff");
-    const [colorTextBlock, setColorTextBlock] = useState("#fff");
-    const [colorFigureFill, setColorFigureFill] = useState("#fff");
-    const [colorFigureBorder, setColorFigureBorder] = useState("#000");
     const [fontSize, setFontSize] = useState('16');
 
     const [isFontOpen, setFontOpen] = useState(false);
-    const handleFontOpen = () => setFontOpen(true);
+    const handleFontOpen = () => setFontOpen(!isFontOpen);
 
-    function verifyExtensionImg(file: any): boolean {
-        const extensionSelectedFile = file.type.split("/").pop();
-        return extensionSelectedFile === "png" || extensionSelectedFile === "jpg" || extensionSelectedFile === "jpeg" || extensionSelectedFile === "svg";
-    }
+    const [isOpenPopupBackgroundColor, setIsOpenPopupBackgroundColor] = useState(false);
+    const handleOpenPopupBackgroundColor = () => setIsOpenPopupBackgroundColor(!isOpenPopupBackgroundColor);
 
-    function downloadImg(input: any, isSlide: boolean): any {
+    const [isOpenPopupBorderColorFigure, setIsOpenPopupBorderColorFigure] = useState(false);
+    const handleOpenPopupBorderColorFigure = () => setIsOpenPopupBorderColorFigure(!isOpenPopupBorderColorFigure);
+    const [isOpenPopupFillColorFigure, setIsOpenPopupFillColorFigure] = useState(false);
+    const handleOpenPopupFillColorFigure = () => setIsOpenPopupFillColorFigure(!isOpenPopupFillColorFigure);
+    const [isOpenPopupTextColor, setIsOpenPopupTextColor] = useState(false);
+    const handleOpenPopupTextColor = () => setIsOpenPopupTextColor(!isOpenPopupTextColor);
+
+    function downloadImg(input: any): any {
+
+        function verifyExtensionImg(file: any): boolean {
+            const extensionSelectedFile = file.type.split("/").pop();
+            return extensionSelectedFile === "png" || extensionSelectedFile === "jpg" || extensionSelectedFile === "jpeg" || extensionSelectedFile === "svg";
+        }
+
         const imgFile = input.files[0];
 
         if (!verifyExtensionImg(imgFile)) {
@@ -38,11 +47,7 @@ function ToolsPanel() {
         reader.onload = () => {
             if (reader.result) {
                 input.value = '';
-                if (isSlide) {
-                    dispatch(changeBackgroundSlide, {image: reader.result.toString()});
-                } else {
-                    dispatch(addBlock, {img: reader.result.toString()})
-                }
+                dispatch(addBlock, {img: reader.result.toString()})
             } else {
                 console.log("Ошибка обработки файла");
             }
@@ -52,12 +57,9 @@ function ToolsPanel() {
         };
     }
 
-    const options = [
-  'one', 'two', 'three'
-];
-
     return (
         <div className={styles.header}>
+            <div>{isOpenPopupBackgroundColor && <PopupBackgroundColor handleClose={handleOpenPopupBackgroundColor} />}</div>
             <div className={styles.infoLine}>
                 <img src={logo} alt="" width="157px" height="46px" className={styles.logo}/>
                 <button className={[styles.historyCommandsButton, styles.rollBack].join(" ")}></button>
@@ -68,40 +70,51 @@ function ToolsPanel() {
             </div>
 
             <div className={styles.toolsLine}>
-                <button className={[styles.slideButtons, styles.addSlide].join(" ")}></button>
-                <button className={[styles.slideButtons, styles.deleteSlide].join(" ")}></button>
-                <button className={[styles.slideButtons, styles.changeColor].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.addSlide].join(" ")} onClick={() => {dispatch(addNewSlide, '')}}></button>
+                <button className={[styles.slideButtons, styles.deleteSlide].join(" ")} onClick={() => dispatch(deleteSlides, '')}></button>
+                <button className={[styles.slideButtons, styles.changeColor].join(" ")} onClick={handleOpenPopupBackgroundColor}></button>
 
-                <button className={[styles.slideButtons, styles.rectangle].join(" ")}></button>
-                <button className={[styles.slideButtons, styles.ellipse].join(" ")}></button>
-                <button className={[styles.slideButtons, styles.triangle].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.rectangle].join(" ")} onClick={() => dispatch(addBlock, {figureType: FigureType.rectangle})}></button>
+                <button className={[styles.slideButtons, styles.ellipse].join(" ")} onClick={() => dispatch(addBlock, {figureType: FigureType.ellipse})}></button>
+                <button className={[styles.slideButtons, styles.triangle].join(" ")} onClick={() =>dispatch(addBlock, {figureType: FigureType.triangle})}></button>
 
-                <button className={[styles.slideButtons, styles.ellipseBorder].join(" ")}></button>
-                <button className={[styles.slideButtons, styles.ellipseFill].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.ellipseBorder].join(" ")} onClick={handleOpenPopupBorderColorFigure}></button>
+                {isOpenPopupBorderColorFigure && <SetColor handleClose={handleOpenPopupBorderColorFigure} changeColor={changeColorFigure} type="colorBorderFigure" />}
 
-                <button className={[styles.slideButtons, styles.addImage].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.ellipseFill].join(" ")} onClick={handleOpenPopupFillColorFigure}></button>
+                {isOpenPopupFillColorFigure && <SetColor handleClose={handleOpenPopupFillColorFigure} changeColor={changeColorFigure} type="colorFillFigure"/>}
 
-                <button className={[styles.slideButtons, styles.addText].join(" ")}></button>
+                <div className={[styles.slideButtons, styles.addImage].join(" ")}>
+                    <input 
+                        type="file" 
+                        onChange={(e) => {const target = e.target as Element; downloadImg(target)}}
+                        className={styles.addImageInput}>
+                    </input>
+                </div>
+                
+                <button className={[styles.slideButtons, styles.addText].join(" ")} onClick={() => dispatch(addBlock, {})}></button>
 
-                <button className={[styles.slideButtons, styles.changeBold].join(" ")}></button>
-                <button className={[styles.slideButtons, styles.changeItalic].join(" ")}></button>
-                <button className={[styles.slideButtons, styles.changeUnderline].join(" ")}></button>
-                <button className={[styles.slideButtons, styles.changeStrikethrought].join(" ")}></button>
-                <button className={[styles.slideButtons, styles.changeColorText].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.changeBold].join(" ")} onClick={() => dispatch(changeStyleText, {newTextStyle: TextStyles.bold})}></button>
+                <button className={[styles.slideButtons, styles.changeItalic].join(" ")} onClick={() => dispatch(changeStyleText, {newTextStyle: TextStyles.italic})}></button>
+                <button className={[styles.slideButtons, styles.changeUnderline].join(" ")} onClick={() => dispatch(changeStyleText, {newTextStyle: TextStyles.underline})}></button>
+                <button className={[styles.slideButtons, styles.changeStrikethrought].join(" ")} onClick={() => dispatch(changeStyleText, {newTextStyle: TextStyles.strikethrough})}></button>
+                <button className={[styles.slideButtons, styles.changeColorText].join(" ")} onClick={handleOpenPopupTextColor}></button>
+                {isOpenPopupTextColor && <SetColor handleClose={handleOpenPopupTextColor} changeColor={changeStyleText} type="colorText" />}
 
                 <button className={[styles.slideButtons, styles.increaseSizeText].join(" ")}></button>
-                <input type="text" value={fontSize} onChange={(e) => setFontSize(e.target.value)} className={[styles.slideButtons, styles.fontSize].join(" ")} />
+                <input
+                    type="text"
+                    onChange={(e) => dispatch(changeStyleText, {newFontSize: e.target.value})}
+                    className={[styles.slideButtons, styles.fontSize].join(" ")}
+                    placeholder="16"
+                />
                 <button className={[styles.slideButtons, styles.decreaseSizeText].join(" ")}></button>
 
                 <button onClick={handleFontOpen} className={[styles.slideButtons, styles.fontFamily].join(" ")}>
                     <p>Arial</p>
                     <img src={arrowDown} alt="" />
                 </button>
-                {/* {
-                    isFontOpen && (
-                        <Fonts></Fonts>
-                    )
-                } */}
+                {isFontOpen && <Fonts></Fonts>}
             </div>
 
             {/*<button className={styles.button} onClick={() => {

@@ -218,7 +218,7 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
             const oldTextBlock: TextBlock = block.content;
             let newTextBlock: TextBlock = {...oldTextBlock};
             if (newTextStyle) {
-               if (newTextStyle === TextStyles.bold as TextStyles) {
+               if (newTextStyle === TextStyles.bold as TextStyles) { // Не понял в чём проблема
                   newTextBlock = {
                      ...oldTextBlock,
                      isBold: !oldTextBlock.isBold,
@@ -233,13 +233,15 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
                if (newTextStyle === TextStyles.underline) {
                  newTextBlock = {
                    ...oldTextBlock,
+                   isStrikethrough: false,
                    isUnderline: !oldTextBlock.isUnderline,
                  };
                }
                if (newTextStyle === TextStyles.strikethrough) {
                   newTextBlock = {
-                     ...oldTextBlock,
-                     isStrikethrough: !oldTextBlock.isStrikethrough,
+                    ...oldTextBlock,
+                    isUnderline: false,
+                    isStrikethrough: !oldTextBlock.isStrikethrough,
                   };
                }
             }
