@@ -1,6 +1,10 @@
 import { PresentationMaker, SlideType } from "./types";
 
 const KEY = "presentationMaker";
+
+let cancelled: boolean = false;
+let rollBackCount: number = 0;
+let historyCommand: PresentationMaker[] = [];
 let presentationMaker: PresentationMaker = getPresentationMakerFromStorage();
 let changePresentationMakerHandler: Function = () => {};
 
@@ -10,17 +14,46 @@ function getState(): PresentationMaker {
 
 function setState(newPresentationMaker: PresentationMaker) {
   presentationMaker = newPresentationMaker;
+  if (!cancelled) {
+    historyCommand.splice(historyCommand.length - rollBackCount, rollBackCount, presentationMaker)
+    rollBackCount = 0;
+  }
   changePresentationMakerHandler();
   setPresentationMakerToStorage();
+  console.log(rollBackCount);
+  console.log(historyCommand);
 }
 
 function dispatch(modifyFn: Function, payload: Object) {
+  cancelled = false;
   if (payload !== '') {
     setState(modifyFn(presentationMaker, payload));
   } else {
     setState(modifyFn(presentationMaker));
   }
   console.log(presentationMaker);
+}
+
+function rollBack(): PresentationMaker {
+  rollBackCount++;
+  cancelled = true;
+  if (rollBackCount > historyCommand.length - 1) {
+    rollBackCount = historyCommand.length - 1;
+    return presentationMaker;
+  } else {
+    return historyCommand[historyCommand.length - 1 - rollBackCount];
+  }
+}
+
+function returnCancel(): PresentationMaker {
+  rollBackCount--;
+  cancelled = true;
+  if (rollBackCount < 0) {
+    rollBackCount = 0;
+    return presentationMaker;
+  } else {
+    return historyCommand[historyCommand.length - 1 - rollBackCount];
+  }
 }
 
 function addChangePresentationMakerHandler(handler: Function) {
@@ -46,4 +79,6 @@ export {
   dispatch,
   addChangePresentationMakerHandler,
   getSlides,
+    rollBack,
+    returnCancel,
 };
