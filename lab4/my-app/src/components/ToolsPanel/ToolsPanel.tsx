@@ -4,12 +4,12 @@ import {HexColorPicker} from "react-colorful";
 import {useState} from "react";
 import styles from "./ToolsPanel.module.css"
 import {changeBackgroundSlide, deleteSlides} from "../../actions/slide";
-import {dispatch} from "../../state";
+import {dispatch, rollBack, returnCancel} from "../../state";
 import {addBlock, changeStyleText, deleteBlocks} from "../../actions/block";
 import {addNewSlide} from "../../actions/navigation/navigation";
 import {FigureType, TextStyles} from "../../types";
 import {changeColorFigure} from "../../actions/figure/figure";
-import Dropdown from 'react-dropdown';
+/*import Dropdown from 'react-dropdown';*/
 
 function ToolsPanel() {
     const [colorBackgroundSlide, setColorBackgroundSlide] = useState("#fff");
@@ -60,8 +60,8 @@ function ToolsPanel() {
         <div className={styles.header}>
             <div className={styles.infoLine}>
                 <img src={logo} alt="" width="157px" height="46px" className={styles.logo}/>
-                <button className={[styles.historyCommandsButton, styles.rollBack].join(" ")}></button>
-                <button className={[styles.historyCommandsButton, styles.returnCancel].join(" ")}></button>
+                <button className={[styles.historyCommandsButton, styles.rollBack].join(" ")} onClick={() => dispatch(rollBack, "")}></button>
+                <button className={[styles.historyCommandsButton, styles.returnCancel].join(" ")} onClick={() => dispatch(returnCancel, "")}></button>
                 <input placeholder="Название презентации" className={styles.presentationTitle}/>
                 <button className={styles.viewButton}>Просмотр</button>
                 <button className={styles.fileButton}>Файл</button>
