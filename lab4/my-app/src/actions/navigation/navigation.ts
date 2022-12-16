@@ -65,7 +65,13 @@ export function moveSlides(oldPresentationMaker: PresentationMaker, insertionInd
         }
     }
  }
- 
+
+ function selectSlide(oldPresentationMaker: PresentationMaker, idNewSlide: string): PresentationMaker {
+    return {
+        ...oldPresentationMaker,
+        idsSelectedSlides: [idNewSlide],
+    };
+ }
 
 function selectSlides(oldPresentationMaker: PresentationMaker, idNewSlide: string): PresentationMaker {
     let newIds: string[] = oldPresentationMaker.idsSelectedSlides.filter(() => {
@@ -89,4 +95,5 @@ function selectSlides(oldPresentationMaker: PresentationMaker, idNewSlide: strin
 
 export {
     selectSlides,
+    selectSlide
 }

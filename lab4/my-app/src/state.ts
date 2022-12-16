@@ -20,8 +20,6 @@ function setState(newPresentationMaker: PresentationMaker) {
   }
   changePresentationMakerHandler();
   setPresentationMakerToStorage();
-  console.log(rollBackCount);
-  console.log(historyCommand);
 }
 
 function dispatch(modifyFn: Function, payload: Object) {

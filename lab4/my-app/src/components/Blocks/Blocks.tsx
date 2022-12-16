@@ -3,8 +3,9 @@ import styles from "./Blocks.module.css";
 import {SlideBlock} from "./Block/Block";
 import {selectBlock} from "../../actions/blocks/blocks";
 import {dispatch} from "../../state";
-import {useRef, useEffect} from 'react'
+import {useRef, useEffect, useState} from 'react'
 import React from 'react-dom';
+import { moveBlock } from "../../actions/block";
 
 type BlocksProps = {
     blocks: Block[],
@@ -13,6 +14,8 @@ type BlocksProps = {
 
 const Blocks = (props: BlocksProps) => {
     
+    const[cords, setCords] = useState({rejectedCoordinatX: 0, rejectedCoordinatY: 0})
+
     const containerRef = useRef<HTMLDivElement>(null);
     const boxRef = useRef<HTMLDivElement>(null);
   
@@ -57,6 +60,8 @@ const Blocks = (props: BlocksProps) => {
   
         box.style.top = `${nextY}px`;
         box.style.left = `${nextX}px`;
+        setCords({rejectedCoordinatX:nextX,rejectedCoordinatY:nextY});
+        dispatch(moveBlock,cords);
       }
   
       box.addEventListener('mousedown', onMouseDown);
@@ -81,8 +86,8 @@ const Blocks = (props: BlocksProps) => {
                 <div ref={boxRef} className={styles.block} key={block.id} style={
                     {
                         position: "absolute",
-                        top:`${block.coordinatesX}`+`px`,
-                        left:`${block.coordinatesY}`+`px`,
+                        top:`${block.coordinatesY}`+`px`,
+                        left:`${block.coordinatesX}`+`px`,
                     }
                 }>
                 <button

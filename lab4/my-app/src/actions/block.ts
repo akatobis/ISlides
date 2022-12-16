@@ -296,7 +296,65 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
    };
 }
 
+type propsType = {rejectedCoordinatX: number, rejectedCoordinatY: number}
+
+function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): PresentationMaker {
+   let newSlides: SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
+   let numberSlide = 0;
+   for(let i = 0;i < oldPresentationMaker.presentation.slides.length;i++)
+   {
+       if(oldPresentationMaker.idsSelectedSlides[oldPresentationMaker.idsSelectedSlides.length - 1] == oldPresentationMaker.presentation.slides[i].id)
+       {
+           numberSlide = i;
+           break;
+       }
+       newSlides[i] = oldPresentationMaker.presentation.slides[i];
+   }
+   let insertedNewBlock = false;
+   let newBlocks: Block[] = new Array(oldPresentationMaker.presentation.slides[numberSlide].blocks.length);
+   for(let int = 0;int < oldPresentationMaker.presentation.slides[numberSlide].blocks.length; int++)
+   {
+       for(let n = 0;n < oldPresentationMaker.idsSelectedBlocks.length ;n++)
+       {
+           if(oldPresentationMaker.presentation.slides[numberSlide].blocks[int].id == oldPresentationMaker.idsSelectedBlocks[n])
+           {
+               newBlocks[int] = {
+                   ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
+                   coordinatesX : props.rejectedCoordinatX,
+                   coordinatesY : props.rejectedCoordinatY,
+               };
+               insertedNewBlock = true;
+           }
+       }
+       if(!insertedNewBlock) newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int];
+       insertedNewBlock = false;
+   }
+
+   const newSlide: SlideType = {
+       ...oldPresentationMaker.presentation.slides[numberSlide],
+       blocks: [] = newBlocks,
+   }
+
+   newSlides[numberSlide] = newSlide;
+
+   for(let i = numberSlide + 1;i < oldPresentationMaker.presentation.slides.length;i++)
+   {
+       newSlides[i] = oldPresentationMaker.presentation.slides[i];
+   }
+
+   const newPresentation: Presentation = {
+       ...oldPresentationMaker.presentation,
+       slides: [] = newSlides,
+   }
+
+   return {
+       ...oldPresentationMaker,
+       presentation: newPresentation,
+   }
+}
+
 export {
+   moveBlock,
    addBlock,
    deleteBlocks,
    changeText,
