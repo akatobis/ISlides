@@ -5,12 +5,15 @@ import {Slide} from './components/Slide/Slide';
 import {ToolsPanel} from './components/ToolsPanel/ToolsPanel';
 import {PresentationMaker, SlideType} from './types';
 import { Navigation } from './components/Navigation/Navigation';
+import {useKeyPress} from './shortcuts';
 
 type AppProps = {
     presentationMaker: PresentationMaker,
 }
 
 function App(props: AppProps) {
+    useKeyPress();
+
     const slides: SlideType[] = props.presentationMaker.presentation.slides
 
     const idsSelectedSlides = props.presentationMaker.idsSelectedSlides;
