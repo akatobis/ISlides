@@ -2,15 +2,36 @@
    width: 100vw;
    height: 100vh;
    position: absolute;
-   z-index: 4;
+   left: 0;
+   top: 0;
+   z-index: 3;
 }
 
 .fonts {
-   width: 600px;
-   height: 400px;
+   box-sizing: border-box;
+   position: relative;
+   top: 90px;
+   right: 120px;
+   width: 120px;
+   background-color: #F1EFF1;
+   padding: 10px 0;
+   border-radius: 5px;
+   overflow: hidden;
    z-index: 5;
 }
 
 .font {
-   font-size: 18px;
+   padding: 1px 10px;
+   font-size: 15px;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden;
+}
+
+.font:hover {
+   background-color: #FFDDFC;
+}
+
+.font:active {
+   background-color: #D29CFF;
 }

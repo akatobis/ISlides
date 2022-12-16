@@ -101,6 +101,36 @@
    margin-left: 6px;
 }
 
+.backgroundFileList {
+   width: 100vw;
+   height: 100vh;
+   position: absolute;
+   left: 0;
+   top: 0;
+   z-index: 3;
+}
+
+.fileList {
+   box-sizing: border-box;
+   position: relative;
+   top: 48px;
+   right: 124px;
+   width: 200px;
+   background-color: #FFDDFC;
+   border: 1px #D29CFF;
+   padding: 10px 0;
+   z-index: 5;
+}
+
+.fileListPoint {
+   padding: 1px 0;
+   padding-left: 10px;
+}
+
+.fileListPoint:hover {
+   background-color: #D29CFF;
+}
+
 .toolsLine {
    width: 100%;
    height: 44px;
@@ -260,4 +290,10 @@
    display: flex;
    align-items: center;
    justify-content: space-between;
+}
+
+.fontFamilyText {
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden;
 }
