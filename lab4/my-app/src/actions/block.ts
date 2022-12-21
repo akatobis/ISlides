@@ -320,8 +320,8 @@ function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): Pr
            {
                newBlocks[int] = {
                    ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
-                   coordinatesX : props.rejectedCoordinatX,
-                   coordinatesY : props.rejectedCoordinatY,
+                   coordinatesX : oldPresentationMaker.presentation.slides[numberSlide].blocks[int].coordinatesX + props.rejectedCoordinatX,
+                   coordinatesY : oldPresentationMaker.presentation.slides[numberSlide].blocks[int].coordinatesY + props.rejectedCoordinatY,
                };
                insertedNewBlock = true;
            }
