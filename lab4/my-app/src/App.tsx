@@ -24,7 +24,7 @@ function App(props: AppProps) {
             <ToolsPanel/>
             <div className={styles.navAndSlides}>
                 <Navigation presentationMaker={props.presentationMaker}/>
-                <div className={stylesSlide.workZone}>
+                <div className={stylesSlide.workZone} id="WorkZone">
                     {slides.map(slide => {
                         if (slide.id === idCurrSlide) {
                             return <Slide

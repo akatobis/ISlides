@@ -1,4 +1,5 @@
 import {Block, Figure, TypeBlock} from "../../../../types";
+import useDragger from "../../../../hooks/useDragger";
 
 type FigureProps = {
     block: Block;
@@ -6,6 +7,7 @@ type FigureProps = {
 }
 
 const Ellipse = (props: FigureProps) => {
+    useDragger(props.block)
     return (
         <svg width={props.block.width} height={props.block.height}>
             <ellipse
