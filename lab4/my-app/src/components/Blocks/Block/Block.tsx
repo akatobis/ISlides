@@ -6,6 +6,7 @@ import {Triangle} from "./Figures/Triangle";
 import { changeText } from "../../../actions/block";
 import { dispatch } from "../../../state";
 import styles from "./Block.module.css"
+import {useMousePress} from "../../../shortcuts";
 
 type BlockProps = {
     block: Block,
@@ -13,6 +14,8 @@ type BlockProps = {
 }
 
 const SlideBlock = (props: BlockProps) => {
+    useMousePress(props.block.id, document.getElementById(props.block.id));
+
     const imageStyle = {
         width: props.block.width,
         height: props.block.height,
@@ -91,7 +94,7 @@ const SlideBlock = (props: BlockProps) => {
     }
     if (props.block.content.typeBlock === TypeBlock.image) {
          return (
-            <img style={imageStyle} src={props.block.content.imageBase64}></img>
+            <img style={imageStyle} src={props.block.content.imageBase64} alt=""></img>
         );
     }
     return (
