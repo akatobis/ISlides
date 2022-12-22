@@ -12,3 +12,39 @@
 .block {
     margin: 0 auto;
 }
+.resizer {
+    position: absolute;
+    background: black;
+  }
+  
+  .resizer-r {
+    cursor: col-resize;
+    height: 100%;
+    right: 0;
+    top: 0;
+    width: 5px;
+  }
+  
+  .resizer-t {
+    cursor: row-resize;
+    height: 5px;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  
+  .resizer-b {
+    cursor: row-resize;
+    height: 5px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .resizer-l {
+    cursor: col-resize;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 5px;
+  }

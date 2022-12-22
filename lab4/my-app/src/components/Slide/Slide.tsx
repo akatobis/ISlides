@@ -2,7 +2,6 @@ import styles from "./Slide.module.css"
 import {SlideType} from "../../types"
 import {Blocks} from "../Blocks/Blocks";
 import React from "react";
-import { elemInArray } from "../../auxiliaryFunctions";
 
 type SlideProps = {
    slide: SlideType,
@@ -22,12 +21,6 @@ function Slide(props: SlideProps) {
       slideStyle = {
          background: '',
          backgroundImage: props.slide.backgroundImage,
-      }
-   }
-   if (elemInArray(props.idsSelectedSlides, props.slide.id)) {
-      slideStyle = {
-         ...slideStyle,
-         border: '1px solid #000',
       }
    }
 

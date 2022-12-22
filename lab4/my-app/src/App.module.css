@@ -1,0 +1,11 @@
+.app {
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+.navAndSlides {
+    display: flex;
+    width: 100%;
+    height: calc(100% - 130px);
+}

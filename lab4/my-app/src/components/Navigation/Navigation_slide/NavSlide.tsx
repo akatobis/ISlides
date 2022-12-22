@@ -2,21 +2,48 @@ import styles from "./NavSlide.module.css";
 import {SlideType} from "../../../types";
 import { elemInArray } from "../../../auxiliaryFunctions";
 import {useState} from 'react'
-import {moveSlides} from './../../../actions/navigation/navigation'
-import {dispatch} from './../../../state'
+import {moveSlides, selectSlide, selectSlides} from './../../../actions/navigation/navigation'
+import {dispatch} from "../../../state";
+import internal from "stream";
+import {useMousePress} from "../../../shortcuts";
 
 type NavigationSlideProps = {
     slide: SlideType;
     idsSelectedSlides: string[],
+    countSlide: number,
 }
 
 const NavSlide = (props: NavigationSlideProps) => {
     let navSlideStyle = {
         border: '2px solid #888',
     }
-    if (elemInArray(props.idsSelectedSlides, props.slide.id)) {
+    let parentNavSlideStyle = {
+        backgroundColor:'#fff',
+        border:'none',
+        color:'#fff',
+        margin:'0px 0px 0px 5px',
+    }
+    let buttonNavSlideStyle = {
+        backgroundColor:'#fff',
+        color:'#fff',
+        border:'none',
+        margin:'0px 0px 0px 10px',
+    }
+    if ( elemInArray(props.idsSelectedSlides, props.slide.id)) {
         navSlideStyle = {
-            border: '2px solid #000',
+            border: '2px solid #6600BA',
+        }
+        parentNavSlideStyle = {
+            backgroundColor:'#FFF6FD',
+            border:'none',
+            color:'#fff',
+            margin:'0px 0px 0px 5px',
+        }
+        buttonNavSlideStyle = {
+            backgroundColor:'#FFF6FD',
+            color:'#FFF6FD',
+            border:'none',
+            margin:'0px 0px 0px 10px',
         }
     }
 
@@ -40,18 +67,34 @@ const NavSlide = (props: NavigationSlideProps) => {
         dispatch(moveSlides,slide.id)
         setDragOver(false);
     }
+
+    useMousePress(props.slide.id, document.getElementById(props.slide.id));
     
     return(
-        <div className={styles.navSlide}
-        draggable={true}
-        onDragStart={(e)=>{handleDragStart(e)}}
-        onDragLeave={(e)=>{handleDragOverEnd()}}
-        onDragEnter={(e)=>handleDragOverStart()}
-        onDragEnd={(e)=>{}}
-        onDragOver={(e)=>{enableDropping(e)}}
-        onDrop={(e)=>{handleDrop(e,props.slide)}}
-        style={ dragOver ? {fontWeight: 'bold', background: 'red'} : navSlideStyle}
-        >
+        <div className='container' style={parentNavSlideStyle} id={props.slide.id}>
+            <button
+                className={styles.slideButton}
+                style={buttonNavSlideStyle}
+                onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                    if (e.button === 0 && !e.ctrlKey){
+                        dispatch(selectSlide, props.slide.id);
+                    }
+                }}
+            >
+                <li>
+                    <div className={styles.navSlide}
+                        draggable={true}
+                        onDragStart={(e: React.DragEvent<HTMLDivElement>)=>{handleDragStart(e)}}
+                        onDragLeave={(e: React.DragEvent<HTMLDivElement>)=>{handleDragOverEnd()}}
+                        onDragEnter={(e: React.DragEvent<HTMLDivElement>)=>handleDragOverStart()}
+                        onDragEnd={(e: React.DragEvent<HTMLDivElement>)=>{}}
+                        onDragOver={(e: React.DragEvent<HTMLDivElement>)=>{enableDropping(e)}}
+                        onDrop={(e: React.DragEvent<HTMLDivElement>)=>{handleDrop(e,props.slide)}}
+                        style={ dragOver ? {fontWeight: 'bold', boxShadow: '5px 5px rgb(162, 40, 243)'} : navSlideStyle}
+                    >
+                    </div>
+                </li>
+            </button>
         </div>
     );
 }
