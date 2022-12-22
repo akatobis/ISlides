@@ -35,6 +35,8 @@ function Slide(props: SlideProps) {
       innerHeight = document.getElementById("WorkZone")?.clientHeight;
    }
 
+   getSlideSize();
+
    if (innerWidth === undefined) {innerWidth = 0}
    if (innerHeight === undefined) {innerHeight = 0}
 
