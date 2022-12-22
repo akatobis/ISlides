@@ -2,9 +2,10 @@ import styles from "./NavSlide.module.css";
 import {SlideType} from "../../../types";
 import { elemInArray } from "../../../auxiliaryFunctions";
 import {useState} from 'react'
-import {moveSlides, selectSlides} from './../../../actions/navigation/navigation'
+import {moveSlides, selectSlide, selectSlides} from './../../../actions/navigation/navigation'
 import {dispatch} from "../../../state";
 import internal from "stream";
+import {useMousePress} from "../../../shortcuts";
 
 type NavigationSlideProps = {
     slide: SlideType;
@@ -66,13 +67,19 @@ const NavSlide = (props: NavigationSlideProps) => {
         dispatch(moveSlides,slide.id)
         setDragOver(false);
     }
+
+    useMousePress(props.slide.id, document.getElementById(props.slide.id));
     
     return(
         <div className='container' style={parentNavSlideStyle} id={props.slide.id}>
             <button
                 className={styles.slideButton}
                 style={buttonNavSlideStyle}
-                onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {dispatch(selectSlides, props.slide.id)}}
+                onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                    if (e.button === 0 && !e.ctrlKey){
+                        dispatch(selectSlide, props.slide.id);
+                    }
+                }}
             >
                 <li>
                     <div className={styles.navSlide}

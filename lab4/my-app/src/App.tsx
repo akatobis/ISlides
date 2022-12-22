@@ -5,12 +5,15 @@ import {Slide} from './components/Slide/Slide';
 import {ToolsPanel} from './components/ToolsPanel/ToolsPanel';
 import {PresentationMaker, SlideType} from './types';
 import { Navigation } from './components/Navigation/Navigation';
+import {useKeyPress} from './shortcuts';
 
 type AppProps = {
     presentationMaker: PresentationMaker,
 }
 
 function App(props: AppProps) {
+    useKeyPress();
+
     const slides: SlideType[] = props.presentationMaker.presentation.slides
 
     const idsSelectedSlides = props.presentationMaker.idsSelectedSlides;
@@ -21,7 +24,7 @@ function App(props: AppProps) {
             <ToolsPanel/>
             <div className={styles.navAndSlides}>
                 <Navigation presentationMaker={props.presentationMaker}/>
-                <div className={stylesSlide.workZone}>
+                <div className={stylesSlide.workZone} id="WorkZone">
                     {slides.map(slide => {
                         if (slide.id === idCurrSlide) {
                             return <Slide

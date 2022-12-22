@@ -1,13 +1,3 @@
-.blockButton {
-    padding: 0;
-    border: none;
-    background-color: transparent;
-}
-
-.blockCanvas {
-    display: flex;
-    flex-wrap: wrap;
-}
 
 .block {
     margin: 0 auto;
