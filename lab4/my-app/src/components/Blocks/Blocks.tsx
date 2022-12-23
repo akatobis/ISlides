@@ -1,6 +1,8 @@
 import {Block} from "../../types";
 import styles from "./Blocks.module.css";
 import {SlideBlock} from "./Block/Block";
+import React from 'react';
+import { BlockHelper } from "./DopHelper/BlockHelp";
 import {selectBlock} from "../../actions/blocks/blocks";
 import {dispatch} from "../../state";
 import React from 'react-dom';
@@ -11,25 +13,19 @@ type BlocksProps = {
 }
 
 const Blocks = (props: BlocksProps) => {
+    const refs = React.useRef<HTMLDivElement[]>([])
+    refs.current = [];
+    React.useEffect(()=>{
+        refs.current.forEach((element,index) => {
+            if(!props.idsSelectedBlocks.includes(element.id)) {
+                refs.current.splice(index,1);
+            }
+        });
+    },[])
     return (
         <div className={styles.blockCanvas}>
             {props.blocks.map(block => (
-                <div className={styles.block} key={block.id} id={block.id} style={
-                    {
-                        position: "absolute",
-                        top:`${block.coordinatesY}`+`px`,
-                        left:`${block.coordinatesX}`+`px`,
-                    }
-                }>
-                <button
-                    className={styles.blockButton}
-                    onClick={()=>{dispatch(selectBlock, block.id)}
-                    }
-                >
-                    <SlideBlock block={block} idsSelectedBlocks={props.idsSelectedBlocks}
-                />
-                </button>
-            </div>
+                <BlockHelper refs={refs} block={block} idsSelectedBlocks={props.idsSelectedBlocks}/>
             ))}
         </div>
     );

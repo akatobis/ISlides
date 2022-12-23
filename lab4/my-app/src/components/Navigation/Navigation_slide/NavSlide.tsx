@@ -75,7 +75,7 @@ const NavSlide = (props: NavigationSlideProps) => {
         <div className='container' style={parentNavSlideStyle} id={props.slide.id}>
             <button
                 className={styles.slideButton}
-                style={buttonNavSlideStyle}
+                style={buttonNavSlideStyle
                 onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
                     if (e.button === 0 && !e.ctrlKey){
                         dispatch(selectSlide, props.slide.id);

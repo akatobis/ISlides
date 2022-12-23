@@ -3,7 +3,12 @@ import {Block} from "./../types";
 import {dispatch} from './../state'
 import {moveBlock} from './../actions/block'
 
-function useDragger(block: Block): void {
+interface propsUseDragger {
+  refs: React.MutableRefObject<HTMLDivElement[]>,
+  block: Block,
+}
+
+function useDragger(props: propsUseDragger): void {
 
   const isClicked = useRef<boolean>(false);
 
@@ -13,21 +18,19 @@ function useDragger(block: Block): void {
     lastX: number,
     lastY: number
   }>({
-    startX: block.coordinatesX,
-    startY: block.coordinatesY,
-    lastX: block.coordinatesX,
-    lastY: block.coordinatesY
+    startX: props.block.coordinatesX,
+    startY: props.block.coordinatesY,
+    lastX: props.block.coordinatesX,
+    lastY: props.block.coordinatesY
   })
 
   useEffect(() => {
 
-    const target = document.getElementById(block.id);
+    const target = document.getElementById(props.block.id);
     if (!target) throw new Error("Element with given id doesn't exist");
 
     const container = document.getElementById("WorkZone")
     if (!container) throw new Error("target element must have a parent");
-
-
 
     const onMouseDown = (e: MouseEvent) => {
       isClicked.current = true;
@@ -55,17 +58,17 @@ function useDragger(block: Block): void {
     target.addEventListener('mousedown', onMouseDown);
     target.addEventListener('mouseup', onMouseUp);
     container.addEventListener('mousemove', onMouseMove);
-    container.addEventListener('mouseleave', onMouseUp);
+    //container.addEventListener('mouseleave', onMouseUp);
 
     const cleanup = () => {
       target.removeEventListener('mousedown', onMouseDown);
       target.removeEventListener('mouseup', onMouseUp);
       container.removeEventListener('mousemove', onMouseMove);
-      container.removeEventListener('mouseleave', onMouseUp);
+      //container.removeEventListener('mouseleave', onMouseUp);
     }
 
     return cleanup;
-  }, [block.id])
+  }, [props])
 
 }
 

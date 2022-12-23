@@ -7,7 +7,7 @@ type FigureProps = {
 }
 
 const Triangle = (props: FigureProps) => {
-    useDragger(props.block)
+    //useDragger(props.block)
     return (
         <svg width={props.block.width} height={props.block.height}>
             <polygon

@@ -7,7 +7,7 @@ type FigureProps = {
 }
 
 const Rectangle = (props: FigureProps) => {
-    useDragger(props.block)
+    //useDragger(props.block)
     return (
         <svg width={props.block.width} height={props.block.height}>
             <rect
