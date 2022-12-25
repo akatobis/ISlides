@@ -12,3 +12,64 @@
 .block {
     margin: 0 auto;
 }
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+.up_left {
+    float:left;
+    position: relative;
+    top: 0; 
+    left: 0;
+    bottom: auto;
+    right: auto;
+    width: 5px;
+	height: 5px;
+	background: white;
+    border:1px solid black;
+    z-index: 9;
+}
+
+.down_left {
+    float:left;
+    position: relative;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    width: 5px;
+	height: 5px;
+	background: white;
+    border:1px solid black;
+    z-index: 9;
+}
+
+.up_right {
+    float:right;
+    position: relative;
+    top: 0; 
+    right: 0;
+    bottom: auto;
+    left: auto;
+    width: 5px;
+	height: 5px;
+	background: white;
+    border:1px solid black;
+    z-index: 9;
+}
+
+.down_right {
+    float:right;
+    position: relative;
+    top: auto;
+    bottom: 0;
+    left: auto; 
+    right: 0;
+    width: 5px;
+	height: 5px;
+	background: white;
+    border:1px solid black;
+    z-index: 9;
+}

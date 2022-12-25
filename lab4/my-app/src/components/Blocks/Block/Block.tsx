@@ -3,7 +3,6 @@ import {Block, FigureType, TypeBlock, Figure} from "../../../types";
 import {Ellipse} from "./Figures/Ellipse";
 import {Rectangle} from "./Figures/Rectangle";
 import {Triangle} from "./Figures/Triangle";
-import { useState } from "react";
 import { changeText } from "../../../actions/block";
 import { dispatch } from "../../../state";
 import styles from "./Block.module.css"
@@ -12,18 +11,6 @@ type BlockProps = {
     block: Block,
     idsSelectedBlocks: string[],
 }
-
-// type TextBlock = {
-//   typeBlock: TypeBlock.text;
-//   innerString: string;
-//   isBold: boolean;
-//   isItalic: boolean;
-//   isStrikethrough: boolean;
-//   isUnderline: boolean;
-//   color: string;
-//   font: string;
-//   fontSize: number;
-// };
 
 const SlideBlock = (props: BlockProps) => {
     const imageStyle = {
@@ -43,7 +30,7 @@ const SlideBlock = (props: BlockProps) => {
         if (textBlock.isBold) {
             textBlockStyle = {
                 ...textBlockStyle,
-                fontWeight: 'bold',
+                fontWeight: 700,
             }
         }
         if (textBlock.isItalic) {
@@ -55,7 +42,7 @@ const SlideBlock = (props: BlockProps) => {
         if (textBlock.isStrikethrough) {
             textBlockStyle = {
                 ...textBlockStyle,
-                textDecoration: 'line-through',
+                textDecoration: 'line-through ' + textBlock.color,
             }
         }
         if (textBlock.isUnderline) {
@@ -75,6 +62,7 @@ const SlideBlock = (props: BlockProps) => {
 
     if (props.block.content.typeBlock === TypeBlock.text) {
          return (
+            //лучше текси=т ареа использовать и в отдельный компонент вынести
             <input className={styles.textBlock} style={textBlockStyle} onChange={(e) => dispatch(changeText, e.target.value)}></input>
         );
     }

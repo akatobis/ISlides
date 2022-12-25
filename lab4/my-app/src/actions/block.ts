@@ -218,7 +218,7 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
             const oldTextBlock: TextBlock = block.content;
             let newTextBlock: TextBlock = {...oldTextBlock};
             if (newTextStyle) {
-               if (newTextStyle === TextStyles.bold as TextStyles) {
+               if (newTextStyle === TextStyles.bold as TextStyles) { // Не понял в чём проблема
                   newTextBlock = {
                      ...oldTextBlock,
                      isBold: !oldTextBlock.isBold,
@@ -233,13 +233,15 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
                if (newTextStyle === TextStyles.underline) {
                  newTextBlock = {
                    ...oldTextBlock,
+                   isStrikethrough: false,
                    isUnderline: !oldTextBlock.isUnderline,
                  };
                }
                if (newTextStyle === TextStyles.strikethrough) {
                   newTextBlock = {
-                     ...oldTextBlock,
-                     isStrikethrough: !oldTextBlock.isStrikethrough,
+                    ...oldTextBlock,
+                    isUnderline: false,
+                    isStrikethrough: !oldTextBlock.isStrikethrough,
                   };
                }
             }
@@ -294,9 +296,117 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
    };
 }
 
+type propsType = {rejectedCoordinatX: number, rejectedCoordinatY: number,id:String}
+
+function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): PresentationMaker {
+   let newSlides: SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
+   let numberSlide = 0;
+   for(let i = 0;i < oldPresentationMaker.presentation.slides.length;i++)
+   {
+       if(oldPresentationMaker.idsSelectedSlides[oldPresentationMaker.idsSelectedSlides.length - 1] == oldPresentationMaker.presentation.slides[i].id)
+       {
+           numberSlide = i;
+           break;
+       }
+       newSlides[i] = oldPresentationMaker.presentation.slides[i];
+   }
+   let insertedNewBlock = false;
+   let newBlocks: Block[] = new Array(oldPresentationMaker.presentation.slides[numberSlide].blocks.length);
+   for(let int = 0;int < oldPresentationMaker.presentation.slides[numberSlide].blocks.length; int++)
+   {
+      if(oldPresentationMaker.presentation.slides[numberSlide].blocks[int].id == props.id)
+      {
+          newBlocks[int] = {
+              ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
+              coordinatesX : props.rejectedCoordinatX,
+              coordinatesY : props.rejectedCoordinatY,
+          };
+          insertedNewBlock = true;
+      }
+       if(!insertedNewBlock) newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int];
+       insertedNewBlock = false;
+   }
+
+   const newSlide: SlideType = {
+       ...oldPresentationMaker.presentation.slides[numberSlide],
+       blocks: [] = newBlocks,
+   }
+
+   newSlides[numberSlide] = newSlide;
+
+   for(let i = numberSlide + 1;i < oldPresentationMaker.presentation.slides.length;i++)
+   {
+       newSlides[i] = oldPresentationMaker.presentation.slides[i];
+   }
+
+   const newPresentation: Presentation = {
+       ...oldPresentationMaker.presentation,
+       slides: [] = newSlides,
+   }
+
+   return {
+       ...oldPresentationMaker,
+       presentation: newPresentation,
+   }
+}
+
+function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsType): PresentationMaker {
+   let newSlides:SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
+   let numberSlide = 0;
+   for(let i = 0;i < oldPresentationMaker.presentation.slides.length;i++)
+   {
+       if(oldPresentationMaker.idsSelectedSlides[oldPresentationMaker.idsSelectedSlides.length - 1] == oldPresentationMaker.presentation.slides[i].id)
+       {
+           numberSlide = i;
+           break;
+       }
+       newSlides[i] = oldPresentationMaker.presentation.slides[i];
+   }
+   let insertedNewBlock = false;
+   let newBlocks:Block[] = new Array(oldPresentationMaker.presentation.slides[numberSlide].blocks.length);
+   for(let int = 0;int < oldPresentationMaker.presentation.slides[numberSlide].blocks.length;int++)
+   {
+      if(oldPresentationMaker.presentation.slides[numberSlide].blocks[int].id == props.id)
+      {
+          newBlocks[int] = {
+              ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
+              width :props.rejectedCoordinatX,
+              height :props.rejectedCoordinatY
+          };
+          insertedNewBlock = true;
+      }
+       if(!insertedNewBlock) newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int];
+       insertedNewBlock = false;
+   }
+
+   const newSlide: SlideType = {
+       ...oldPresentationMaker.presentation.slides[numberSlide],
+       blocks: [] = newBlocks,
+   }
+
+   newSlides[numberSlide] = newSlide;
+
+   for(let i = numberSlide + 1;i < oldPresentationMaker.presentation.slides.length;i++)
+   {
+       newSlides[i] = oldPresentationMaker.presentation.slides[i];
+   }
+
+   const newPresentation: Presentation = {
+       ...oldPresentationMaker.presentation,
+       slides: [] = newSlides,
+   }
+
+   return {
+       ...oldPresentationMaker,
+       presentation: newPresentation,
+   }
+}
+
 export {
+   moveBlock,
    addBlock,
    deleteBlocks,
    changeText,
-   changeStyleText
+   changeStyleText,
+   resizeBlock,
 }

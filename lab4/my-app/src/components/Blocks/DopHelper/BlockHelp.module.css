@@ -1,0 +1,64 @@
+.blockButton {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.blockCanvas {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.resizeable {
+  position: absolute;
+  border: 2px solid #533535;
+  width: 100px;
+  height: 100px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 15px;
+  min-height: 15px;
+  z-index: 1;
+}
+
+.resizer_r {
+  position: absolute;
+  background: black;
+  cursor: col-resize;
+  height: 100%;
+  right: 0;
+  top: 0;
+  width: 2px;
+}
+
+.resizer_t {
+  position: absolute;
+  background: black;
+  cursor: row-resize;
+  height: 2px;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.resizer_b {
+  position: absolute;
+  background: black;
+  cursor: row-resize;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.resizer_l {
+  position: absolute;
+  background: black;
+  cursor: col-resize;
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 2px;
+}

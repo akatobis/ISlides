@@ -1,8 +1,8 @@
-import styles from "./Navigation.module.css"
+import styles from "./Navigation.module.css";
 import {PresentationMaker} from "../../types";
-import {NavSlide} from "./Navigation_slide/NavSlide"
+import {NavSlide} from "./Navigation_slide/NavSlide";
 import { useState } from "react";
-import {HideShowNavButton} from './HideShowNavButton/HideShowNavButton'
+import {HideShowNavButton} from './HideShowNavButton/HideShowNavButton';
 
 type NavigationProps = {
     presentationMaker: PresentationMaker;
