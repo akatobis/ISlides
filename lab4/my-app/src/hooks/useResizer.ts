@@ -100,7 +100,8 @@ function useResizer(props: propsUseResizer): void {
 
     const onMouseUpLeftResize = (event:MouseEvent) => {
         props.block.coordinatesX = el.getBoundingClientRect().left;
-        dispatch(resizeBlock,{width:size.current.width, 
+        dispatch(resizeBlock,{
+          width:size.current.width, 
           height:size.current.height, 
           id:props.block.id,
           rejectedCoordinatY:el.getBoundingClientRect().top,
@@ -135,7 +136,8 @@ function useResizer(props: propsUseResizer): void {
 
     const onMouseUpBottomResize = (event:MouseEvent) => {
         props.block.coordinatesY = el.getBoundingClientRect().top;
-        dispatch(resizeBlock,{width:size.current.width, 
+        dispatch(resizeBlock,{
+          width:size.current.width, 
           height:size.current.height, 
           id:props.block.id,
           rejectedCoordinatY:el.getBoundingClientRect().top,
@@ -170,11 +172,11 @@ function useResizer(props: propsUseResizer): void {
     const onMouseUpTopResize = (event:MouseEvent) => {
         props.block.coordinatesY = el.getBoundingClientRect().top;
         dispatch(resizeBlock,{
-          width:size.current.width, 
-          height:size.current.height, 
-          id:props.block.id,
-          rejectedCoordinatY:el.getBoundingClientRect().top,
-          rejectedCoordinatX:el.getBoundingClientRect().left,
+          width: size.current.width, 
+          height: size.current.height, 
+          id: props.block.id,
+          rejectedCoordinatY: el.getBoundingClientRect().top,
+          rejectedCoordinatX: el.getBoundingClientRect().left,
         });
         document.removeEventListener("mousemove", onMouseMoveTopResize);
     };
