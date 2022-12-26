@@ -30,7 +30,6 @@
 	height: 5px;
 	background: white;
     border:1px solid black;
-    z-index: 9;
 }
 
 .down_left {
@@ -43,7 +42,6 @@
 	height: 5px;
 	background: white;
     border:1px solid black;
-    z-index: 9;
 }
 
 .up_right {
@@ -57,7 +55,6 @@
 	height: 5px;
 	background: white;
     border:1px solid black;
-    z-index: 9;
 }
 
 .down_right {
@@ -71,5 +68,4 @@
 	height: 5px;
 	background: white;
     border:1px solid black;
-    z-index: 9;
 }

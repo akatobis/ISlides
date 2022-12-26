@@ -39,6 +39,12 @@ function useResizer(props: propsUseResizer): void {
     const width = parseInt(styleMain.width, 10);
     const height = parseInt(styleMain.height, 10);
 
+    const container = document.getElementById("WorkZone")!;
+    const styleContainer = window.getComputedStyle(container);
+    const widthContainer = parseInt(styleContainer.width, 10);
+    const heightContainer = parseInt(styleContainer.height, 10);
+    const leftContainer = parseInt(styleContainer.left, 10);
+
     const el = props.refs.ref.current!;
     const elRight = props.refs.refRight.current!;
     const elBottom = props.refs.refBottom.current!;
