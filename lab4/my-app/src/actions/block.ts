@@ -350,7 +350,9 @@ function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): Pr
    }
 }
 
-function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsType): PresentationMaker {
+type propsTypeResize = {width: number, height: number,id:String, rejectedCoordinatX: number, rejectedCoordinatY: number}
+
+function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsTypeResize): PresentationMaker {
    let newSlides:SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
    let numberSlide = 0;
    for(let i = 0;i < oldPresentationMaker.presentation.slides.length;i++)
@@ -370,8 +372,10 @@ function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsType): 
       {
           newBlocks[int] = {
               ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
-              width :props.rejectedCoordinatX,
-              height :props.rejectedCoordinatY
+              width :props.width,
+              height :props.height,
+              coordinatesX: props.rejectedCoordinatX,
+              coordinatesY: props.rejectedCoordinatY, 
           };
           insertedNewBlock = true;
       }

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import {Block} from "./../types";
-import {dispatch} from './../state'
-import {moveBlock} from './../actions/block'
+import {dispatch} from './../state';
+import {moveBlock} from './../actions/block';
 
 type porpsUseDragger = {
   block:Block,
