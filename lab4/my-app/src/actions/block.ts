@@ -218,7 +218,7 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
             const oldTextBlock: TextBlock = block.content;
             let newTextBlock: TextBlock = {...oldTextBlock};
             if (newTextStyle) {
-               if (newTextStyle === TextStyles.bold as TextStyles) { // Не понял в чём проблема
+               if (newTextStyle === TextStyles.bold) { 
                   newTextBlock = {
                      ...oldTextBlock,
                      isBold: !oldTextBlock.isBold,
