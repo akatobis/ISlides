@@ -1,5 +1,5 @@
 import {Block, Figure} from "../../../../types";
-
+import React from 'react'
 
 type FigureProps = {
     block: Block;
@@ -8,6 +8,8 @@ type FigureProps = {
 
 const Rectangle = (props: FigureProps) => {
     return (
+        <div >
+
         <svg width={props.block.width} height={props.block.height}>
             <rect
                 x={props.figure.border}
@@ -19,6 +21,7 @@ const Rectangle = (props: FigureProps) => {
                 strokeWidth={props.figure.border}
             />
         </svg>
+        </div>
     );
 }
 
