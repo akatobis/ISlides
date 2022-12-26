@@ -46,22 +46,22 @@ function useResizer(props: propsUseResizer): void {
 
     // Right resize
     const onMouseMoveRightResize = (event:MouseEvent) => {
-      const dx = event.clientX - coords.current.startX;
-      coords.current.startX = event.clientX;
-      size.current.width = size.current.width + dx;
-      el.style.width = `${size.current.width}px`;
-      const r = width - event.clientX;
-      el.style.right = `${r}px`;
+        const dx = event.clientX - coords.current.startX;
+        coords.current.startX = event.clientX;
+        size.current.width = size.current.width + dx;
+        el.style.width = `${size.current.width}px`;
+        const a = event.clientX - size.current.width;
+        el.style.left = `${a}px`;
     };
 
     const onMouseUpRightResize = (event:MouseEvent) => {
       dispatch(resizeBlock,{rejectedCoordinatX:size.current.width, rejectedCoordinatY:size.current.height, id:props.block.id});
-      el.removeEventListener("mousemove", onMouseMoveRightResize);
+      document.removeEventListener("mousemove", onMouseMoveRightResize);
     };
 
     const onMouseDownRightResize = (event:MouseEvent) => {
       coords.current.startX = event.clientX;
-      el.addEventListener("mousemove", onMouseMoveRightResize);
+      document.addEventListener("mousemove", onMouseMoveRightResize);
       el.addEventListener("mouseup", onMouseUpRightResize);
     };
 
@@ -91,8 +91,8 @@ function useResizer(props: propsUseResizer): void {
       size.current.height = size.current.height + dy;
       coords.current.startY = event.clientY;
       el.style.height = `${size.current.height}px`;
-      const topY = event.clientX + el.style.height;  
-      el.style.top = `${topY}px`;
+      const a = event.clientY - size.current.height;
+      el.style.top = `${a}px`
     };
 
     const onMouseUpBottomResize = (event:MouseEvent) => {

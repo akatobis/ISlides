@@ -59,7 +59,7 @@ export function BlockHelper(props:propsBlockHelp) {
             <div ref={refTop} className={styles.resizer_t}></div>
             <div ref={refRight} className={styles.resizer_r}></div>
             <div ref={refBottom} className={styles.resizer_b}></div>
-            <div className={styles.block} id={props.block.id} ref={(el)=>addRef(el,props.block.id)} 
+            <div className={styles.block} ref={(el)=>addRef(el,props.block.id)} 
                 onMouseUp={()=>{dispatch(selectBlock, props.block.id)}}>
                 <SlideBlock block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
             </div>

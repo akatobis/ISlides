@@ -27,11 +27,7 @@ function useDragger(props:porpsUseDragger): void {
   useEffect(() => {
     const el = props.ref.current!;
 
-    // const target = document.getElementById(block.id);
-    // if (!target) throw new Error("Element with given id doesn't exist");
-
-    const container = document.getElementById("WorkZone")
-    if (!container) throw new Error("target element must have a parent");
+    const container = document.getElementById("WorkZone")!;
 
     const onMouseDown = (e: MouseEvent) => {
       isClicked.current = true;
