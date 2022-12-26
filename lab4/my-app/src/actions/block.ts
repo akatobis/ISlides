@@ -218,7 +218,7 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
             const oldTextBlock: TextBlock = block.content;
             let newTextBlock: TextBlock = {...oldTextBlock};
             if (newTextStyle) {
-               if (newTextStyle === TextStyles.bold as TextStyles) { // Не понял в чём проблема
+               if (newTextStyle === TextStyles.bold) { 
                   newTextBlock = {
                      ...oldTextBlock,
                      isBold: !oldTextBlock.isBold,
@@ -296,7 +296,7 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
    };
 }
 
-type propsType = {rejectedCoordinatX: number, rejectedCoordinatY: number,id:String}
+type propsType = {rejectedCoordinatX: number, rejectedCoordinatY: number,id:string}
 
 function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): PresentationMaker {
    let newSlides: SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
@@ -343,14 +343,17 @@ function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): Pr
        ...oldPresentationMaker.presentation,
        slides: [] = newSlides,
    }
-
+   
    return {
        ...oldPresentationMaker,
        presentation: newPresentation,
+       idsSelectedBlocks: [props.id],
    }
 }
 
-function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsType): PresentationMaker {
+type propsTypeResize = {width: number, height: number,id:string, rejectedCoordinatX: number, rejectedCoordinatY: number}
+
+function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsTypeResize): PresentationMaker {
    let newSlides:SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
    let numberSlide = 0;
    for(let i = 0;i < oldPresentationMaker.presentation.slides.length;i++)
@@ -370,8 +373,10 @@ function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsType): 
       {
           newBlocks[int] = {
               ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
-              width :props.rejectedCoordinatX,
-              height :props.rejectedCoordinatY
+              width :props.width,
+              height :props.height,
+              coordinatesX: props.rejectedCoordinatX,
+              coordinatesY: props.rejectedCoordinatY, 
           };
           insertedNewBlock = true;
       }

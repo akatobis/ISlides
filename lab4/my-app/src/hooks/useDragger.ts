@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import {Block} from "./../types";
-import {dispatch} from './../state'
-import {moveBlock} from './../actions/block'
+import {dispatch} from './../state';
+import {moveBlock} from './../actions/block';
+import { BlockHelper } from "../components/Blocks/DopHelper/BlockHelp";
 
 type porpsUseDragger = {
   block:Block,
@@ -39,6 +40,8 @@ function useDragger(props:porpsUseDragger): void {
       isClicked.current = false;
       coords.current.lastX = el.offsetLeft;
       coords.current.lastY = el.offsetTop;
+      props.block.coordinatesX = coords.current.lastX;
+      props.block.coordinatesY = coords.current.lastY;
       dispatch(moveBlock, {rejectedCoordinatX:coords.current.lastX,rejectedCoordinatY:coords.current.lastY,id:props.block.id})
     }
 

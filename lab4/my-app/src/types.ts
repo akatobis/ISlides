@@ -38,6 +38,7 @@ type TextBlock = {
 };
 
 enum TextStyles {
+  none,
   bold,
   italic,
   strikethrough,

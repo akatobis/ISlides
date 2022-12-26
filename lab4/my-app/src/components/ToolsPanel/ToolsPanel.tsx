@@ -1,18 +1,18 @@
 import logo from "../../images/logoISlides.svg";
 import arrowDown from "../../images/arrow_down.svg";
-import {HexColorPicker} from "react-colorful";
 import {useState} from "react";
 import styles from "./ToolsPanel.module.css"
-import {changeBackgroundSlide, deleteSlides} from "../../actions/slide";
+import {deleteSlides} from "../../actions/slide";
 import {dispatch, rollBack, returnCancel, getState, setState} from "../../state";
-import {addBlock, changeStyleText, deleteBlocks} from "../../actions/block";
+import {addBlock, changeStyleText} from "../../actions/block";
 import {addNewSlide} from "../../actions/navigation/navigation";
-import {FigureType, PresentationMaker, TextStyles} from "../../types";
+import {Block, Figure, FigureType, PresentationMaker, SlideType, TextBlock, TextStyles, TypeBlock, Image} from "../../types";
 import {changeColorFigure} from "../../actions/figure/figure";
 import { PopupBackgroundColor } from "./PopupBackgroundColor/PopupBackgroundColor";
 import SetColor from "./SetColor/SetColor";
 import Fonts from "./Fonts/Fonts";
 import { changeNamePresentation } from "../../actions/presentation";
+import { jsPDF } from "jspdf";
 
 function ToolsPanel() {
     const [fontSize, setFontSize] = useState('16');
@@ -120,6 +120,62 @@ function ToolsPanel() {
         file.value = '';
     }
 
+    function exportPresentationToPDF(): void {
+        const presentationMaker: PresentationMaker = getState();
+        const slides: SlideType[] = presentationMaker.presentation.slides;
+        
+        const doc = new jsPDF({
+            orientation: "landscape",
+            unit: "px",
+            format: [1080, 1920],
+        });
+
+        slides.forEach(slide => {
+            if (slide.backgroundImage !== '') {
+                doc.addImage(slide.backgroundImage, 'JPEG', 0, 0, 1920, 1080)
+            }
+            if (slide.backgroundColor !== '') {
+                doc.setFillColor(slide.backgroundColor);
+                doc.rect(0, 0, 1920, 1080, 'F');
+            }
+            
+            const blocks: Block[] = slide.blocks;
+            blocks.forEach(block => {
+                const contentBlock: TextBlock | Image | Figure = block.content;
+                if (contentBlock.typeBlock === TypeBlock.image) {
+                    doc.addImage(contentBlock.imageBase64, 'JPEG', block.coordinatesX, block.coordinatesY, block.width, block.height);
+                }
+                if (contentBlock.typeBlock === TypeBlock.text) {
+                    doc.text(contentBlock.innerString, block.coordinatesX, block.coordinatesY);
+                }
+                if (contentBlock.typeBlock === TypeBlock.figure) {
+                    const typeFigure = contentBlock.type;
+                    doc.setFillColor(contentBlock.colorFill);
+                    doc.setDrawColor(contentBlock.colorBorder);
+
+                    if (typeFigure.figureType === FigureType.ellipse) {
+                        doc.ellipse(block.coordinatesX, block.coordinatesY, typeFigure.rx, typeFigure.ry, 'FD');
+                    }
+                    if (typeFigure.figureType === FigureType.rectangle) {
+                        doc.rect(block.coordinatesX, block.coordinatesY, block.width, block.height, 'FD');
+                    }
+                    if (typeFigure.figureType === FigureType.triangle) {
+                        const x1: number = block.coordinatesX + block.width / 2;
+                        const y1: number = block.coordinatesY;
+                        const x2: number = block.coordinatesX;
+                        const y2: number = block.coordinatesY + block.height;
+                        const x3: number = block.coordinatesX + block.width;
+                        const y3: number = block.coordinatesY + block.height;
+                        doc.triangle(x1, y1, x2, y2, x3, y3, 'FD');
+                    }
+                }
+            })
+            doc.addPage();
+        });
+        
+        doc.save(`${namePresentation}.pdf`);
+    }
+
     return (
         <div className={styles.header}>
             <div>{isOpenPopupBackgroundColor && <PopupBackgroundColor handleClose={handleOpenPopupBackgroundColor} />}</div>
@@ -136,9 +192,12 @@ function ToolsPanel() {
                         <div>
                             <div className={styles.backgroundFileList} onClick={handleOpenFileList}></div>
                             <div className={styles.fileList}>
-                                <p className={styles.fileListPoint} onClick={() => savePresentatinoWithJSON()}>Скачать в формате JSON</p>
-                                <p>Загрузить</p>
-                                <input type='file' className={styles.fileListPoint} onChange={(e) => uploadPresentation(e.target)} />
+                                <button className={styles.fileListPoint} onClick={() => savePresentatinoWithJSON()}>Скачать в формате JSON</button>
+                                <button className={styles.fileListPoint} onClick={() => exportPresentationToPDF()}>Скачать в формате PDF</button>
+                                <button className={styles.fileListPoint}>
+                                    Загрузить
+                                    <input type='file' className={styles.fileListUpload} onChange={(e) => uploadPresentation(e.target)} />
+                                </button>
                             </div>
                         </div>
                     }
