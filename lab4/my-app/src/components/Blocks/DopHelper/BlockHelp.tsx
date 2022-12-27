@@ -4,6 +4,9 @@ import {Block} from "../../../types";
 import React from 'react'
 import {selectBlock} from "./../../../actions/blocks/blocks";
 import {dispatch} from "./../../../state";
+import {resizeBlock} from './../../../actions/block';
+import useDragger from "../../../hooks/useDragger";
+import useResizer from "../../../hooks/useResizer";
 
 type propsBlockHelp = {
     idsSelectedBlocks: string[],
@@ -13,31 +16,53 @@ type propsBlockHelp = {
 
 export function BlockHelper(props:propsBlockHelp) {
     const [pos,setPos] = React.useState<{x:number,y:number}>();
+
     const addRef = (el: HTMLDivElement|null , id:string) => {
         if(el && !props.refs.current.includes(el) && props.idsSelectedBlocks.includes(id)){
             props.refs.current.push(el);
         }
     }
+    const ref = React.useRef<HTMLDivElement>(null);
+    const refLeft = React.useRef<HTMLDivElement>(null);
+    const refTop = React.useRef<HTMLDivElement>(null);
+    const refRight = React.useRef<HTMLDivElement>(null);
+    const refBottom = React.useRef<HTMLDivElement>(null);
+
+    useResizer(
+        {
+            block: props.block,
+            refs:{
+                ref: ref,
+                refBottom: refBottom,
+                refLeft: refLeft,
+                refRight: refRight,
+                refTop: refTop
+            }
+        })
+    useDragger(
+        {
+            block: props.block,
+            ref: ref
+        })
+
     return (
-        <div className={styles.block} ref={(el)=>addRef(el,props.block.id)} key={props.block.id} id={props.block.id} style={
+        <div ref={ref} id={props.block.id} className={styles.resizeable} style={
             {
                 position: "absolute",
                 top:`${props.block.coordinatesY}`+`px`,
                 left:`${props.block.coordinatesX}`+`px`,
+                width:`${props.block.width}`+`px`,
+                height:`${props.block.height}`+`px`,
             }
         }>
-            <div className="resizer-l" id={`${props.block.id}-l`}></div>
-            <div className="resizer-t" id={`${props.block.id}-t`}></div>
-            <div className="resizer-r" id={`${props.block.id}-r`}></div>
-            <div className="resizer-b" id={`${props.block.id}-b`}></div>
-            <button
-                className={styles.blockButton}
-                onClick={()=>{dispatch(selectBlock, props.block.id)}
-                }
-            >
-                <SlideBlock block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}
-            />
-            </button>
+            <div ref={refLeft} className={styles.resizer_l}></div>
+            <div ref={refTop} className={styles.resizer_t}></div>
+            <div ref={refRight} className={styles.resizer_r}></div>
+            <div ref={refBottom} className={styles.resizer_b}></div>
+            <div className={styles.block} ref={(el)=>addRef(el,props.block.id)}
+                onMouseDown={()=>{dispatch(selectBlock, props.block.id)}}>
+                <SlideBlock block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
+            </div>
         </div>
 )
 }

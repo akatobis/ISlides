@@ -1,5 +1,5 @@
-import useDragger from "../../../../hooks/useDragger";
 import {Block, Figure, TypeBlock} from "../../../../types";
+import React from 'react'
 
 type FigureProps = {
     block: Block;
@@ -7,7 +7,6 @@ type FigureProps = {
 }
 
 const Triangle = (props: FigureProps) => {
-    //useDragger(props.block)
     return (
         <svg width={props.block.width} height={props.block.height}>
             <polygon

@@ -1,6 +1,5 @@
 import {Block, Figure, TypeBlock} from "../../../../types";
-import useDragger from "../../../../hooks/useDragger";
-import useResizable from "./../../../../hooks/useResizable";
+import React from 'react'
 
 type FigureProps = {
     block: Block;
@@ -8,9 +7,7 @@ type FigureProps = {
 }
 
 const Ellipse = (props: FigureProps) => {
-    //useResizable(props.block)
-    //useDragger(props.block)
-    return (
+    return (   
         <svg width={props.block.width} height={props.block.height}>
             <ellipse
                 cx={props.block.width / 2}

@@ -1,11 +1,10 @@
 import {Block} from "../../types";
 import styles from "./Blocks.module.css";
 import {SlideBlock} from "./Block/Block";
-import React from 'react';
-import { BlockHelper } from "./DopHelper/BlockHelp";
 import {selectBlock} from "../../actions/blocks/blocks";
 import {dispatch} from "../../state";
-import React from 'react-dom';
+import React from 'react';
+import { BlockHelper } from "./DopHelper/BlockHelp";
 
 type BlocksProps = {
     blocks: Block[],
@@ -23,9 +22,9 @@ const Blocks = (props: BlocksProps) => {
         });
     },[])
     return (
-        <div className={styles.blockCanvas}>
+        <div>
             {props.blocks.map(block => (
-                <BlockHelper refs={refs} block={block} idsSelectedBlocks={props.idsSelectedBlocks}/>
+                <BlockHelper idsSelectedBlocks={props.idsSelectedBlocks} block={block} refs={refs} key={block.id}/>
             ))}
         </div>
     );

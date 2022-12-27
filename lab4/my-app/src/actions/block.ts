@@ -218,7 +218,7 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
             const oldTextBlock: TextBlock = block.content;
             let newTextBlock: TextBlock = {...oldTextBlock};
             if (newTextStyle) {
-               if (newTextStyle === TextStyles.bold as TextStyles) { // Не понял в чём проблема
+               if (newTextStyle === TextStyles.bold) {
                   newTextBlock = {
                      ...oldTextBlock,
                      isBold: !oldTextBlock.isBold,
@@ -296,7 +296,7 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
    };
 }
 
-type propsType = {rejectedCoordinatX: number, rejectedCoordinatY: number}
+type propsType = {rejectedCoordinatX: number, rejectedCoordinatY: number,id:string}
 
 function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): PresentationMaker {
    let newSlides: SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
@@ -314,18 +314,72 @@ function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): Pr
    let newBlocks: Block[] = new Array(oldPresentationMaker.presentation.slides[numberSlide].blocks.length);
    for(let int = 0;int < oldPresentationMaker.presentation.slides[numberSlide].blocks.length; int++)
    {
-       for(let n = 0;n < oldPresentationMaker.idsSelectedBlocks.length ;n++)
+      if(oldPresentationMaker.presentation.slides[numberSlide].blocks[int].id == props.id)
+      {
+          newBlocks[int] = {
+              ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
+              coordinatesX : props.rejectedCoordinatX,
+              coordinatesY : props.rejectedCoordinatY,
+          };
+          insertedNewBlock = true;
+      }
+       if(!insertedNewBlock) newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int];
+       insertedNewBlock = false;
+   }
+
+   const newSlide: SlideType = {
+       ...oldPresentationMaker.presentation.slides[numberSlide],
+       blocks: [] = newBlocks,
+   }
+
+   newSlides[numberSlide] = newSlide;
+
+   for(let i = numberSlide + 1;i < oldPresentationMaker.presentation.slides.length;i++)
+   {
+       newSlides[i] = oldPresentationMaker.presentation.slides[i];
+   }
+
+   const newPresentation: Presentation = {
+       ...oldPresentationMaker.presentation,
+       slides: [] = newSlides,
+   }
+
+   return {
+       ...oldPresentationMaker,
+       presentation: newPresentation,
+       idsSelectedBlocks: [props.id],
+   }
+}
+
+type propsTypeResize = {width: number, height: number,id:string, rejectedCoordinatX: number, rejectedCoordinatY: number}
+
+function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsTypeResize): PresentationMaker {
+   let newSlides:SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
+   let numberSlide = 0;
+   for(let i = 0;i < oldPresentationMaker.presentation.slides.length;i++)
+   {
+       if(oldPresentationMaker.idsSelectedSlides[oldPresentationMaker.idsSelectedSlides.length - 1] == oldPresentationMaker.presentation.slides[i].id)
        {
-           if(oldPresentationMaker.presentation.slides[numberSlide].blocks[int].id == oldPresentationMaker.idsSelectedBlocks[n])
-           {
-               newBlocks[int] = {
-                   ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
-                   coordinatesX : props.rejectedCoordinatX,
-                   coordinatesY : props.rejectedCoordinatY,
-               };
-               insertedNewBlock = true;
-           }
+           numberSlide = i;
+           break;
        }
+       newSlides[i] = oldPresentationMaker.presentation.slides[i];
+   }
+   let insertedNewBlock = false;
+   let newBlocks:Block[] = new Array(oldPresentationMaker.presentation.slides[numberSlide].blocks.length);
+   for(let int = 0;int < oldPresentationMaker.presentation.slides[numberSlide].blocks.length;int++)
+   {
+      if(oldPresentationMaker.presentation.slides[numberSlide].blocks[int].id == props.id)
+      {
+          newBlocks[int] = {
+              ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
+              width :props.width,
+              height :props.height,
+              coordinatesX: props.rejectedCoordinatX,
+              coordinatesY: props.rejectedCoordinatY,
+          };
+          insertedNewBlock = true;
+      }
        if(!insertedNewBlock) newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int];
        insertedNewBlock = false;
    }
@@ -358,5 +412,6 @@ export {
    addBlock,
    deleteBlocks,
    changeText,
-   changeStyleText
+   changeStyleText,
+   resizeBlock,
 }

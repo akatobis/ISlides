@@ -65,6 +65,7 @@ const SlideBlock = (props: BlockProps) => {
 
     if (props.block.content.typeBlock === TypeBlock.text) {
          return (
+            //лучше текси=т ареа использовать и в отдельный компонент вынести
             <input className={styles.textBlock} style={textBlockStyle} onChange={(e) => dispatch(changeText, e.target.value)}></input>
         );
     }

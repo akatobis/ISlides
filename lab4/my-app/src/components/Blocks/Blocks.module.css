@@ -12,39 +12,60 @@
 .block {
     margin: 0 auto;
 }
-.resizer {
-    position: absolute;
-    background: black;
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
-  
-  .resizer-r {
-    cursor: col-resize;
-    height: 100%;
-    right: 0;
+
+.up_left {
+    float:left;
+    position: relative;
     top: 0;
+    left: 0;
+    bottom: auto;
+    right: auto;
     width: 5px;
-  }
-  
-  .resizer-t {
-    cursor: row-resize;
-    height: 5px;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
-  
-  .resizer-b {
-    cursor: row-resize;
-    height: 5px;
-    left: 0;
+	height: 5px;
+	background: white;
+    border:1px solid black;
+}
+
+.down_left {
+    float:left;
+    position: relative;
     bottom: 0;
-    width: 100%;
-  }
-  
-  .resizer-l {
-    cursor: col-resize;
-    height: 100%;
+    top: auto;
     left: 0;
-    top: 0;
     width: 5px;
-  }
+	height: 5px;
+	background: white;
+    border:1px solid black;
+}
+
+.up_right {
+    float:right;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: auto;
+    width: 5px;
+	height: 5px;
+	background: white;
+    border:1px solid black;
+}
+
+.down_right {
+    float:right;
+    position: relative;
+    top: auto;
+    bottom: 0;
+    left: auto;
+    right: 0;
+    width: 5px;
+	height: 5px;
+	background: white;
+    border:1px solid black;
+}

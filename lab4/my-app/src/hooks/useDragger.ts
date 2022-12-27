@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import {Block} from "./../types";
-import {dispatch} from './../state'
-import {moveBlock} from './../actions/block'
+import {dispatch} from './../state';
+import {moveBlock} from './../actions/block';
+import { BlockHelper } from "../components/Blocks/DopHelper/BlockHelp";
 
-interface propsUseDragger {
-  refs: React.MutableRefObject<HTMLDivElement[]>,
-  block: Block,
+type porpsUseDragger = {
+  block:Block,
+  ref: React.RefObject<HTMLDivElement>,
 }
 
-function useDragger(props: propsUseDragger): void {
+function useDragger(props:porpsUseDragger): void {
 
   const isClicked = useRef<boolean>(false);
 
@@ -25,12 +26,9 @@ function useDragger(props: propsUseDragger): void {
   })
 
   useEffect(() => {
+    const el = props.ref.current!;
 
-    const target = document.getElementById(props.block.id);
-    if (!target) throw new Error("Element with given id doesn't exist");
-
-    const container = document.getElementById("WorkZone")
-    if (!container) throw new Error("target element must have a parent");
+    const container = document.getElementById("WorkZone")!;
 
     const onMouseDown = (e: MouseEvent) => {
       isClicked.current = true;
@@ -40,9 +38,11 @@ function useDragger(props: propsUseDragger): void {
 
     const onMouseUp = (e: MouseEvent) => {
       isClicked.current = false;
-      coords.current.lastX = target.offsetLeft;
-      coords.current.lastY = target.offsetTop;
-      dispatch(moveBlock, {rejectedCoordinatX:coords.current.lastX,rejectedCoordinatY:coords.current.lastY})
+      coords.current.lastX = el.offsetLeft;
+      coords.current.lastY = el.offsetTop;
+      props.block.coordinatesX = coords.current.lastX;
+      props.block.coordinatesY = coords.current.lastY;
+      dispatch(moveBlock, {rejectedCoordinatX:coords.current.lastX,rejectedCoordinatY:coords.current.lastY,id:props.block.id})
     }
 
     const onMouseMove = (e: MouseEvent) => {
@@ -51,24 +51,24 @@ function useDragger(props: propsUseDragger): void {
       const nextX = e.clientX - coords.current.startX + coords.current.lastX;
       const nextY = e.clientY - coords.current.startY + coords.current.lastY;
 
-      target.style.top = `${nextY}px`;
-      target.style.left = `${nextX}px`;
+      el.style.top = `${nextY}px`;
+      el.style.left = `${nextX}px`;
     }
 
-    target.addEventListener('mousedown', onMouseDown);
-    target.addEventListener('mouseup', onMouseUp);
+    el.addEventListener('mousedown', onMouseDown);
+    el.addEventListener('mouseup', onMouseUp);
     container.addEventListener('mousemove', onMouseMove);
     //container.addEventListener('mouseleave', onMouseUp);
 
     const cleanup = () => {
-      target.removeEventListener('mousedown', onMouseDown);
-      target.removeEventListener('mouseup', onMouseUp);
+      el.removeEventListener('mousedown', onMouseDown);
+      el.removeEventListener('mouseup', onMouseUp);
       container.removeEventListener('mousemove', onMouseMove);
       //container.removeEventListener('mouseleave', onMouseUp);
     }
 
     return cleanup;
-  }, [props])
+  }, [props.block.id, props.ref])
 
 }
 
