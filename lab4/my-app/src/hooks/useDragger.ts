@@ -42,7 +42,7 @@ function useDragger(props:porpsUseDragger): void {
       coords.current.lastY = el.offsetTop;
       props.block.coordinatesX = coords.current.lastX;
       props.block.coordinatesY = coords.current.lastY;
-      dispatch(moveBlock, {rejectedCoordinatX:coords.current.lastX,rejectedCoordinatY:coords.current.lastY,id:props.block.id})
+      dispatch(moveBlock, {rejectedCoordinatX:coords.current.lastX, rejectedCoordinatY:coords.current.lastY, id:props.block.id})
     }
 
     const onMouseMove = (e: MouseEvent) => {

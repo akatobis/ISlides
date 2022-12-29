@@ -12,7 +12,7 @@ import { PopupBackgroundColor } from "./PopupBackgroundColor/PopupBackgroundColo
 import SetColor from "./SetColor/SetColor";
 import Fonts from "./Fonts/Fonts";
 import { changeNamePresentation } from "../../actions/presentation";
-import { jsPDF } from "jspdf";
+import {jsPDF} from "jspdf";
 
 function ToolsPanel() {
     const [fontSize, setFontSize] = useState('16');

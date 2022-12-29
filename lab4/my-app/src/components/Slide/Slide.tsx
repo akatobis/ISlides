@@ -2,11 +2,13 @@ import styles from "./Slide.module.css"
 import {SlideType} from "../../types"
 import {Blocks} from "../Blocks/Blocks";
 import React from "react";
+import {getState} from "../../state";
 
 type SlideProps = {
    slide: SlideType,
    idsSelectedSlides: string[],
    idsSelectedBlocks: string[],
+   from: string,
 }
 
 function Slide(props: SlideProps) {
@@ -25,14 +27,13 @@ function Slide(props: SlideProps) {
    }
 
    let targetNode = document.getElementById("WorkZone");
-   console.log(targetNode);
 
    let innerWidth;
    let innerHeight;
 
    function getSlideSize() {
-      innerWidth = document.getElementById("WorkZone")?.clientWidth;
-      innerHeight = document.getElementById("WorkZone")?.clientHeight;
+      innerWidth = targetNode?.clientWidth;
+      innerHeight = targetNode?.clientHeight;
    }
 
    getSlideSize();
@@ -56,14 +57,25 @@ function Slide(props: SlideProps) {
       }
    }
 
-   slideStyle = {
-      ...slideStyle,
-      ...slideSize,
+   if (props.from === "navigation") {
+      slideStyle = {
+         ...slideStyle,
+         width: "157px",
+         height: "82px",
+         borderRadius: "8px",
+         marginLeft: "-1px",
+         marginTop: "-0.5px",
+      }
+   } else {
+      slideStyle = {
+         ...slideStyle,
+         ...slideSize,
+      }
    }
 
    return (
        <div className={styles.slide} style={slideStyle}>
-          <Blocks blocks={props.slide.blocks} idsSelectedBlocks={props.idsSelectedBlocks}/>
+          <Blocks slideId={props.slide.id} blocks={props.slide.blocks} idsSelectedBlocks={props.idsSelectedBlocks}/>
        </div>
    )
 }

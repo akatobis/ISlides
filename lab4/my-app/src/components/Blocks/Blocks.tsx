@@ -1,7 +1,7 @@
 import {Block} from "../../types";
 import styles from "./Blocks.module.css";
 import {SlideBlock} from "./Block/Block";
-import {selectBlock} from "../../actions/blocks/blocks";
+import {selectBlock} from "../../actions/block";
 import {dispatch} from "../../state";
 import React from 'react';
 import { BlockHelper } from "./DopHelper/BlockHelp";
@@ -9,6 +9,7 @@ import { BlockHelper } from "./DopHelper/BlockHelp";
 type BlocksProps = {
     blocks: Block[],
     idsSelectedBlocks: string[],
+    slideId: string,
 }
 
 const Blocks = (props: BlocksProps) => {
@@ -24,7 +25,7 @@ const Blocks = (props: BlocksProps) => {
     return (
         <div>
             {props.blocks.map(block => (
-                <BlockHelper idsSelectedBlocks={props.idsSelectedBlocks} block={block} refs={refs} key={block.id}/>
+                <BlockHelper slideId={props.slideId} idsSelectedBlocks={props.idsSelectedBlocks} block={block} refs={refs} key={block.id}/>
             ))}
         </div>
     );

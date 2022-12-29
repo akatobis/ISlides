@@ -74,6 +74,7 @@ function App(props: AppProps) {
                                 slide={slide}
                                 idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
                                 idsSelectedBlocks={props.presentationMaker.idsSelectedBlocks}
+                                from=""
                             />
                         }
                     })}

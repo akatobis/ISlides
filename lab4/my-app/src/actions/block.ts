@@ -13,6 +13,23 @@ import {
    TypeBlock
 } from "../types";
 
+function selectBlock(oldPresentationMaker: PresentationMaker, idSelectedBlock: string): PresentationMaker {
+   let newIds: string[] = oldPresentationMaker.idsSelectedBlocks.filter(() => {
+      return true;
+   });
+
+   if (newIds.indexOf(idSelectedBlock) === -1) {
+      newIds = [...newIds, idSelectedBlock];
+   } else {
+      newIds.splice(newIds.indexOf(idSelectedBlock), 1);
+   }
+
+   return {
+      ...oldPresentationMaker,
+      idsSelectedBlocks: newIds,
+   }
+}
+
 function addImage(img: string): Image {
    return {
      typeBlock: TypeBlock.image,
@@ -154,11 +171,16 @@ function deleteBlocks(oldPresentationMaker: PresentationMaker): PresentationMake
       slides: newSlides,
    };
 
-   return {
-      ...oldPresentationMaker,
-      presentation: newPresentation,
-      idsSelectedBlocks: [],
-   };
+   if (oldPresentationMaker.idsSelectedSlides.length === 1)
+   {
+      return {
+         ...oldPresentationMaker,
+         presentation: newPresentation,
+         idsSelectedBlocks: [],
+      };
+   } else {
+      return {...oldPresentationMaker}
+   }
 }
 
 function changeText(oldPresentationMaker: PresentationMaker, text: string): PresentationMaker {
@@ -414,4 +436,5 @@ export {
    changeText,
    changeStyleText,
    resizeBlock,
+   selectBlock,
 }

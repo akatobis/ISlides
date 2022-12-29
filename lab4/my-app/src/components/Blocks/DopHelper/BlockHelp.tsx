@@ -2,14 +2,16 @@ import {SlideBlock} from "./../Block/Block";
 import styles from './BlockHelp.module.css'
 import {Block} from "../../../types";
 import React from 'react'
-import {selectBlock} from "./../../../actions/blocks/blocks";
+import {selectBlock} from "./../../../actions/block";
 import {dispatch} from "./../../../state";
 import {resizeBlock} from './../../../actions/block';
 import useDragger from "../../../hooks/useDragger";
 import useResizer from "../../../hooks/useResizer";
+import {elemInArray} from "../../../auxiliaryFunctions";
 
 type propsBlockHelp = {
     idsSelectedBlocks: string[],
+    slideId: string,
     block: Block,
     refs: React.MutableRefObject<HTMLDivElement[]>,
 }
@@ -61,7 +63,7 @@ export function BlockHelper(props:propsBlockHelp) {
             <div ref={refBottom} className={styles.resizer_b}></div>
             <div className={styles.block} ref={(el)=>addRef(el,props.block.id)}
                 onMouseDown={()=>{dispatch(selectBlock, props.block.id)}}>
-                <SlideBlock block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
+                <SlideBlock slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
             </div>
         </div>
 )

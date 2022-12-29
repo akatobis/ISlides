@@ -51,11 +51,15 @@ function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMake
       slides: newSlides,
    }
 
-   return {
-     ...oldPresentationMaker,
-     presentation: newPresentation,
-     idsSelectedSlides: newIdsSelectedSlides,
-   };
+   if (oldPresentationMaker.idsSelectedBlocks.length === 0) {
+       return {
+           ...oldPresentationMaker,
+           presentation: newPresentation,
+           idsSelectedSlides: newIdsSelectedSlides,
+       };
+   } else {
+       return {...oldPresentationMaker};
+   }
 }
 
 function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color, image }: {color?: string, image?: string}): PresentationMaker {
