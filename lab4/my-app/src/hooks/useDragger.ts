@@ -49,7 +49,7 @@ function useDragger(props:porpsUseDragger): void {
         rejectedCoordinatX: coords.current.lastX,
         rejectedCoordinatY: coords.current.lastY,
         id: props.block.id,
-      })
+      });
     }
 
     const onMouseMove = (e: MouseEvent) => {

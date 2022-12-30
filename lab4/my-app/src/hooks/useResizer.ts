@@ -262,6 +262,7 @@ function useResizer(props: propsUseResizer): void {
       elTop.removeEventListener("mousedown", onMouseDownTopResize);
       elBottom.removeEventListener("mousedown", onMouseDownBottomResize);
       elLeft.removeEventListener("mousedown", onMouseDownLeftResize);
+      
       el.removeEventListener("mouseup", onMouseUpTopResize);
       el.removeEventListener("mouseup", onMouseUpBottomResize);
       el.removeEventListener("mouseup", onMouseUpLeftResize);
@@ -271,6 +272,7 @@ function useResizer(props: propsUseResizer): void {
     return cleanup;
 
   }, [props.block, props.refs, props.setPos, props.setSize]);
+  
 }
 
 export default useResizer;

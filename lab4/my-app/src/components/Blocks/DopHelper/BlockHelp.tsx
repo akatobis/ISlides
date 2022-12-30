@@ -1,7 +1,7 @@
 import {SlideBlock} from "./../Block/Block";
 import styles from './BlockHelp.module.css'
 import {Block} from "../../../types";
-import React from 'react'
+import React, { useState } from 'react'
 import {selectBlock} from "./../../../actions/blocks/blocks";
 import {dispatch} from "./../../../state";
 import useDragger from "../../../hooks/useDragger";
@@ -13,7 +13,7 @@ type propsBlockHelp = {
     refs: React.MutableRefObject<HTMLDivElement[]>,
 }
 
-export function BlockHelper(props:propsBlockHelp) {    
+export function BlockHelper(props:propsBlockHelp) { 
     const [pos,setPos] = React.useState<
     {
         x:number,
@@ -81,7 +81,9 @@ export function BlockHelper(props:propsBlockHelp) {
             <div ref={refRight} className={styles.resizer_r}></div>
             <div ref={refBottom} className={styles.resizer_b}></div>
             <div className={styles.block}  ref={ref}
-                onMouseDown={()=>{dispatch(selectBlock, props.block.id)}}>
+                onMouseDown={()=>{
+                    dispatch(selectBlock, props.block.id);
+                }}>
                 <SlideBlock block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
             </div>
         </div>
