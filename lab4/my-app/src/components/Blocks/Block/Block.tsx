@@ -5,7 +5,8 @@ import {Rectangle} from "./Figures/Rectangle";
 import {Triangle} from "./Figures/Triangle";
 import { changeText } from "../../../actions/block";
 import { dispatch } from "../../../state";
-import styles from "./Block.module.css"
+import styles from "./Block.module.css";
+import {Text} from "./Text/Text";
 import {useMousePress} from "../../../shortcuts";
 
 type BlockProps = {
@@ -66,8 +67,7 @@ const SlideBlock = (props: BlockProps) => {
 
     if (props.block.content.typeBlock === TypeBlock.text) {
          return (
-            //лучше текси=т ареа использовать и в отдельный компонент вынести
-            <input className={styles.textBlock} style={textBlockStyle} onChange={(e) => dispatch(changeText, e.target.value)}></input>
+            <Text block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}></Text>
         );
     }
     if (props.block.content.typeBlock === TypeBlock.figure) {

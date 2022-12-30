@@ -373,7 +373,7 @@ function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): Pr
    }
 }
 
-type propsTypeResize = {width: number, height: number,id:string, rejectedCoordinatX: number, rejectedCoordinatY: number}
+type propsTypeResize = {width: number, height: number, id: string, rejectedCoordinatX: number, rejectedCoordinatY: number}
 
 function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsTypeResize): PresentationMaker {
    let newSlides:SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);

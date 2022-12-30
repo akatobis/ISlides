@@ -2,7 +2,6 @@ import styles from "./Slide.module.css"
 import {SlideType} from "../../types"
 import {Blocks} from "../Blocks/Blocks";
 import React from "react";
-import {getState} from "../../state";
 
 type SlideProps = {
    slide: SlideType,
@@ -75,7 +74,7 @@ function Slide(props: SlideProps) {
 
    return (
        <div className={styles.slide} style={slideStyle}>
-          <Blocks slideId={props.slide.id} blocks={props.slide.blocks} idsSelectedBlocks={props.idsSelectedBlocks}/>
+          <Blocks slideId={props.slide.id} blocks={props.slide.blocks} idsSelectedBlocks={props.idsSelectedBlocks} from={props.from}/>
        </div>
    )
 }

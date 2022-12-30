@@ -1,5 +1,6 @@
 import logo from "../../images/logoISlides.svg";
 import arrowDown from "../../images/arrow_down.svg";
+import {HexColorPicker} from "react-colorful";
 import {useState} from "react";
 import styles from "./ToolsPanel.module.css"
 import {deleteSlides} from "../../actions/slide";
@@ -12,7 +13,7 @@ import { PopupBackgroundColor } from "./PopupBackgroundColor/PopupBackgroundColo
 import SetColor from "./SetColor/SetColor";
 import Fonts from "./Fonts/Fonts";
 import { changeNamePresentation } from "../../actions/presentation";
-import {jsPDF} from "jspdf";
+import { jsPDF } from "jspdf";
 
 function ToolsPanel() {
     const [fontSize, setFontSize] = useState('16');
@@ -123,7 +124,7 @@ function ToolsPanel() {
     function exportPresentationToPDF(): void {
         const presentationMaker: PresentationMaker = getState();
         const slides: SlideType[] = presentationMaker.presentation.slides;
-        
+
         const doc = new jsPDF({
             orientation: "landscape",
             unit: "px",
@@ -138,7 +139,7 @@ function ToolsPanel() {
                 doc.setFillColor(slide.backgroundColor);
                 doc.rect(0, 0, 1920, 1080, 'F');
             }
-            
+
             const blocks: Block[] = slide.blocks;
             blocks.forEach(block => {
                 const contentBlock: TextBlock | Image | Figure = block.content;
@@ -172,7 +173,7 @@ function ToolsPanel() {
             })
             doc.addPage();
         });
-        
+
         doc.save(`${namePresentation}.pdf`);
     }
 
