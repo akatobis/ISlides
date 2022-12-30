@@ -65,6 +65,7 @@ export function BlockHelper(props:propsBlockHelp) {
         block: props.block,
         ref: ref,
         setPos,
+        pos,
     });
 
     return (

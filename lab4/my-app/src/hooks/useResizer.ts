@@ -135,8 +135,8 @@ function useResizer(props: propsUseResizer): void {
         ...pos,
         x: event.pageX,
       })); 
-      
-      props.block.coordinatesX = event.pageX;
+
+      //props.block.coordinatesX = event.pageX;
     };
 
     const onMouseUpLeftResize = (event:MouseEvent) => {
@@ -234,7 +234,7 @@ function useResizer(props: propsUseResizer): void {
         y: event.pageY,
       }));
 
-      props.block.coordinatesY = event.pageY;
+      //props.block.coordinatesY = event.pageY;
     };
 
     const onMouseUpTopResize = (event:MouseEvent) => {
