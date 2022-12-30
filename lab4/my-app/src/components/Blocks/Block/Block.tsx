@@ -3,8 +3,6 @@ import {Block, FigureType, TypeBlock, Figure} from "../../../types";
 import {Ellipse} from "./Figures/Ellipse";
 import {Rectangle} from "./Figures/Rectangle";
 import {Triangle} from "./Figures/Triangle";
-import { changeText } from "../../../actions/block";
-import { dispatch } from "../../../state";
 import styles from "./Block.module.css";
 import {Text} from "./Text/Text";
 import {useMousePress} from "../../../shortcuts";
@@ -16,11 +14,6 @@ type BlockProps = {
 
 const SlideBlock = (props: BlockProps) => {
     useMousePress(props.block.id, document.getElementById(props.block.id));
-
-    const imageStyle = {
-        width: props.block.width,
-        height: props.block.height,
-    };
 
     let textBlockStyle = {};
     if (props.block.content.typeBlock === TypeBlock.text) {
@@ -95,7 +88,13 @@ const SlideBlock = (props: BlockProps) => {
     }
     if (props.block.content.typeBlock === TypeBlock.image) {
          return (
-            <img style={imageStyle} src={props.block.content.imageBase64} alt=""></img>
+            <img style={{
+                width: props.block.width,
+                height: props.block.height,
+                zIndex: -1,
+                pointerEvents: 'none'
+            }} 
+            src={props.block.content.imageBase64} alt=""></img>
         );
     }
     return (
