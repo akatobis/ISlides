@@ -6,6 +6,7 @@ import {selectBlock} from "./../../../actions/blocks/blocks";
 import {dispatch} from "./../../../state";
 import useDragger from "../../../hooks/useDragger";
 import useResizer from "../../../hooks/useResizer";
+import { render } from "@testing-library/react";
 
 type propsBlockHelp = {
     idsSelectedBlocks: string[],

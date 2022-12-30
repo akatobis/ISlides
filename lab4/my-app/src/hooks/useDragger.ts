@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import {Block} from "./../types";
 import {dispatch} from './../state';
 import {moveBlock} from './../actions/block';
+import { textSpanIntersectsWithTextSpan } from "typescript";
 
 type porpsUseDragger = {
   block:Block,
@@ -15,7 +16,7 @@ type porpsUseDragger = {
 function useDragger(props:porpsUseDragger): void {
 
   const isClicked = useRef<boolean>(false);
-
+  
   const coords = useRef<{
     startX: number,
     startY: number,
@@ -27,6 +28,9 @@ function useDragger(props:porpsUseDragger): void {
     lastX: props.block.coordinatesX,
     lastY: props.block.coordinatesY,
   })
+
+  coords.current.lastX = props.block.coordinatesX;
+  coords.current.lastY = props.block.coordinatesY;
 
   useEffect(() => {
     const el = props.ref.current!;

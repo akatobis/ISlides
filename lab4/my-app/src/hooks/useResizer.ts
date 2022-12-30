@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import {Block} from "./../types";
 import {dispatch} from './../state'
 import {resizeBlock} from './../actions/block';
+import { BlockHelper } from "../components/Blocks/DopHelper/BlockHelp";
 
 type propsUseResizer =  {
   block:Block,
@@ -104,7 +105,7 @@ function useResizer(props: propsUseResizer): void {
       isClickedR.current = true;
       coords.current.x = event.pageX;
       document.addEventListener("mousemove", onMouseMoveRightResize);
-      el.addEventListener("mouseup", onMouseUpRightResize);
+      elRight.addEventListener("mouseup", onMouseUpRightResize);
     };
 
     // Left resize
@@ -134,6 +135,8 @@ function useResizer(props: propsUseResizer): void {
         ...pos,
         x: event.pageX,
       })); 
+      
+      props.block.coordinatesX = event.pageX;
     };
 
     const onMouseUpLeftResize = (event:MouseEvent) => {
@@ -153,7 +156,7 @@ function useResizer(props: propsUseResizer): void {
       isClickedL.current = true;
       coords.current.x = event.pageX;
       document.addEventListener("mousemove", onMouseMoveLeftResize);
-      el.addEventListener("mouseup", onMouseUpLeftResize);
+      elLeft.addEventListener("mouseup", onMouseUpLeftResize);
     };
 
     // Bottom resize
@@ -201,7 +204,7 @@ function useResizer(props: propsUseResizer): void {
       isClickedB.current = true;
       coords.current.y = event.pageY;
       document.addEventListener("mousemove", onMouseMoveBottomResize);
-      el.addEventListener("mouseup", onMouseUpBottomResize);
+      elBottom.addEventListener("mouseup", onMouseUpBottomResize);
     };
     
     // Top resize
@@ -230,6 +233,8 @@ function useResizer(props: propsUseResizer): void {
         ...pos,
         y: event.pageY,
       }));
+
+      props.block.coordinatesY = event.pageY;
     };
 
     const onMouseUpTopResize = (event:MouseEvent) => {
@@ -249,7 +254,7 @@ function useResizer(props: propsUseResizer): void {
       isClickedT.current = true;
       coords.current.y = event.pageY;
       document.addEventListener("mousemove", onMouseMoveTopResize);
-      el.addEventListener("mouseup", onMouseUpTopResize);
+      elTop.addEventListener("mouseup", onMouseUpTopResize);
     };
 
     elRight.addEventListener("mousedown", onMouseDownRightResize);
@@ -262,11 +267,11 @@ function useResizer(props: propsUseResizer): void {
       elTop.removeEventListener("mousedown", onMouseDownTopResize);
       elBottom.removeEventListener("mousedown", onMouseDownBottomResize);
       elLeft.removeEventListener("mousedown", onMouseDownLeftResize);
-      
-      el.removeEventListener("mouseup", onMouseUpTopResize);
-      el.removeEventListener("mouseup", onMouseUpBottomResize);
-      el.removeEventListener("mouseup", onMouseUpLeftResize);
-      el.removeEventListener("mouseup", onMouseUpRightResize);
+
+      elTop.removeEventListener("mouseup", onMouseUpTopResize);
+      elBottom.removeEventListener("mouseup", onMouseUpBottomResize);
+      elLeft.removeEventListener("mouseup", onMouseUpLeftResize);
+      elRight.removeEventListener("mouseup", onMouseUpRightResize);
     };
 
     return cleanup;
