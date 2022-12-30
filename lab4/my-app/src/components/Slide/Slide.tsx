@@ -25,15 +25,54 @@ function Slide(props: SlideProps) {
       }
    }
 
+   let targetNode = document.getElementById("WorkZone");
+   console.log(targetNode);
+
+   let innerWidth;
+   let innerHeight;
+
+   function getSlideSize() {
+      innerWidth = document.getElementById("WorkZone")?.clientWidth;
+      innerHeight = document.getElementById("WorkZone")?.clientHeight;
+   }
+
+   getSlideSize();
+
+   if (innerWidth === undefined) {innerWidth = 0}
+   if (innerHeight === undefined) {innerHeight = 0}
+
+   let slideSize = {};
+   if (innerHeight * 1.8 < innerWidth) {
+      innerHeight -= 30;
+      slideSize = {
+         ...slideSize,
+         height: innerHeight + "px",
+      }
+   }
+   if (innerWidth / 1.8 <= innerHeight) {
+      innerWidth -= 50;
+      slideSize = {
+         ...slideSize,
+         width: innerWidth + "px",
+      }
+   }
+
+   slideStyle = {
+      ...slideStyle,
+      ...slideSize,
+   }
+
    return (
-       <div className={styles.slide} style={slideStyle}>
+       <div className={styles.slide} style={slideStyle} id="slide">
           <Blocks blocks={props.slide.blocks} idsSelectedBlocks={props.idsSelectedBlocks}/>
        </div>
    )
 }
 
-const mapStateToProps = (state: SlideType) => {
-   return {slide: state}
-}
+// const mapStateToProps = (state: SlideType) => {
+//    return {slide: state}
+// }
 
-export default connect(mapStateToProps)(Slide);
+// export default connect(mapStateToProps)(Slide);
+
+export default {Slide};

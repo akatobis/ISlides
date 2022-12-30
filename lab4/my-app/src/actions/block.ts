@@ -218,7 +218,7 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
             const oldTextBlock: TextBlock = block.content;
             let newTextBlock: TextBlock = {...oldTextBlock};
             if (newTextStyle) {
-               if (newTextStyle === TextStyles.bold) { 
+               if (newTextStyle === TextStyles.bold) {
                   newTextBlock = {
                      ...oldTextBlock,
                      isBold: !oldTextBlock.isBold,
@@ -343,7 +343,7 @@ function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): Pr
        ...oldPresentationMaker.presentation,
        slides: [] = newSlides,
    }
-   
+
    return {
        ...oldPresentationMaker,
        presentation: newPresentation,
@@ -351,7 +351,7 @@ function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): Pr
    }
 }
 
-type propsTypeResize = {width: number, height: number,id:string, rejectedCoordinatX: number, rejectedCoordinatY: number}
+type propsTypeResize = {width: number, height: number, id: string, rejectedCoordinatX: number, rejectedCoordinatY: number}
 
 function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsTypeResize): PresentationMaker {
    let newSlides:SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
@@ -376,7 +376,7 @@ function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsTypeRes
               width :props.width,
               height :props.height,
               coordinatesX: props.rejectedCoordinatX,
-              coordinatesY: props.rejectedCoordinatY, 
+              coordinatesY: props.rejectedCoordinatY,
           };
           insertedNewBlock = true;
       }

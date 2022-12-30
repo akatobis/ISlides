@@ -2,11 +2,14 @@ import React, { useEffect, useRef } from "react";
 import {Block} from "./../types";
 import {dispatch} from './../state';
 import {moveBlock} from './../actions/block';
-import { BlockHelper } from "../components/Blocks/DopHelper/BlockHelp";
 
 type porpsUseDragger = {
   block:Block,
   ref: React.RefObject<HTMLDivElement>,
+  setPos: React.Dispatch<React.SetStateAction<{
+    x: number;
+    y: number;
+  }>>,
 }
 
 function useDragger(props:porpsUseDragger): void {
@@ -17,12 +20,12 @@ function useDragger(props:porpsUseDragger): void {
     startX: number,
     startY: number,
     lastX: number,
-    lastY: number
+    lastY: number,
   }>({
     startX: props.block.coordinatesX,
     startY: props.block.coordinatesY,
     lastX: props.block.coordinatesX,
-    lastY: props.block.coordinatesY
+    lastY: props.block.coordinatesY,
   })
 
   useEffect(() => {
@@ -32,27 +35,29 @@ function useDragger(props:porpsUseDragger): void {
 
     const onMouseDown = (e: MouseEvent) => {
       isClicked.current = true;
-      coords.current.startX = e.clientX;
-      coords.current.startY = e.clientY;
+      coords.current.startX = e.pageX;
+      coords.current.startY = e.pageY;
+      console.log(el.getBoundingClientRect(), props.block)
     }
 
     const onMouseUp = (e: MouseEvent) => {
       isClicked.current = false;
-      coords.current.lastX = el.offsetLeft;
-      coords.current.lastY = el.offsetTop;
-      props.block.coordinatesX = coords.current.lastX;
-      props.block.coordinatesY = coords.current.lastY;
-      dispatch(moveBlock, {rejectedCoordinatX:coords.current.lastX,rejectedCoordinatY:coords.current.lastY,id:props.block.id})
+      coords.current.lastX = el.getBoundingClientRect().left;
+      coords.current.lastY = el.getBoundingClientRect().top;
+      
+      dispatch(moveBlock, {
+        rejectedCoordinatX: coords.current.lastX,
+        rejectedCoordinatY: coords.current.lastY,
+        id: props.block.id,
+      })
     }
 
     const onMouseMove = (e: MouseEvent) => {
       if (!isClicked.current) return;
-
-      const nextX = e.clientX - coords.current.startX + coords.current.lastX;
-      const nextY = e.clientY - coords.current.startY + coords.current.lastY;
-
-      el.style.top = `${nextY}px`;
-      el.style.left = `${nextX}px`;
+      props.setPos({
+        x: e.pageX - coords.current.startX + coords.current.lastX,
+        y: e.pageY - coords.current.startY + coords.current.lastY
+      })
     }
 
     el.addEventListener('mousedown', onMouseDown);
@@ -68,7 +73,7 @@ function useDragger(props:porpsUseDragger): void {
     }
 
     return cleanup;
-  }, [props.block.id, props.ref])
+  }, [props.block.id, props.ref, props.setPos])
 
 }
 

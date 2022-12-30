@@ -18,8 +18,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 15px;
-  min-height: 15px;
+  min-width: 5px;
+  min-height: 5px;
   z-index: 1;
 }
 
@@ -30,30 +30,30 @@
   height: 100%;
   right: 0;
   top: 0;
-  width: 2px;
-  z-index: 3;
+  width: 3px;
+  z-index: 2;
 }
 
 .resizer_t {
   position: absolute;
   background: black;
   cursor: row-resize;
-  height: 2px;
+  height: 3px;
   left: 0;
-  top: 0;
+  top: -1px;
   width: 100%;
-  z-index: 3;
+  z-index: 2;
 }
 
 .resizer_b {
   position: absolute;
   background: black;
   cursor: row-resize;
-  height: 2px;
+  height: 3px;
   left: 0;
   bottom: 0;
   width: 100%;
-  z-index: 3;
+  z-index: 2;
 }
 
 .resizer_l {
@@ -61,8 +61,8 @@
   background: black;
   cursor: col-resize;
   height: 100%;
-  left: 0;
+  left: -1.5px;
   top: 0;
-  width: 2px;
-  z-index: 3;
+  width: 3px;
+  z-index: 2;
 }
