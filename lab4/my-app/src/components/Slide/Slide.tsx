@@ -1,7 +1,8 @@
 import styles from "./Slide.module.css"
-import {SlideType} from "../../types"
+import {PresentationMaker, SlideType} from "../../types"
 import {Blocks} from "../Blocks/Blocks";
 import React from "react";
+import { connect } from "react-redux";
 
 type SlideProps = {
    slide: SlideType,
@@ -31,6 +32,8 @@ function Slide(props: SlideProps) {
    )
 }
 
-export {
-    Slide,
+const mapStateToProps = (state: SlideType) => {
+   return {slide: state}
 }
+
+export default connect(mapStateToProps)(Slide);

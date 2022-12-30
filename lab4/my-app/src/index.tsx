@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { addChangePresentationMakerHandler, getState, setState } from './state';
+// import { addChangePresentationMakerHandler, getState, setState } from './state';
+import {store} from './state';
 import { TextBlock, TypeBlock, Block, Presentation, PresentationMaker, FigureType} from './types';
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -182,17 +184,19 @@ const deleteOpm: PresentationMaker = {
   idsSelectedSlides: ['1'],
   idsSelectedBlocks: [],
 };
-setState(deleteOpm);
+// setState(deleteOpm);
 
 function render() {
   root.render(
     <React.StrictMode>
-      <App presentationMaker={getState()} />
+      <Provider store={store}>
+        <App presentationMaker={getState()} />
+      </Provider>
     </React.StrictMode>
   );
 }
 
-addChangePresentationMakerHandler(render)
+// addChangePresentationMakerHandler(render)
 render()
 
 // If you want to start measuring performance in your app, pass a function

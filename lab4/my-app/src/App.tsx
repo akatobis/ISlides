@@ -6,6 +6,7 @@ import {ToolsPanel} from './components/ToolsPanel/ToolsPanel';
 import {PresentationMaker, SlideType} from './types';
 import { Navigation } from './components/Navigation/Navigation';
 import {useKeyPress} from './shortcuts';
+import { connect } from 'react-redux';
 
 type AppProps = {
     presentationMaker: PresentationMaker,
@@ -83,4 +84,8 @@ function App(props: AppProps) {
     );
 }
 
-export default App;
+function mapStateToProps(state: PresentationMaker) {
+   return {slides: state.presentation.slides}
+}
+
+export default connect(mapStateToProps)(App);
