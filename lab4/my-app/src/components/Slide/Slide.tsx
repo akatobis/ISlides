@@ -3,6 +3,8 @@ import {PresentationMaker, SlideType} from "../../types"
 import {Blocks} from "../Blocks/Blocks";
 import React from "react";
 import { connect } from "react-redux";
+import { removeBlockSelection } from "../../actions/slide";
+import { dispatch } from "../../state";
 
 type SlideProps = {
    slide: SlideType,

@@ -1,12 +1,13 @@
 import {SlideBlock} from "./../Block/Block";
 import styles from './BlockHelp.module.css'
 import {Block} from "../../../types";
-import React, { useState } from 'react'
+import React, { CSSProperties, useState } from 'react'
 import {selectBlock} from "./../../../actions/blocks/blocks";
 import {dispatch} from "./../../../state";
 import useDragger from "../../../hooks/useDragger";
 import useResizer from "../../../hooks/useResizer";
 import { render } from "@testing-library/react";
+import { elemInArray } from "../../../auxiliaryFunctions";
 
 type propsBlockHelp = {
     idsSelectedBlocks: string[],
@@ -68,9 +69,18 @@ export function BlockHelper(props:propsBlockHelp) {
         pos,
     });
 
+    let dragStyle = {} as CSSProperties;
+    if (!elemInArray(props.idsSelectedBlocks, props.block.id)) {
+        dragStyle = {
+            border: "none",
+            width: "0px"
+        }
+    }
+
     return (
         <div id={props.block.id} className={styles.resizeable} style={
             { 
+                ...dragStyle,
                 position: "absolute",
                 top:`${pos.y}`+`px`,
                 left:`${pos.x}`+`px`,
@@ -78,10 +88,10 @@ export function BlockHelper(props:propsBlockHelp) {
                 height:`${size.height}`+`px`,
             }
         }>
-            <div ref={refLeft} className={styles.resizer_l}></div>
-            <div ref={refTop} className={styles.resizer_t}></div>
-            <div ref={refRight} className={styles.resizer_r}></div>
-            <div ref={refBottom} className={styles.resizer_b}></div>
+            <div ref={refLeft} className={styles.resizer_l} style={dragStyle}></div>
+            <div ref={refTop} className={styles.resizer_t} style={dragStyle}></div>
+            <div ref={refRight} className={styles.resizer_r} style={dragStyle}></div>
+            <div ref={refBottom} className={styles.resizer_b} style={dragStyle}></div>
             <div className={styles.block}  ref={ref}
                 onMouseDown={()=>{
                     dispatch(selectBlock, props.block.id);

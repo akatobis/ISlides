@@ -177,7 +177,7 @@ function ToolsPanel() {
                     doc.setDrawColor(contentBlock.colorBorder);
 
                     if (typeFigure.figureType === FigureType.ellipse) {
-                        doc.ellipse(blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages/2, blockHeigthToPdfPages/2, 'FD');
+                        doc.ellipse(blockCoordinateXToPdfPages + blockWidthToPdfPages/2, blockCoordinateYToPdfPages + blockHeigthToPdfPages/2, blockWidthToPdfPages/2, blockHeigthToPdfPages/2, 'FD');
                     }
                     if (typeFigure.figureType === FigureType.rectangle) {
                         doc.rect(blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages, blockHeigthToPdfPages, 'FD');

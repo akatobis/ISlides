@@ -41,7 +41,7 @@ function useDragger(props:porpsUseDragger): void {
 
     const block = document.getElementById(props.block.id)!;
 
-    let A = 0
+    let A = 0;
 
     let B = 0;
     
