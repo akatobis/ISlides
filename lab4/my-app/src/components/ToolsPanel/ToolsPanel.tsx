@@ -133,25 +133,28 @@ function ToolsPanel() {
     function exportPresentationToPDF(): void {
         const presentationMaker: PresentationMaker = getState();
         const slides: SlideType[] = presentationMaker.presentation.slides;
+
+        const widthPage: number = 1920;
+        const heightPage: number = 1080;
         
         const doc = new jsPDF({
             orientation: "landscape",
             unit: "px",
-            format: [1080, 1920],
+            format: [heightPage, widthPage],
         });
 
         const widthSlide: number = coordinatesSlides.right - coordinatesSlides.left;
         const heigthSlide: number = coordinatesSlides.bottom - coordinatesSlides.top;
-        const rationX: number = 1920 / widthSlide;
-        const rationY: number = 1080 / heigthSlide;
+        const rationX: number = widthPage / widthSlide;
+        const rationY: number = heightPage / heigthSlide;
 
         slides.forEach(slide => {
             if (slide.backgroundImage !== '') {
-                doc.addImage(slide.backgroundImage, 'JPEG', 0, 0, 1920, 1080)
+                doc.addImage(slide.backgroundImage, 'JPEG', 0, 0, widthPage, heightPage)
             }
             if (slide.backgroundColor !== '') {
                 doc.setFillColor(slide.backgroundColor);
-                doc.rect(0, 0, 1920, 1080, 'F');
+                doc.rect(0, 0, widthPage, heightPage, 'F');
             }
             
             const blocks: Block[] = slide.blocks;
@@ -169,6 +172,10 @@ function ToolsPanel() {
                     doc.addImage(contentBlock.imageBase64, 'JPEG', blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages, blockHeigthToPdfPages);
                 }
                 if (contentBlock.typeBlock === TypeBlock.text) {
+                    doc.setFont(contentBlock.font);
+                    doc.setFontSize(contentBlock.fontSize * rationX);
+                    doc.setTextColor(contentBlock.color);
+                    // doc.setFontStyle()
                     doc.text(contentBlock.innerString, blockCoordinateXToPdfPages, blockCoordinateYToPdfPages);
                 }
                 if (contentBlock.typeBlock === TypeBlock.figure) {
@@ -199,6 +206,17 @@ function ToolsPanel() {
         doc.save(`${namePresentation}.pdf`);
     }
 
+    
+    function requestFullScreen() {
+        const slide = document.querySelector('#slide');
+        console.log(slide);
+        if (!slide) {return}
+        var requestMethod = slide.requestFullscreen;
+        if (requestMethod) {
+            requestMethod.call(slide);
+        }
+    }
+
     return (
         <div className={styles.header}>
             <div>{isOpenPopupBackgroundColor && <PopupBackgroundColor handleClose={handleOpenPopupBackgroundColor} />}</div>
@@ -207,7 +225,7 @@ function ToolsPanel() {
                 <button className={[styles.historyCommandsButton, styles.rollBack].join(" ")} onClick={() => dispatch(rollBack, "")}></button>
                 <button className={[styles.historyCommandsButton, styles.returnCancel].join(" ")} onClick={() => dispatch(returnCancel, "")}></button>
                 <input placeholder="Название презентации" onChange={(e) => handleNamePresentation(e.target.value)} className={styles.presentationTitle}/>
-                <button className={styles.viewButton}>Просмотр</button>
+                <button onClick={() => requestFullScreen()} className={styles.viewButton}>Просмотр</button>
 
                 <button className={styles.fileButton} onClick={handleOpenFileList}>Файл</button>
                 <div>
