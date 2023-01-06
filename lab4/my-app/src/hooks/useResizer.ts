@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from "react";
-import {Block} from "./../types";
-import {dispatch} from './../state'
-import {resizeBlock} from './../actions/block';
-import { BlockHelper } from "../components/Blocks/DopHelper/BlockHelp";
+import React, {useEffect, useRef} from "react";
+import {Block} from "../types";
+import {dispatch} from '../state'
+import {resizeBlock} from '../actions/block';
 
 type propsUseResizer =  {
   block:Block,
@@ -53,7 +52,6 @@ function useResizer(props: propsUseResizer): void {
     const width = parseInt(styleMain.width, 10);
     const height = parseInt(styleMain.height, 10);
 
-    const elementRef = props.refs.ref.current!;
     const el = document.getElementById(props.block.id)!;
     const elRight = props.refs.refRight.current!;
     const elBottom = props.refs.refBottom.current!;
@@ -70,8 +68,6 @@ function useResizer(props: propsUseResizer): void {
         size.current.width = 5;
       size.current.width = size.current.width + coords.current.delta;
 
-      //el.style.width = `${size.current.width}px`;
-
       el.style.left = `${event.pageX - size.current.width}px`;
       el.style.top = `${props.block.coordinatesY}px`;
       el.style.right = `${event.pageX}px`
@@ -81,22 +77,17 @@ function useResizer(props: propsUseResizer): void {
         ...sizer,
         width: size.current.width,
       }));
-
-      // props.setPos(pos=>({
-      //   ...pos,
-      //   x: event.pageX - size.current.width,
-      // }));     
     };
 
-    const onMouseUpRightResize = (event:MouseEvent) => {
+    const onMouseUpRightResize = () => {
       if (!isClickedR.current) return;
       isClickedR.current = false;
       dispatch(resizeBlock,{
         width:size.current.width, 
         height:size.current.height, 
         id:props.block.id,
-        rejectedCoordinatY:el.getBoundingClientRect().top,
-        rejectedCoordinatX:el.getBoundingClientRect().left,
+        rejectedCoordinateY:el.getBoundingClientRect().top,
+        rejectedCoordinateX:el.getBoundingClientRect().left,
       });
       document.removeEventListener("mousemove", onMouseMoveRightResize);
     };
@@ -119,8 +110,6 @@ function useResizer(props: propsUseResizer): void {
       
       size.current.width = size.current.width - coords.current.delta;
 
-      //el.style.width = `${size.current.width}px`;
-
       el.style.left = `${event.pageX}px`;
       el.style.top = `${props.block.coordinatesY}px`;
       el.style.bottom = `${height - (props.block.coordinatesY + size.current.height)}px`;
@@ -134,20 +123,18 @@ function useResizer(props: propsUseResizer): void {
       props.setPos(pos=>({
         ...pos,
         x: event.pageX,
-      })); 
-
-      //props.block.coordinatesX = event.pageX;
+      }));
     };
 
-    const onMouseUpLeftResize = (event:MouseEvent) => {
+    const onMouseUpLeftResize = () => {
       if(!isClickedL) return;
       isClickedL.current = false;
       dispatch(resizeBlock,{
         width:size.current.width, 
         height:size.current.height, 
         id:props.block.id,
-        rejectedCoordinatY:el.getBoundingClientRect().top,
-        rejectedCoordinatX:el.getBoundingClientRect().left
+        rejectedCoordinateY:el.getBoundingClientRect().top,
+        rejectedCoordinateX:el.getBoundingClientRect().left
       });
       document.removeEventListener("mousemove", onMouseMoveLeftResize);
     };
@@ -169,8 +156,6 @@ function useResizer(props: propsUseResizer): void {
           size.current.height = 5;
       size.current.height = size.current.height + coords.current.delta;
 
-      //el.style.height = `${size.current.height}px`;
-
       el.style.top = `${event.pageY - size.current.height}px`;
       el.style.left = `${props.block.coordinatesX}px`;
       el.style.right = `${width - (props.block.coordinatesX + size.current.width)}px`;
@@ -180,22 +165,17 @@ function useResizer(props: propsUseResizer): void {
         ...sizer,
         height: size.current.height,
       }));
-
-      // props.setPos(pos=>({
-      //   ...pos,
-      //   y: event.pageY - size.current.height,
-      // }));
     };
 
-    const onMouseUpBottomResize = (event:MouseEvent) => {
+    const onMouseUpBottomResize = () => {
       if(!isClickedB) return;
       isClickedB.current = false;
       dispatch(resizeBlock,{
         width:size.current.width, 
         height:size.current.height, 
         id:props.block.id,
-        rejectedCoordinatY:el.getBoundingClientRect().top,
-        rejectedCoordinatX:el.getBoundingClientRect().left,
+        rejectedCoordinateY:el.getBoundingClientRect().top,
+        rejectedCoordinateX:el.getBoundingClientRect().left,
       });
       document.removeEventListener("mousemove", onMouseMoveBottomResize);
     };
@@ -217,8 +197,6 @@ function useResizer(props: propsUseResizer): void {
           size.current.height = 5;
       size.current.height = size.current.height - coords.current.delta;
 
-      //el.style.height = `${size.current.height}px`;
-
       el.style.top = `${event.pageY}px`;
       el.style.left = `${props.block.coordinatesX}px`;
       el.style.right = `${width - (props.block.coordinatesX + size.current.width)}px`;
@@ -233,19 +211,18 @@ function useResizer(props: propsUseResizer): void {
         ...pos,
         y: event.pageY,
       }));
-
-      //props.block.coordinatesY = event.pageY;
     };
 
-    const onMouseUpTopResize = (event:MouseEvent) => {
+    const onMouseUpTopResize = () => {
       if(!isClickedT) return;
       isClickedT.current = false;
+
       dispatch(resizeBlock, {
         width: size.current.width, 
         height: size.current.height, 
         id: props.block.id,
-        rejectedCoordinatY: el.getBoundingClientRect().top,
-        rejectedCoordinatX: el.getBoundingClientRect().left,
+        rejectedCoordinateY: el.getBoundingClientRect().top,
+        rejectedCoordinateX: el.getBoundingClientRect().left,
       });
       document.removeEventListener("mousemove", onMouseMoveTopResize);
     };
@@ -262,7 +239,7 @@ function useResizer(props: propsUseResizer): void {
     elBottom.addEventListener("mousedown", onMouseDownBottomResize);
     elLeft.addEventListener("mousedown", onMouseDownLeftResize);
 
-    const cleanup =  () => {
+    return () => {
       elRight.removeEventListener("mousedown", onMouseDownRightResize);
       elTop.removeEventListener("mousedown", onMouseDownTopResize);
       elBottom.removeEventListener("mousedown", onMouseDownBottomResize);
@@ -273,8 +250,6 @@ function useResizer(props: propsUseResizer): void {
       elLeft.removeEventListener("mouseup", onMouseUpLeftResize);
       elRight.removeEventListener("mouseup", onMouseUpRightResize);
     };
-
-    return cleanup;
 
   }, [props.block, props.refs, props.setPos, props.setSize]);
   

@@ -296,7 +296,7 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
    };
 }
 
-type propsType = {rejectedCoordinatX: number, rejectedCoordinatY: number,id:string}
+type propsType = {rejectedCoordinateX: number, rejectedCoordinateY: number,id:string}
 
 function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): PresentationMaker {
    let newSlides: SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
@@ -318,8 +318,8 @@ function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): Pr
       {
           newBlocks[int] = {
               ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
-              coordinatesX : props.rejectedCoordinatX,
-              coordinatesY : props.rejectedCoordinatY,
+              coordinatesX : props.rejectedCoordinateX,
+              coordinatesY : props.rejectedCoordinateY,
           };
           insertedNewBlock = true;
       }
@@ -339,19 +339,16 @@ function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): Pr
        newSlides[i] = oldPresentationMaker.presentation.slides[i];
    }
 
-   const newPresentation: Presentation = {
-       ...oldPresentationMaker.presentation,
-       slides: [] = newSlides,
-   }
-
    return {
        ...oldPresentationMaker,
-       presentation: newPresentation,
-       idsSelectedBlocks: [props.id],
+       presentation: {
+          ...oldPresentationMaker.presentation,
+          slides: [] = newSlides,
+       },
    }
 }
 
-type propsTypeResize = {width: number, height: number, id: string, rejectedCoordinatX: number, rejectedCoordinatY: number}
+type propsTypeResize = {width: number, height: number, id: string, rejectedCoordinateX: number, rejectedCoordinateY: number}
 
 function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsTypeResize): PresentationMaker {
    let newSlides:SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
@@ -375,8 +372,8 @@ function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsTypeRes
               ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
               width :props.width,
               height :props.height,
-              coordinatesX: props.rejectedCoordinatX,
-              coordinatesY: props.rejectedCoordinatY,
+              coordinatesX: props.rejectedCoordinateX,
+              coordinatesY: props.rejectedCoordinateY,
           };
           insertedNewBlock = true;
       }

@@ -16,9 +16,7 @@ function Text(props: TextProps) {
         const textBlock = props.block.content;
         textBlockStyle = {
             width: `${props.block.width}px`,
-            height: `${props.block.height}px`,
-            top:`${props.block.coordinatesY}px`,
-            left:`${props.block.coordinatesX}px`,
+            height: `${props.block.height - 8}px`,
             fontFamily: textBlock.font,
             color: textBlock.color,
             fontSize: textBlock.fontSize.toString() + 'px',
@@ -55,7 +53,7 @@ function Text(props: TextProps) {
                 border: '1px solid #888',
             }
         }
-        
+
         if (elemInArray(props.idsSelectedBlocks, props.block.id)) {
             textBlockStyle = {
                 ...textBlockStyle,
@@ -63,13 +61,13 @@ function Text(props: TextProps) {
             }
         }
     }
-    
+
     if (props.block.content.typeBlock === TypeBlock.text) {
         return (
-            <textarea 
-                value={props.block.content.innerString} 
-                className={styles.textBlock} 
-                style={textBlockStyle} 
+            <textarea
+                value={props.block.content.innerString}
+                className={styles.textBlock}
+                style={textBlockStyle}
                 onChange={(e) => dispatch(changeText, e.target.value)}
             >
             </textarea>

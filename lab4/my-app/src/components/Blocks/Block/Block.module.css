@@ -3,6 +3,7 @@
     height: 75px;
     background-color: transparent;
     margin: 0 auto;
+    z-index: -1;
 }
 
 .textBlock {

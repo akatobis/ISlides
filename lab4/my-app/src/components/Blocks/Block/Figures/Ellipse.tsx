@@ -1,4 +1,4 @@
-import {Block, Figure, TypeBlock} from "../../../../types";
+import {Block, Figure} from "../../../../types";
 import React from 'react'
 
 type FigureProps = {
@@ -10,8 +10,8 @@ const Ellipse = (props: FigureProps) => {
     return (   
         <svg width={props.block.width} height={props.block.height}>
             <ellipse
-                cx={props.block.width / 2}
-                cy={props.block.height / 2}
+                cx={props.block.width/2}
+                cy={props.block.height/2}
                 rx={props.block.width / 2 - props.figure.border / 2}
                 ry={props.block.height / 2 - props.figure.border / 2}
                 stroke={props.figure.colorBorder}
