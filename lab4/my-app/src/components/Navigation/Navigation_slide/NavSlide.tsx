@@ -6,6 +6,7 @@ import {moveSlides, selectSlide, selectSlides} from './../../../actions/navigati
 import {dispatch} from "../../../state";
 import internal from "stream";
 import {useMousePress} from "../../../shortcuts";
+import { removeBlockSelection } from "../../../actions/slide";
 
 type NavigationSlideProps = {
     slide: SlideType;
@@ -78,6 +79,7 @@ const NavSlide = (props: NavigationSlideProps) => {
                 onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
                     if (e.button === 0 && !e.ctrlKey){
                         dispatch(selectSlide, props.slide.id);
+                        dispatch(removeBlockSelection, {});
                     }
                 }}
             >

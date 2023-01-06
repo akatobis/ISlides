@@ -3,9 +3,9 @@ import {Block, FigureType, TypeBlock, Figure} from "../../../types";
 import {Ellipse} from "./Figures/Ellipse";
 import {Rectangle} from "./Figures/Rectangle";
 import {Triangle} from "./Figures/Triangle";
-import { changeText } from "../../../actions/block";
-import { dispatch } from "../../../state";
-import styles from "./Block.module.css"
+import styles from "./Block.module.css";
+import {Text} from "./Text/Text";
+import {useMousePress} from "../../../shortcuts";
 
 type BlockProps = {
     block: Block,
@@ -13,10 +13,7 @@ type BlockProps = {
 }
 
 const SlideBlock = (props: BlockProps) => {
-    const imageStyle = {
-        width: props.block.width,
-        height: props.block.height,
-    };
+    useMousePress(props.block.id, document.getElementById(props.block.id));
 
     let textBlockStyle = {};
     if (props.block.content.typeBlock === TypeBlock.text) {
@@ -62,8 +59,7 @@ const SlideBlock = (props: BlockProps) => {
 
     if (props.block.content.typeBlock === TypeBlock.text) {
          return (
-            //лучше текси=т ареа использовать и в отдельный компонент вынести
-            <input className={styles.textBlock} style={textBlockStyle} onChange={(e) => dispatch(changeText, e.target.value)}></input>
+            <Text block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}></Text>
         );
     }
     if (props.block.content.typeBlock === TypeBlock.figure) {
@@ -92,7 +88,13 @@ const SlideBlock = (props: BlockProps) => {
     }
     if (props.block.content.typeBlock === TypeBlock.image) {
          return (
-            <img style={imageStyle} src={props.block.content.imageBase64}></img>
+            <img style={{
+                width: props.block.width,
+                height: props.block.height,
+                zIndex: -1,
+                pointerEvents: 'none'
+            }} 
+            src={props.block.content.imageBase64} alt=""></img>
         );
     }
     return (

@@ -1,6 +1,6 @@
 import logo from "../../images/logoISlides.svg";
 import arrowDown from "../../images/arrow_down.svg";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import styles from "./ToolsPanel.module.css"
 import {deleteSlides} from "../../actions/slide";
 import {dispatch, rollBack, returnCancel, getState, setState} from "../../state";
@@ -120,33 +120,63 @@ function ToolsPanel() {
         file.value = '';
     }
 
+    let coordinatesSlides: DOMRect;
+    useEffect(() =>  {
+        const slide = document.querySelector('#slide');
+        if (slide === null) {
+            return;
+        }
+        coordinatesSlides = slide.getBoundingClientRect();
+        console.log(coordinatesSlides);
+    })
+
     function exportPresentationToPDF(): void {
         const presentationMaker: PresentationMaker = getState();
         const slides: SlideType[] = presentationMaker.presentation.slides;
+
+        const widthPage: number = 1920;
+        const heightPage: number = 1080;
         
         const doc = new jsPDF({
             orientation: "landscape",
             unit: "px",
-            format: [1080, 1920],
+            format: [heightPage, widthPage],
         });
+
+        const widthSlide: number = coordinatesSlides.right - coordinatesSlides.left;
+        const heigthSlide: number = coordinatesSlides.bottom - coordinatesSlides.top;
+        const rationX: number = widthPage / widthSlide;
+        const rationY: number = heightPage / heigthSlide;
 
         slides.forEach(slide => {
             if (slide.backgroundImage !== '') {
-                doc.addImage(slide.backgroundImage, 'JPEG', 0, 0, 1920, 1080)
+                doc.addImage(slide.backgroundImage, 'JPEG', 0, 0, widthPage, heightPage)
             }
             if (slide.backgroundColor !== '') {
                 doc.setFillColor(slide.backgroundColor);
-                doc.rect(0, 0, 1920, 1080, 'F');
+                doc.rect(0, 0, widthPage, heightPage, 'F');
             }
             
             const blocks: Block[] = slide.blocks;
             blocks.forEach(block => {
+                const blockCoordinateXRelaiveToSlide = block.coordinatesX - coordinatesSlides.x;
+                const blockCoordinateYRelaiveToSlide = block.coordinatesY - coordinatesSlides.y;
+
+                const blockCoordinateXToPdfPages = blockCoordinateXRelaiveToSlide * rationX;
+                const blockCoordinateYToPdfPages = blockCoordinateYRelaiveToSlide * rationY;
+                const blockWidthToPdfPages = block.width * rationX;
+                const blockHeigthToPdfPages = block.height * rationY;
+
                 const contentBlock: TextBlock | Image | Figure = block.content;
                 if (contentBlock.typeBlock === TypeBlock.image) {
-                    doc.addImage(contentBlock.imageBase64, 'JPEG', block.coordinatesX, block.coordinatesY, block.width, block.height);
+                    doc.addImage(contentBlock.imageBase64, 'JPEG', blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages, blockHeigthToPdfPages);
                 }
                 if (contentBlock.typeBlock === TypeBlock.text) {
-                    doc.text(contentBlock.innerString, block.coordinatesX, block.coordinatesY);
+                    doc.setFont(contentBlock.font);
+                    doc.setFontSize(contentBlock.fontSize * rationX);
+                    doc.setTextColor(contentBlock.color);
+                    // doc.setFontStyle()
+                    doc.text(contentBlock.innerString, blockCoordinateXToPdfPages, blockCoordinateYToPdfPages);
                 }
                 if (contentBlock.typeBlock === TypeBlock.figure) {
                     const typeFigure = contentBlock.type;
@@ -154,26 +184,37 @@ function ToolsPanel() {
                     doc.setDrawColor(contentBlock.colorBorder);
 
                     if (typeFigure.figureType === FigureType.ellipse) {
-                        doc.ellipse(block.coordinatesX, block.coordinatesY, typeFigure.rx, typeFigure.ry, 'FD');
+                        doc.ellipse(blockCoordinateXToPdfPages + blockWidthToPdfPages/2, blockCoordinateYToPdfPages + blockHeigthToPdfPages/2, blockWidthToPdfPages/2, blockHeigthToPdfPages/2, 'FD');
                     }
                     if (typeFigure.figureType === FigureType.rectangle) {
-                        doc.rect(block.coordinatesX, block.coordinatesY, block.width, block.height, 'FD');
+                        doc.rect(blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages, blockHeigthToPdfPages, 'FD');
                     }
                     if (typeFigure.figureType === FigureType.triangle) {
-                        const x1: number = block.coordinatesX + block.width / 2;
-                        const y1: number = block.coordinatesY;
-                        const x2: number = block.coordinatesX;
-                        const y2: number = block.coordinatesY + block.height;
-                        const x3: number = block.coordinatesX + block.width;
-                        const y3: number = block.coordinatesY + block.height;
+                        const x1: number = blockCoordinateXToPdfPages + blockWidthToPdfPages / 2;
+                        const y1: number = blockCoordinateYToPdfPages;
+                        const x2: number = blockCoordinateXToPdfPages;
+                        const y2: number = blockCoordinateYToPdfPages + blockHeigthToPdfPages;
+                        const x3: number = blockCoordinateXToPdfPages + blockWidthToPdfPages;
+                        const y3: number = blockCoordinateYToPdfPages + blockHeigthToPdfPages;
                         doc.triangle(x1, y1, x2, y2, x3, y3, 'FD');
                     }
                 }
             })
             doc.addPage();
         });
-        
+        doc.deletePage(slides.length + 1);
         doc.save(`${namePresentation}.pdf`);
+    }
+
+    
+    function requestFullScreen() {
+        const slide = document.querySelector('#slide');
+        console.log(slide);
+        if (!slide) {return}
+        var requestMethod = slide.requestFullscreen;
+        if (requestMethod) {
+            requestMethod.call(slide);
+        }
     }
 
     return (
@@ -184,7 +225,7 @@ function ToolsPanel() {
                 <button className={[styles.historyCommandsButton, styles.rollBack].join(" ")} onClick={() => dispatch(rollBack, "")}></button>
                 <button className={[styles.historyCommandsButton, styles.returnCancel].join(" ")} onClick={() => dispatch(returnCancel, "")}></button>
                 <input placeholder="Название презентации" onChange={(e) => handleNamePresentation(e.target.value)} className={styles.presentationTitle}/>
-                <button className={styles.viewButton}>Просмотр</button>
+                <button onClick={() => requestFullScreen()} className={styles.viewButton}>Просмотр</button>
 
                 <button className={styles.fileButton} onClick={handleOpenFileList}>Файл</button>
                 <div>

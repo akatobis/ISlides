@@ -22,7 +22,7 @@
 .up_left {
     float:left;
     position: relative;
-    top: 0; 
+    top: 0;
     left: 0;
     bottom: auto;
     right: auto;
@@ -47,7 +47,7 @@
 .up_right {
     float:right;
     position: relative;
-    top: 0; 
+    top: 0;
     right: 0;
     bottom: auto;
     left: auto;
@@ -62,7 +62,7 @@
     position: relative;
     top: auto;
     bottom: 0;
-    left: auto; 
+    left: auto;
     right: 0;
     width: 5px;
 	height: 5px;

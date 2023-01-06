@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { addChangePresentationMakerHandler, getState, setState } from './state';
 import { TextBlock, TypeBlock, Block, Presentation, PresentationMaker, FigureType} from './types';
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -187,7 +188,9 @@ setState(deleteOpm);
 function render() {
   root.render(
     <React.StrictMode>
-      <App presentationMaker={getState()} />
+      {/* <Provider store={store}> */}
+        <App presentationMaker={getState()} />
+      {/* </Provider> */}
     </React.StrictMode>
   );
 }
