@@ -70,17 +70,17 @@ const NavSlide = (props: NavigationSlideProps) => {
         setDragOver(false);
     }
 
-    useMousePress(props.slide.id, "", "slide", document.getElementById(props.slide.id));
+    useMousePress(props.slide.id, "", "slide", document.getElementById(props.slide.id+"-nav"));
     
     return(
-        <div className='container' style={parentNavSlideStyle} /*id={props.slide.id}*/>
+        <div className='container' style={parentNavSlideStyle} id={`${props.slide.id}-nav`}>
             <button
                 className={styles.slideButton}
                 style={buttonNavSlideStyle}
                 onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                    dispatch(removeBlockSelection, {});
                     if (e.button === 0 && !e.ctrlKey){
                         dispatch(selectSlide, props.slide.id);
-                        dispatch(removeBlockSelection, {});
                     }
                 }}
             >

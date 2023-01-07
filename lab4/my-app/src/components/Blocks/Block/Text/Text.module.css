@@ -1,0 +1,6 @@
+.textBlock {
+   all: unset;
+   box-sizing: border-box;
+   background: transparent;
+   border: none;
+}

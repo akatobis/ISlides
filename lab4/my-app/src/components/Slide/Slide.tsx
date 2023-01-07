@@ -1,7 +1,9 @@
 import styles from "./Slide.module.css"
-import {SlideType} from "../../types"
+import {PresentationMaker, SlideType} from "../../types"
 import {Blocks} from "../Blocks/Blocks";
 import React, {CSSProperties} from "react";
+import { removeBlockSelection } from "../../actions/slide";
+import { dispatch } from "../../state";
 
 let sizeFactor = 1;
 
@@ -77,7 +79,7 @@ function Slide(props: SlideProps) {
             overflow: "hidden",
             pointerEvents: "none",
         }
-        id += "-nav";
+        id += "-nav-slide";
     }
 
     return (
