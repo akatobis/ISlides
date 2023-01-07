@@ -10,6 +10,7 @@ type BlocksProps = {
     blocks: Block[],
     idsSelectedBlocks: string[],
     slideId: string,
+    from: string,
 }
 
 const Blocks = (props: BlocksProps) => {
@@ -23,11 +24,11 @@ const Blocks = (props: BlocksProps) => {
         });
     },[])
     return (
-        <div>
+        <>
             {props.blocks.map(block => (
-                <BlockHelper slideId={props.slideId} idsSelectedBlocks={props.idsSelectedBlocks} block={block} refs={refs} key={block.id}/>
+                <BlockHelper slideId={props.slideId} idsSelectedBlocks={props.idsSelectedBlocks} block={block} refs={refs} from={props.from} key={block.id}/>
             ))}
-        </div>
+        </>
     );
 }
 

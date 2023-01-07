@@ -1,7 +1,7 @@
 import {SlideBlock} from "./../Block/Block";
 import styles from './BlockHelp.module.css'
 import {Block} from "../../../types";
-import React from 'react'
+import React, {CSSProperties, useState} from 'react'
 import {selectBlock} from "./../../../actions/block";
 import {dispatch} from "./../../../state";
 import useDragger from "../../../hooks/useDragger";
@@ -13,6 +13,7 @@ type propsBlockHelp = {
     slideId: string,
     block: Block,
     refs: React.MutableRefObject<HTMLDivElement[]>,
+    from: string,
 }
 
 export function BlockHelper(props:propsBlockHelp) {    
@@ -69,22 +70,55 @@ export function BlockHelper(props:propsBlockHelp) {
         setPos,
     });
 
+    let dragStyle = {} as CSSProperties;
+    if (!elemInArray(props.idsSelectedBlocks, props.block.id)) {
+        dragStyle = {
+            border: "none",
+            width: "0px"
+        }
+    }
+
+    let blockStyle = {} as CSSProperties;
+    if (props.from !== "navigation") {
+        blockStyle = {
+            top:`${pos.y}`+`px`,
+            left:`${pos.x}`+`px`,
+            width:`${size.width}`+`px`,
+            height:`${size.height}`+`px`,
+        }
+    } else {
+        let slideCoordinates = {} as DOMRect;
+        /*if (document.getElementById("WorkZone")) {
+            let workZoneCoordinates = document.getElementById("workZone")!.getBoundingClientRect();
+            console.log("wzTop: " + workZoneCoordinates.top, "wzLeft: " + workZoneCoordinates.left);
+        }*/
+        if (document.getElementById(props.slideId)) {
+            slideCoordinates = document.getElementById(props.slideId)!.getBoundingClientRect();
+        }
+        blockStyle = {
+            position: "absolute",
+            top:`${props.block.coordinatesY - slideCoordinates.top}`+`px`,
+            left:`${props.block.coordinatesX - slideCoordinates.left}`+`px`,
+            width:`${props.block.width}`+`px`,
+            height:`${props.block.height}`+`px`,
+        }
+    }
+
     return (
         <div id={props.block.id} className={styles.resizeable} style={
-            { 
-                position: "absolute",
-                top:`${pos.y}`+`px`,
-                left:`${pos.x}`+`px`,
-                width:`${size.width}`+`px`,
-                height:`${size.height}`+`px`,
-            }
-        }>
-            <div ref={refLeft} className={styles.resizer_l}></div>
-            <div ref={refTop} className={styles.resizer_t}></div>
-            <div ref={refRight} className={styles.resizer_r}></div>
-            <div ref={refBottom} className={styles.resizer_b}></div>
+            {
+                ...dragStyle,
+            position: "absolute",
+                ...blockStyle
+
+        }}>
+
+            <div ref={refLeft} className={styles.resizer_l} style={dragStyle}></div>
+            <div ref={refTop} className={styles.resizer_t} style={dragStyle}></div>
+            <div ref={refRight} className={styles.resizer_r} style={dragStyle}></div>
+            <div ref={refBottom} className={styles.resizer_b} style={dragStyle}></div>
             <div className={styles.block}  ref={ref}
-                onMouseDown={()=>{dispatch(selectBlock, props.block.id)}}>
+                onMouseDown={()=>{ if (props.from !== "navigation") {dispatch(selectBlock, props.block.id)}}}>
                 <SlideBlock slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
             </div>
         </div>

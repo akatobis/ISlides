@@ -73,7 +73,7 @@ const NavSlide = (props: NavigationSlideProps) => {
     useMousePress(props.slide.id, "", "slide", document.getElementById(props.slide.id));
     
     return(
-        <div className='container' style={parentNavSlideStyle} id={props.slide.id}>
+        <div className='container' style={parentNavSlideStyle} /*id={props.slide.id}*/>
             <button
                 className={styles.slideButton}
                 style={buttonNavSlideStyle}

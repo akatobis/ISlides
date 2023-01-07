@@ -1,12 +1,14 @@
 .navSlide {
     width: 160px;
-    height: 85px;
+    height: 88px;
     cursor: pointer;
     border:solid 1px rgb(0, 0, 0);
     border-radius: 10px;
     padding: 0 0;
     margin: 0 0;
-    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .slideButton {
