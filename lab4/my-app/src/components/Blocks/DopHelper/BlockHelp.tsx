@@ -37,8 +37,22 @@ export function BlockHelper(props:propsBlockHelp) {
         })
 
     React.useEffect(()=>{
-        console.log(1)
-    },[])
+        if(props.block.coordinatesX != pos.x || props.block.coordinatesY != pos.y)
+        {
+            setPos({
+                x: props.block.coordinatesX,
+                y: props.block.coordinatesY,
+            })
+
+        }
+        if(props.block.width != size.width || props.block.height != size.height)
+        {
+            setSize({
+                width: props.block.width,
+                height: props.block.height,
+            })
+        }
+    },[props.block])
 
     const ref = React.useRef<HTMLDivElement>(null)
     const refLeft = React.useRef<HTMLDivElement>(null)
