@@ -17,8 +17,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 5px;
-  min-height: 5px;
+  min-width: 8px;
+  min-height: 8px;
   z-index: 1;
 }
 
