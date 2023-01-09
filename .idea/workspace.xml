@@ -2,31 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7dd0c07c-65a9-408b-aaed-3f9a44f09f6a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Text/Text.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab4/my-app/src/hooks/useDragAndDrop.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab4/my-app/src/redusers/presentationReduser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/actions/block.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/actions/block.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Block.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Block.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Block.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Block.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Figures/Ellipse.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Figures/Ellipse.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Figures/Rectangle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Figures/Rectangle.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Figures/Triangle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Figures/Triangle.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Figures/style.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Text/Text.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Text/Text.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Blocks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Blocks.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/DopHelper/BlockHelp.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/DopHelper/BlockHelp.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/DopHelper/BlockHelp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/DopHelper/BlockHelp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation_slide/NavSlide.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation_slide/NavSlide.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Slide/Slide.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Slide/Slide.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/ToolsPanel/ToolsPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/ToolsPanel/ToolsPanel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/hooks/useDragger.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/hooks/useDragger.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/hooks/useResizer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/hooks/useResizer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/state.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/ToolsPanel/ToolsPanel.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/ToolsPanel/ToolsPanel.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +85,8 @@
       <workItem from="1672348330990" duration="27680000" />
       <workItem from="1672824172636" duration="1785000" />
       <workItem from="1672933992036" duration="16332000" />
-      <workItem from="1673094738532" duration="17709000" />
+      <workItem from="1673094738532" duration="18631000" />
+      <workItem from="1673271957577" duration="1281000" />
     </task>
     <servers />
   </component>

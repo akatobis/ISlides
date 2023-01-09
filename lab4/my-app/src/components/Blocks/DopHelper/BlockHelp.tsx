@@ -101,6 +101,7 @@ export function BlockHelper(props:propsBlockHelp) {
     }
 
     let blockStyle = {} as CSSProperties;
+    let id: string = props.block.id;
     if (props.from !== "navigation") {
         blockStyle = {
             top:`${pos.y}`+`px`,
@@ -109,6 +110,7 @@ export function BlockHelper(props:propsBlockHelp) {
             height:`${size.height}`+`px`,
         }
     } else {
+        id += "-nav";
         let slideCoordinates = {} as DOMRect;
         if (document.getElementById(props.slideId)) {
             slideCoordinates = document.getElementById(props.slideId)!.getBoundingClientRect();
@@ -123,7 +125,7 @@ export function BlockHelper(props:propsBlockHelp) {
     }
 
     return (
-        <div id={props.block.id} style={
+        <div id={id} style={
             {
                 ...blockStyle,
                 ...dragStyle,
