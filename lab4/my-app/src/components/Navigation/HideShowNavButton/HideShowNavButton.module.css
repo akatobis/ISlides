@@ -3,18 +3,26 @@
     box-sizing: border-box;
 
     position: absolute;
-    width: 212px;
+    width: 226px;
     height: 5%;
 
     background: #FFEBFD;
     border-top: 1px solid #D29CFF;
+    border-radius: 5px;
     bottom:0;
     background-position: center center;
     background-repeat: no-repeat;
     background-image: url("../../../images/arrow_left.svg");
+    z-index: 2000;
+
+    transition: background-color .3s;
 }
 
-.buttonShowNav {
+.buttonHideNav:hover {
+    background-color: #e6d0f5;
+}
+
+.buttonShowNavCirc {
     all: unset;
     position: absolute;
     width: 50px;
@@ -25,4 +33,39 @@
     background-repeat: no-repeat;
     background-image: url("../../../images/arrow_rigth.svg");
     bottom:0;
+    left: -5px;
+    z-index: 2000;
+    transition-property: left,width ,background-color, border-radius;
+    transition-duration:  .6s;
+}
+
+.buttonShowNavRect {
+    all: unset;
+    position: absolute;
+    width: 50px;
+    height: 5%;
+    background: #FFEBFD;
+    border-radius: 0 40% 40% 0;
+    background-position: center center;
+    background-repeat: no-repeat;
+    bottom:0;
+    z-index: 2001;
+    transition-property: z-index,width, background-color;
+    transition-duration:  .3s;
+}
+
+.buttonShowNavCirc:hover {
+    left: -15px;
+    border-top: 1px solid #D29CFF;
+    width: 120px;
+    border-radius: 20px;
+    background-color: #e6d0f5;
+}
+
+.buttonShowNavRect:hover {
+    border-top: 1px solid #D29CFF;
+    z-index: 3000;
+    width: 110px;
+    border-radius: 5px;
+    background-color: #e6d0f5;
 }

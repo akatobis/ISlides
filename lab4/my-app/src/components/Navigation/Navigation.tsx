@@ -1,7 +1,7 @@
 import styles from "./Navigation.module.css";
 import {PresentationMaker} from "../../types";
 import {NavSlide} from "./Navigation_slide/NavSlide";
-import { useState } from "react";
+import {useState, CSSProperties, useRef} from "react";
 import {HideShowNavButton} from './HideShowNavButton/HideShowNavButton';
 
 type NavigationProps = {
@@ -9,19 +9,29 @@ type NavigationProps = {
 }
 
 const Navigation = (props: NavigationProps) => {
-    const [countSlide, setCountSlide] = useState(0)
+    const [show, setShow] = useState<boolean>(false)
+    const navigation = useRef<HTMLOListElement>(null)
+
+    let style = {} as CSSProperties
+    if(show)
+    {
+        style = {
+            width: 0,
+        }
+    }
+
     return (
         <div>
-            <ol className={styles.navigation}>
+            <ol className={styles.navigation} style={style} ref={navigation}>
                 {props.presentationMaker.presentation.slides.map(slide => {
                     return (
                         <NavSlide
-                            key={slide.id} slide={slide} idsSelectedSlides={props.presentationMaker.idsSelectedSlides} countSlide={countSlide}
+                            key={slide.id} slide={slide} idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
                         />
                     )
                 })}
             </ol>
-            <HideShowNavButton/>
+            <HideShowNavButton setShow={setShow} navigation={navigation}/>
         </div>
 
     )
