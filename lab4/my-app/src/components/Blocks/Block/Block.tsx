@@ -9,11 +9,12 @@ import {useMousePress} from "../../../shortcuts";
 
 type BlockProps = {
     block: Block,
+    slideId: string,
     idsSelectedBlocks: string[],
 }
 
 const SlideBlock = (props: BlockProps) => {
-    useMousePress(props.block.id, document.getElementById(props.block.id));
+    /*useMousePress(props.slideId ,props.block.id, "block", document.getElementById(props.block.id));*/
 
     let textBlockStyle = {};
     if (props.block.content.typeBlock === TypeBlock.text) {

@@ -136,7 +136,7 @@ function ToolsPanel() {
 
         const widthPage: number = 1920;
         const heightPage: number = 1080;
-        
+
         const doc = new jsPDF({
             orientation: "landscape",
             unit: "px",
@@ -206,7 +206,7 @@ function ToolsPanel() {
         doc.save(`${namePresentation}.pdf`);
     }
 
-    
+
     function requestFullScreen() {
         const slide = document.querySelector('#slide');
         console.log(slide);

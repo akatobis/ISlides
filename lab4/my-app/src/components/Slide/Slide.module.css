@@ -15,6 +15,7 @@
    aspect-ratio: 18/10;
    background-color: #fff;
    box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.05);
+   background-size: 100% 100%;
 }
 
 .slideButton {

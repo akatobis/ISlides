@@ -5,7 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { addChangePresentationMakerHandler, getState, setState } from './state';
 import { TextBlock, TypeBlock, Block, Presentation, PresentationMaker, FigureType} from './types';
-import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -112,10 +111,10 @@ const blockWithRectangle: Block = {
     border: 30,
     colorBorder: "#000000",
   },
-  coordinatesX: 200,
-  coordinatesY: 200,
-  width: 400,
-  height: 250,
+  coordinatesX: 400,
+  coordinatesY: 400,
+  width: 500,
+  height: 800,
 }
 
 const blockWithTriangle: Block = {
@@ -183,14 +182,12 @@ const deleteOpm: PresentationMaker = {
   idsSelectedSlides: ['1'],
   idsSelectedBlocks: [],
 };
-setState(deleteOpm);
+/*setState(deleteOpm);*/
 
 function render() {
   root.render(
     <React.StrictMode>
-      {/* <Provider store={store}> */}
         <App presentationMaker={getState()} />
-      {/* </Provider> */}
     </React.StrictMode>
   );
 }

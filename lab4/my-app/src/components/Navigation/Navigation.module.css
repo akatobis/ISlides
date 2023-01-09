@@ -9,8 +9,9 @@
     width: 219px;
     will-change: transform;
     height: 95.7%;
-    margin: 0px -28px;
+    margin: 0 -28px;
     background-color:#fff;
+    z-index: 100;
 }
 
 .navigation::-webkit-scrollbar {

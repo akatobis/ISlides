@@ -1,80 +1,95 @@
 import styles from "./Slide.module.css"
 import {PresentationMaker, SlideType} from "../../types"
 import {Blocks} from "../Blocks/Blocks";
-import React from "react";
-import { connect } from "react-redux";
+import React, {CSSProperties} from "react";
 import { removeBlockSelection } from "../../actions/slide";
 import { dispatch } from "../../state";
 
+let sizeFactor = 1;
+
 type SlideProps = {
-   slide: SlideType,
-   idsSelectedSlides: string[],
-   idsSelectedBlocks: string[],
+    slide: SlideType,
+    idsSelectedSlides: string[],
+    idsSelectedBlocks: string[],
+    from: string,
 }
 
 function Slide(props: SlideProps) {
-   let slideStyle = {};
-   if (props.slide.backgroundColor !== "") {
-      slideStyle = {
-         background: props.slide.backgroundColor,
-         backgroundImage: 'url()',
-      }
-   }
-   if (props.slide.backgroundImage !== "") {
-      slideStyle = {
-         background: '',
-         backgroundImage: props.slide.backgroundImage,
-      }
-   }
+    let slideStyle = {} as CSSProperties;
+    if (props.slide.backgroundColor !== "") {
+        slideStyle = {
+            background: props.slide.backgroundColor,
+            backgroundImage: 'url()',
+        }
+    }
+    if (props.slide.backgroundImage !== "") {
+        slideStyle = {
+            background: '',
+            backgroundImage: props.slide.backgroundImage,
+        } as CSSProperties;
+    }
 
-   let targetNode = document.getElementById("WorkZone");
-   console.log(targetNode);
+    let slideSize = {} as CSSProperties;
+    let targetNode = document.getElementById("WorkZone");
+    let innerWidth = 0;
+    let innerHeight = 0;
 
-   let innerWidth;
-   let innerHeight;
+    function getSlideSize() {
+        innerWidth = Number(targetNode?.clientWidth);
+        innerHeight = Number(targetNode?.clientHeight);
+    }
 
-   function getSlideSize() {
-      innerWidth = document.getElementById("WorkZone")?.clientWidth;
-      innerHeight = document.getElementById("WorkZone")?.clientHeight;
-   }
+    getSlideSize();
 
-   getSlideSize();
+    if (!innerWidth) {
+        innerWidth = 0;
+    }
+    if (!innerHeight) {
+        innerHeight = 0
+    }
 
-   if (innerWidth === undefined) {innerWidth = 0}
-   if (innerHeight === undefined) {innerHeight = 0}
+    if (innerHeight * 1.8 < innerWidth) {
+        innerWidth = innerHeight * 1.8
+        sizeFactor = 88 / innerHeight
+    }
+    if (innerWidth / 1.8 <= innerHeight) {
+        innerHeight = innerWidth / 1.8;
+        sizeFactor = 160 / innerWidth;
+    }
 
-   let slideSize = {};
-   if (innerHeight * 1.8 < innerWidth) {
-      innerHeight -= 30;
-      slideSize = {
-         ...slideSize,
-         height: innerHeight + "px",
-      }
-   }
-   if (innerWidth / 1.8 <= innerHeight) {
-      innerWidth -= 50;
-      slideSize = {
-         ...slideSize,
-         width: innerWidth + "px",
-      }
-   }
+    slideSize = {
+        ...slideSize,
+        height: innerHeight + "px",
+        width: innerWidth + "px"
+    }
 
-   slideStyle = {
-      ...slideStyle,
-      ...slideSize,
-   }
+    slideStyle = {
+        ...slideStyle,
+        ...slideSize,
+    }
 
-   return (
-       <div className={styles.slide} style={slideStyle} id="slide">
-          <Blocks blocks={props.slide.blocks} idsSelectedBlocks={props.idsSelectedBlocks}/>
-       </div>
-   )
+    let id = props.slide.id;
+    if (props.from === "navigation") {
+        slideStyle = {
+            ...slideStyle,
+            boxSizing: "border-box",
+            transform: `scale(${sizeFactor * 0.97})`,
+            borderRadius: `${8 / sizeFactor}px`,
+            position: "absolute",
+            overflow: "hidden",
+            pointerEvents: "none",
+        }
+        id += "-nav-slide";
+    }
+
+    return (
+        <div className={styles.slide} style={slideStyle} id={id}>
+            <Blocks slideId={props.slide.id} blocks={props.slide.blocks} idsSelectedBlocks={props.idsSelectedBlocks}
+                    from={props.from}/>
+        </div>
+    )
 }
 
-// const mapStateToProps = (state: SlideType) => {
-//    return {slide: state}
-// }
-
-// export default connect(mapStateToProps)(Slide);
-
-export default {Slide};
+export {
+    Slide,
+}

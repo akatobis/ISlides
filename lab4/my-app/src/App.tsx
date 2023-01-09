@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from "./App.module.css";
 import stylesSlide from "./components/Slide/Slide.module.css";
-import Slide from './components/Slide/Slide';
+import {Slide} from './components/Slide/Slide';
 import {ToolsPanel} from './components/ToolsPanel/ToolsPanel';
 import {PresentationMaker, SlideType} from './types';
 import { Navigation } from './components/Navigation/Navigation';
 import {useKeyPress} from './shortcuts';
-import { connect } from 'react-redux';
 
 type AppProps = {
     presentationMaker: PresentationMaker,
@@ -70,11 +69,12 @@ function App(props: AppProps) {
                 <div className={stylesSlide.workZone} id="WorkZone">
                     {slides.map(slide => {
                         if (slide.id === idCurrSlide) {
-                            return <Slide.Slide
+                            return <Slide
                                 key={slide.id}
                                 slide={slide}
                                 idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
                                 idsSelectedBlocks={props.presentationMaker.idsSelectedBlocks}
+                                from=""
                             />
                         }
                     })}
@@ -84,9 +84,4 @@ function App(props: AppProps) {
     );
 }
 
-// function mapStateToProps(state: PresentationMaker) {
-//    return {slides: state.presentation.slides}
-// }
-
-// export default connect(mapStateToProps)(App);
 export default App;

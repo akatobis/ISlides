@@ -2,7 +2,7 @@ import {SlideBlock} from "../Block/Block";
 import styles from './BlockHelp.module.css'
 import {Block} from "../../../types";
 import React, {CSSProperties} from 'react'
-import {selectBlock} from "../../../actions/blocks/blocks";
+import {selectBlock} from "../../../actions/block";
 import {dispatch} from "../../../state";
 import useDragAndDrop from "../../../hooks/useDragAndDrop";
 import useResizer from "../../../hooks/useResizer";
@@ -10,10 +10,12 @@ import { elemInArray } from "../../../auxiliaryFunctions";
 
 type propsBlockHelp = {
     idsSelectedBlocks: string[],
+    slideId: string,
     block: Block,
+    from: string,
 }
 
-export function BlockHelper(props:propsBlockHelp) { 
+export function BlockHelper(props:propsBlockHelp) {
     const [pos,setPos] = React.useState<
     {
         x: number,
@@ -34,6 +36,10 @@ export function BlockHelper(props:propsBlockHelp) {
             height: props.block.height,
         })
 
+    React.useEffect(()=>{
+        console.log(1)
+    },[])
+
     const ref = React.useRef<HTMLDivElement>(null)
     const refLeft = React.useRef<HTMLDivElement>(null)
     const refTop = React.useRef<HTMLDivElement>(null)
@@ -42,7 +48,7 @@ export function BlockHelper(props:propsBlockHelp) {
 
     useResizer(
     {
-        block: props.block, 
+        block: props.block,
         refs: {
             ref: ref,
             refBottom: refBottom,
@@ -98,14 +104,36 @@ export function BlockHelper(props:propsBlockHelp) {
         }
     }
 
+    let blockStyle = {} as CSSProperties;
+    let id: string = props.block.id;
+    if (props.from !== "navigation") {
+        blockStyle = {
+            top:`${pos.y}px`,
+            left:`${pos.x}px`,
+            width:`${size.width}px`,
+            height:`${size.height}px`,
+        }
+    } else {
+        id += "-nav";
+        let slideCoordinates = {} as DOMRect;
+        if (document.getElementById(props.slideId)) {
+            slideCoordinates = document.getElementById(props.slideId)!.getBoundingClientRect();
+        }
+        blockStyle = {
+            position: "absolute",
+            top:`${props.block.coordinatesY - slideCoordinates.top}px`,
+            left:`${props.block.coordinatesX - slideCoordinates.left}px`,
+            width:`${props.block.width}px`,
+            height:`${props.block.height}px`,
+        }
+    }
+
     return (
-        <div id={props.block.id} style={
-            { 
+        <div id={id} style={
+            {
+                ...blockStyle,
                 ...dragStyle,
-                top:`${pos.y}px`,
-                left:`${pos.x}px`,
-                width:`${size.width}px`,
-                height:`${size.height}px`,
+                position: "absolute",
             }
         }>
             <div style={
@@ -158,10 +186,24 @@ export function BlockHelper(props:propsBlockHelp) {
                 <div ref={refBottom} className={styles.resizer_b} style={dragStyle}></div>
             </div>
             <div className={styles.block}  ref={ref} onDoubleClick={()=>{
-                dispatch(selectBlock,props.block.id)
+                dispatch(selectBlock, props.block.id)
             }}>
-                <SlideBlock block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
+                <SlideBlock slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
             </div>
         </div>
-)
+    )
+
+    /*return (
+        <div id={props.block.id} className={styles.resizeable} style={
+            {
+            position: "absolute",
+                ...blockStyle
+
+        }}>
+            <div className={styles.block}  ref={ref}
+                onMouseDown={()=>{ if (props.from !== "navigation") {dispatch(selectBlock, props.block.id)}}}>
+                <SlideBlock slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
+            </div>
+        </div>
+)*/
 }

@@ -2,11 +2,12 @@ import styles from "./NavSlide.module.css";
 import {SlideType} from "../../../types";
 import { elemInArray } from "../../../auxiliaryFunctions";
 import {useState} from 'react'
-import {moveSlides, selectSlide, selectSlides} from './../../../actions/navigation/navigation'
+import {moveSlides, selectSlide, selectSlides} from './../../../actions/navigation/navigation';
+import {removeBlockSelection} from './../../../actions/slide'
 import {dispatch} from "../../../state";
 import internal from "stream";
 import {useMousePress} from "../../../shortcuts";
-import { removeBlockSelection } from "../../../actions/slide";
+import {Slide} from "../../Slide/Slide";
 
 type NavigationSlideProps = {
     slide: SlideType;
@@ -69,17 +70,17 @@ const NavSlide = (props: NavigationSlideProps) => {
         setDragOver(false);
     }
 
-    useMousePress(props.slide.id, document.getElementById(props.slide.id));
+    useMousePress(props.slide.id, "", "slide", document.getElementById(props.slide.id+"-nav"));
     
     return(
-        <div className='container' style={parentNavSlideStyle} id={props.slide.id}>
+        <div className='container' style={parentNavSlideStyle} id={`${props.slide.id}-nav`}>
             <button
                 className={styles.slideButton}
                 style={buttonNavSlideStyle}
                 onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                    dispatch(removeBlockSelection, {});
                     if (e.button === 0 && !e.ctrlKey){
                         dispatch(selectSlide, props.slide.id);
-                        dispatch(removeBlockSelection, {});
                     }
                 }}
             >
@@ -94,6 +95,7 @@ const NavSlide = (props: NavigationSlideProps) => {
                         onDrop={(e: React.DragEvent<HTMLDivElement>)=>{handleDrop(e,props.slide)}}
                         style={ dragOver ? {fontWeight: 'bold', boxShadow: '5px 5px rgb(162, 40, 243)'} : navSlideStyle}
                     >
+                       <Slide slide={props.slide} idsSelectedSlides={[]} idsSelectedBlocks={[]} from="navigation"></Slide>
                     </div>
                 </li>
             </button>
