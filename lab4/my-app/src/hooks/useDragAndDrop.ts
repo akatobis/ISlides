@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from "react"
 import {Block} from "../types"
 import {dispatch} from '../state'
-import {moveBlock} from '../actions/block'
+import {moveBlock, selectBlock} from '../actions/block'
 
 type propsUseDragAndDrop = {
   block: Block,
@@ -16,6 +16,8 @@ type propsUseDragAndDrop = {
 function useDragAndDrop(props:propsUseDragAndDrop): void {
 
   const isClicked = useRef<boolean>(false)
+
+  const Moved = useRef<boolean>(false)
   
   const coords = useRef<{
     X: number,
@@ -53,7 +55,14 @@ function useDragAndDrop(props:propsUseDragAndDrop): void {
       if (!isClicked.current) return
       e.preventDefault()
       isClicked.current = false
-
+      if(!Moved.current)
+      {
+        setTimeout(()=>{
+          dispatch(selectBlock, props.block.id)
+        },100)
+        return
+      }
+      Moved.current = false
       dispatch(moveBlock, {
         rejectedCoordinateX: el.getBoundingClientRect().left,
         rejectedCoordinateY: el.getBoundingClientRect().top,
@@ -64,7 +73,10 @@ function useDragAndDrop(props:propsUseDragAndDrop): void {
     const onMouseMove = (e: MouseEvent) => {
       if (!isClicked.current) return
       e.preventDefault()
-
+      setTimeout(()=>{
+        Moved.current = true
+        console.log(1)
+      },  100)
       props.setPos({
         x: e.pageX - coords.current.X + coords.current.oldX,
         y: e.pageY - coords.current.Y + coords.current.oldY,

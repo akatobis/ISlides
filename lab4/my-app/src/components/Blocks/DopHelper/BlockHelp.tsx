@@ -36,6 +36,24 @@ export function BlockHelper(props:propsBlockHelp) {
             height: props.block.height,
         })
 
+    React.useEffect(()=>{
+        if(props.block.coordinatesX != pos.x || props.block.coordinatesY != pos.y)
+        {
+            setPos({
+                x: props.block.coordinatesX,
+                y: props.block.coordinatesY,
+            })
+
+        }
+        if(props.block.width != size.width || props.block.height != size.height)
+        {
+            setSize({
+                width: props.block.width,
+                height: props.block.height,
+            })
+        }
+    },[props.block])
+
     const ref = React.useRef<HTMLDivElement>(null)
     const refLeft = React.useRef<HTMLDivElement>(null)
     const refTop = React.useRef<HTMLDivElement>(null)
@@ -104,10 +122,10 @@ export function BlockHelper(props:propsBlockHelp) {
     let id: string = props.block.id;
     if (props.from !== "navigation") {
         blockStyle = {
-            top:`${pos.y}`+`px`,
-            left:`${pos.x}`+`px`,
-            width:`${size.width}`+`px`,
-            height:`${size.height}`+`px`,
+            top:`${pos.y}px`,
+            left:`${pos.x}px`,
+            width:`${size.width}px`,
+            height:`${size.height}px`,
         }
     } else {
         id += "-nav";
@@ -117,10 +135,10 @@ export function BlockHelper(props:propsBlockHelp) {
         }
         blockStyle = {
             position: "absolute",
-            top:`${props.block.coordinatesY - slideCoordinates.top}`+`px`,
-            left:`${props.block.coordinatesX - slideCoordinates.left}`+`px`,
-            width:`${props.block.width}`+`px`,
-            height:`${props.block.height}`+`px`,
+            top:`${props.block.coordinatesY - slideCoordinates.top}px`,
+            left:`${props.block.coordinatesX - slideCoordinates.left}px`,
+            width:`${props.block.width}px`,
+            height:`${props.block.height}px`,
         }
     }
 
@@ -181,8 +199,9 @@ export function BlockHelper(props:propsBlockHelp) {
                 }}>
                 <div ref={refBottom} className={styles.resizer_b} style={dragStyle}></div>
             </div>
-            <div className={styles.block}  ref={ref} onDoubleClick={()=>{
-                dispatch(selectBlock, props.block.id)
+            <div className={styles.block}  ref={ref} onClick={()=>{
+                if(!props.idsSelectedBlocks.includes(props.block.id))
+                    dispatch(selectBlock,props.block.id)
             }}>
                 <SlideBlock slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
             </div>

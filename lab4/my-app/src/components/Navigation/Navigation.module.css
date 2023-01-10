@@ -6,10 +6,9 @@
     position: relative;
     transform: translateZ(0);
     vertical-align: top;
-    width: 219px;
+    width: 225px;
     will-change: transform;
-    height: 95.7%;
-    margin: 0 -28px;
+    height: 96%;
     background-color:#fff;
     z-index: 100;
 }
@@ -36,8 +35,7 @@
 }
 
 ol {
-    padding: 0px 0 0 20px;
-    margin: 0.5em 0 1.571em 1.9em;
+    padding: 0;
     color: #2E2E2E;
     list-style-type: none;
     font: 15px/17px Verdana, Arial, Helvetica, sans-serif;
