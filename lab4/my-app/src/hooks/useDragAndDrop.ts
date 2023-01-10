@@ -59,7 +59,7 @@ function useDragAndDrop(props:propsUseDragAndDrop): void {
       {
         setTimeout(()=>{
           dispatch(selectBlock, props.block.id)
-        },200)
+        },100)
         return
       }
       Moved.current = false
@@ -76,7 +76,7 @@ function useDragAndDrop(props:propsUseDragAndDrop): void {
       setTimeout(()=>{
         Moved.current = true
         console.log(1)
-      },200)
+      },  100)
       props.setPos({
         x: e.pageX - coords.current.X + coords.current.oldX,
         y: e.pageY - coords.current.Y + coords.current.oldY,

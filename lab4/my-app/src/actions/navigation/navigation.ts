@@ -34,37 +34,6 @@ export function addNewSlide(oldPresentationMaker: PresentationMaker): Presentati
     }
 }
 
-
-// export function moveSlides(oldPresentationMaker: PresentationMaker, slide: SlideType): PresentationMaker {
-//     // const index = oldPresentationMaker.presentation.slides.indexOf(slide)
-//     //
-//     //
-//     // let i = 0;
-//     // for(i; i < oldPresentationMaker.presentation.slides.length; i++)
-//     // {
-//     //     if(oldPresentationMaker.presentation.slides[i].id === oldPresentationMaker.idsSelectedSlides[0])
-//     //         break;
-//     // }
-//     //
-//     // const movableSlides: SlideType[] = oldPresentationMaker.presentation.slides.filter(slide=>oldPresentationMaker.idsSelectedSlides.includes(slide.id))
-//     // let slides: SlideType[]  = oldPresentationMaker.presentation.slides.filter(slide=>!oldPresentationMaker.idsSelectedSlides.includes(slide.id))
-//     //
-//     // if(i > index)
-//     // {
-//     //     console.log(index,i)
-//     // }
-//     //
-//     // if(i < index)
-//     // {
-//     //
-//     // }
-//     //
-//     // return {
-//     //     ...oldPresentationMaker,
-//     // }
-//
-//  }
-
 export function moveSlides(oldPresentationMaker: PresentationMaker, insertionIndex: number): PresentationMaker {
     const slides: SlideType[] = [...oldPresentationMaker.presentation.slides]
 
@@ -93,12 +62,12 @@ export function moveSlides(oldPresentationMaker: PresentationMaker, insertionInd
     }
 }
 
- function selectSlide(oldPresentationMaker: PresentationMaker, idNewSlide: string): PresentationMaker {
+function selectSlide(oldPresentationMaker: PresentationMaker, idNewSlide: string): PresentationMaker {
     return {
         ...oldPresentationMaker,
         idsSelectedSlides: [idNewSlide],
     };
- }
+}
 
 function selectSlides(oldPresentationMaker: PresentationMaker, idNewSlide: string): PresentationMaker {
     let newIds: string[] = oldPresentationMaker.idsSelectedSlides.filter(() => {
