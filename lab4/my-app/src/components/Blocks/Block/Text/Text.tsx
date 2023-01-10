@@ -1,5 +1,4 @@
 import { changeText } from "../../../../actions/block";
-import { elemInArray } from "../../../../auxiliaryFunctions";
 import { dispatch } from "../../../../state";
 import { Block, TypeBlock } from "../../../../types"
 import styles from "./Text.module.css"
@@ -16,7 +15,9 @@ function Text(props: TextProps) {
         const textBlock = props.block.content;
         textBlockStyle = {
             width: `${props.block.width}px`,
-            height: `${props.block.height - 8}px`,
+            height: `${props.block.height}px`,
+            top:`${props.block.coordinatesY}px`,
+            left:`${props.block.coordinatesX}px`,
             fontFamily: textBlock.font,
             color: textBlock.color,
             fontSize: textBlock.fontSize.toString() + 'px',
@@ -54,7 +55,7 @@ function Text(props: TextProps) {
             }
         }
 
-        if (elemInArray(props.idsSelectedBlocks, props.block.id)) {
+        if (props.idsSelectedBlocks.includes(props.block.id)) {
             textBlockStyle = {
                 ...textBlockStyle,
                 border: '1px solid #000',

@@ -1,0 +1,24 @@
+.menuContextContainer {
+   z-index: 99;
+}
+
+.btnDelete {
+   all: unset;
+   padding: 2px 25px;
+   font-size: 15px;
+   background-color: #FFDDFC;
+   z-index: 99;
+}
+
+.btnDelete:hover {
+   background-color: #D29CFF;
+}
+
+.background {
+   position: fixed;
+   top: 0;
+   left: 0;
+   z-index: 98;
+   width: 100vw;
+   height: 100vh;
+}

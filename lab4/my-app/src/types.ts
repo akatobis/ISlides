@@ -18,7 +18,7 @@ type SlideType = {
 
 type Block = {
   id: string;
-  content: TextBlock | Image | Figure;
+  content: TextBlock | ImageType | Figure;
   coordinatesX: number;
   coordinatesY: number;
   width: number;
@@ -45,7 +45,7 @@ enum TextStyles {
   underline,
 }
 
-type Image = {
+type ImageType = {
   typeBlock: TypeBlock.image;
   imageBase64: string;
 };
@@ -91,7 +91,7 @@ export {
   type SlideType,
   type Block,
   type TextBlock,
-  type Image,
+  type ImageType,
   type Figure,
   type Ellipse,
   type Rectangle,

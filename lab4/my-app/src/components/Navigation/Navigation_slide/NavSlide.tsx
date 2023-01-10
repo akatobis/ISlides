@@ -28,7 +28,7 @@ const NavSlide = (props: NavigationSlideProps) => {
         border:'none',
         margin:'0px 0px 0px 10px',
     }
-    if ( props.idsSelectedSlides.includes(props.slide.id)) {
+    if (props.idsSelectedSlides.includes(props.slide.id)) {
         navSlideStyle = {
             border: '2px solid #6600BA',
         }

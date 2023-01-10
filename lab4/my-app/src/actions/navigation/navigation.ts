@@ -34,25 +34,27 @@ export function addNewSlide(oldPresentationMaker: PresentationMaker): Presentati
     }
 }
 
-export function moveSlides(oldPresentationMaker: PresentationMaker, insertionIndex: number): PresentationMaker {
-    const slides: SlideType[] = [...oldPresentationMaker.presentation.slides]
 
+export function moveSlides(oldPresentationMaker: PresentationMaker, idInsertionSlide: string): PresentationMaker {
+    const slides: SlideType[] = [...oldPresentationMaker.presentation.slides];
+
+    let indexInsertionSlide: number = 0;
+    slides.forEach((slide) => {
+        if (slide.id === idInsertionSlide) {
+            indexInsertionSlide = slides.indexOf(slide);
+        }
+    });
+ 
     const movableSlides: SlideType[] = slides.filter((slide) => {
         return oldPresentationMaker.idsSelectedSlides.indexOf(slide.id) !== -1;
     })
-
-    let inIndex: number = insertionIndex;
-
+ 
     movableSlides.forEach((slide) => {
-        if (inIndex >= slides.indexOf(slide)) {
-            inIndex--;
-        }
         slides.splice(slides.indexOf(slide), 1);
-        inIndex++;
     });
-
-    slides.splice(insertionIndex, 0, ...movableSlides)
-
+ 
+    slides.splice(indexInsertionSlide, 0, ...movableSlides);
+ 
     return {
         ...oldPresentationMaker,
         presentation: {

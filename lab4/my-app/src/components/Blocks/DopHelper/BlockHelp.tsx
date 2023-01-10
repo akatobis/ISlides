@@ -1,12 +1,12 @@
 import {SlideBlock} from "../Block/Block";
 import styles from './BlockHelp.module.css'
 import {Block} from "../../../types";
-import React, {CSSProperties} from 'react'
+import React, {CSSProperties, useState} from 'react'
 import {selectBlock} from "../../../actions/block";
 import {dispatch} from "../../../state";
 import useDragAndDrop from "../../../hooks/useDragAndDrop";
 import useResizer from "../../../hooks/useResizer";
-import { elemInArray } from "../../../auxiliaryFunctions";
+import ContextMenu from "./ContextMenu/ContextMenu";
 
 type propsBlockHelp = {
     idsSelectedBlocks: string[],
@@ -16,6 +16,21 @@ type propsBlockHelp = {
 }
 
 export function BlockHelper(props:propsBlockHelp) {
+     const [contextMenu, setContextMenu] = useState(false);
+
+    function handleContextMenu(): void {
+        setContextMenu(!contextMenu);
+    }
+
+    const [pointsContextMenu, setPointsContextMenu] = useState({ x: 0, y: 0, });
+
+    function handlePointsContextMenu(top: number, left: number): void {
+        setPointsContextMenu({
+            x: left,
+            y: top,
+        })
+    }
+    
     const [pos,setPos] = React.useState<
     {
         x: number,
@@ -83,7 +98,7 @@ export function BlockHelper(props:propsBlockHelp) {
     })
 
     let dragStyle = {} as CSSProperties;
-    if (!elemInArray(props.idsSelectedBlocks, props.block.id)) {
+    if (!props.idsSelectedBlocks.includes(props.block.id)) {
         dragStyle = {
             border: "none",
             width: "0px",
@@ -202,23 +217,15 @@ export function BlockHelper(props:propsBlockHelp) {
             <div className={styles.block}  ref={ref} onClick={()=>{
                 if(!props.idsSelectedBlocks.includes(props.block.id))
                     dispatch(selectBlock,props.block.id)
+            }} onContextMenu={(e) => {
+                    e.preventDefault();
+                    // dispatch(selectBlock,props.block.id)
+                    handleContextMenu();
+                    handlePointsContextMenu(e.pageY, e.pageX);
             }}>
                 <SlideBlock slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
+                {contextMenu && (<ContextMenu top={pointsContextMenu.y} left={pointsContextMenu.x} handleContextMenu={handleContextMenu} />)}
             </div>
         </div>
     )
-
-    /*return (
-        <div id={props.block.id} className={styles.resizeable} style={
-            {
-            position: "absolute",
-                ...blockStyle
-
-        }}>
-            <div className={styles.block}  ref={ref}
-                onMouseDown={()=>{ if (props.from !== "navigation") {dispatch(selectBlock, props.block.id)}}}>
-                <SlideBlock slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
-            </div>
-        </div>
-)*/
 }

@@ -1,16 +1,15 @@
-import {elemInArray} from "../auxiliaryFunctions";
 import {v4 as uuidv4} from "uuid";
 import {
-   Block,
-   Figure,
-   FigureType,
-   Image,
-   Presentation,
-   PresentationMaker,
-   SlideType,
-   TextBlock,
-   TextStyles,
-   TypeBlock
+  Block,
+  Figure,
+  FigureType,
+  ImageType,
+  Presentation,
+  PresentationMaker,
+  SlideType,
+  TextBlock,
+  TextStyles,
+  TypeBlock,
 } from "../types";
 
 function selectBlock(oldPresentationMaker: PresentationMaker, idSelectedBlock: string): PresentationMaker {
@@ -31,10 +30,10 @@ function selectBlock(oldPresentationMaker: PresentationMaker, idSelectedBlock: s
    }
 }
 
-function addImage(img: string): Image {
+function addImage(img: string): ImageType {
    return {
-     typeBlock: TypeBlock.image,
-     imageBase64: img,
+      typeBlock: TypeBlock.image,
+      imageBase64: img,
    };
 }
 
@@ -91,57 +90,68 @@ function createFigure(figureType: FigureType): Figure {
    };
 }
 
-function addBlock(oldPresentationMaker: PresentationMaker, { img, figureType }: { img?: string; figureType?: FigureType }): PresentationMaker {
-   console.log(figureType);
-   let contentNewBlock!: Image | TextBlock | Figure;
-   if (img) {
-      contentNewBlock = addImage(img);
-   } else if (figureType === 0 || figureType === 1 || figureType === 2) {
-      contentNewBlock = createFigure(figureType);
-   } else {
-      contentNewBlock = createTextBlock();
-   }
-
-   const idNewBlock: string = uuidv4();
-   const newBlock: Block = {
+function addBlock(oldPresentationMaker: PresentationMaker,{ img, figureType, aspectRatioImg,}: { img?: string; figureType?: FigureType; aspectRatioImg?: number }): PresentationMaker {
+  const idNewBlock: string = uuidv4();
+  let newBlock: Block;
+  if (img) {
+    newBlock = {
       id: idNewBlock,
-      content: contentNewBlock,
-      coordinatesX: 500,
-      coordinatesY: 500,
+      content: addImage(img),
+      coordinatesX: 900,
+      coordinatesY: 400,
+      width: aspectRatioImg ? 100 * aspectRatioImg : 100,
+      height: 100,
+    };
+  } else if (figureType === 0 || figureType === 1 || figureType === 2) {
+    newBlock = {
+      id: idNewBlock,
+      content: createFigure(figureType),
+      coordinatesX: 750,
+      coordinatesY: 400,
       width: 100,
       height: 100,
-   };
+    };
+  } else {
+    newBlock = {
+      id: idNewBlock,
+      content: createTextBlock(),
+      coordinatesX: 500,
+      coordinatesY: 400,
+      width: 200,
+      height: 30,
+    };
+  }
 
-   const oldPresentation: Presentation = oldPresentationMaker.presentation;
-   const oldSlides: SlideType[] = oldPresentation.slides;
-   const idSelectedSlide: string = oldPresentationMaker.idsSelectedSlides[0];
+  const oldPresentation: Presentation = oldPresentationMaker.presentation;
+  const oldSlides: SlideType[] = oldPresentation.slides;
+  const idSelectedSlide: string = oldPresentationMaker.idsSelectedSlides[0];
 
-   const selectedSlide: SlideType = oldSlides.filter((slide) => {
-      return idSelectedSlide === slide.id;
-   })[0];
+  const selectedSlide: SlideType = oldSlides.filter((slide) => {
+    return idSelectedSlide === slide.id;
+  })[0];
 
-   const oldBlocks: Block[] = selectedSlide.blocks;
+  const oldBlocks: Block[] = selectedSlide.blocks;
 
-   const newSlides: SlideType[] = oldSlides.map((slide) => {
-      if (slide.id === idSelectedSlide) {
-         return {
-         ...selectedSlide,
-         blocks: [...oldBlocks, newBlock],
-         };
-      }
-      return slide;
-   });
+  const newSlides: SlideType[] = oldSlides.map((slide) => {
+    if (slide.id === idSelectedSlide) {
+      return {
+        ...selectedSlide,
+        blocks: [...oldBlocks, newBlock],
+      };
+    }
+    return slide;
+  });
 
-   const newPresentation: Presentation = {
-      ...oldPresentation,
-      slides: newSlides,
-   };
+  const newPresentation: Presentation = {
+    ...oldPresentation,
+    slides: newSlides,
+  };
 
-   return {
-      ...oldPresentationMaker,
-      presentation: newPresentation,
-      idsSelectedBlocks: [idNewBlock],
-   };
+  return {
+    ...oldPresentationMaker,
+    presentation: newPresentation,
+    idsSelectedBlocks: [idNewBlock],
+  };
 }
 
 function deleteBlocks(oldPresentationMaker: PresentationMaker): PresentationMaker {
@@ -154,7 +164,7 @@ function deleteBlocks(oldPresentationMaker: PresentationMaker): PresentationMake
    let idsSelectedBlocks: string[] = oldPresentationMaker.idsSelectedBlocks;
    let oldBlocks: Block[] = selectedSlide.blocks;
    let newBlocks: Block[] = oldBlocks.filter((block) => {
-      return !elemInArray(idsSelectedBlocks, block.id);
+      return !idsSelectedBlocks.includes(block.id);
    });
 
    const newSlides: SlideType[] = oldSlides.map((slide) => {
@@ -194,7 +204,7 @@ function changeText(oldPresentationMaker: PresentationMaker, text: string): Pres
    let idSelectedBlock: string[] = oldPresentationMaker.idsSelectedBlocks;
    let oldBlocks: Block[] = selectedSlide.blocks;
    let newBlocks: Block[] = oldBlocks.map((block) => {
-      if (elemInArray(idSelectedBlock, block.id)) {
+      if (idSelectedBlock.includes(block.id)) {
          const oldTextBlock = block.content
          return {
             ...block,
@@ -236,7 +246,7 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
    let oldBlocks: Block[] = selectedSlide.blocks;
 
    let newBlocks: Block[] = oldBlocks.map((block) => {
-      if (elemInArray(idsSelectedBlocks, block.id)) {
+      if (idsSelectedBlocks.includes(block.id)) {
          if (block.content.typeBlock === TypeBlock.text) {
             const oldTextBlock: TextBlock = block.content;
             let newTextBlock: TextBlock = {...oldTextBlock};
@@ -406,6 +416,7 @@ function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsTypeRes
       },
    }
 }
+
 
 export {
    moveBlock,

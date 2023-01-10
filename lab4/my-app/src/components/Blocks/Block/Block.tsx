@@ -1,11 +1,9 @@
-import {elemInArray} from "../../../auxiliaryFunctions";
 import {Block, FigureType, TypeBlock, Figure} from "../../../types";
 import {Ellipse} from "./Figures/Ellipse";
 import {Rectangle} from "./Figures/Rectangle";
 import {Triangle} from "./Figures/Triangle";
 import styles from "./Block.module.css";
 import {Text} from "./Text/Text";
-import {useMousePress} from "../../../shortcuts";
 
 type BlockProps = {
     block: Block,
@@ -14,7 +12,6 @@ type BlockProps = {
 }
 
 const SlideBlock = (props: BlockProps) => {
-    /*useMousePress(props.slideId ,props.block.id, "block", document.getElementById(props.block.id));*/
 
     let textBlockStyle = {};
     if (props.block.content.typeBlock === TypeBlock.text) {
@@ -50,7 +47,7 @@ const SlideBlock = (props: BlockProps) => {
             }
         }
 
-        if (elemInArray(props.idsSelectedBlocks, props.block.id) || props.block.content.innerString === '' || props.block.content.innerString === undefined) {
+        if (props.idsSelectedBlocks.includes(props.block.id) || props.block.content.innerString === '' || props.block.content.innerString === undefined) {
             textBlockStyle = {
                 ...textBlockStyle,
                 border: '1px solid #000',
@@ -92,8 +89,7 @@ const SlideBlock = (props: BlockProps) => {
             <img style={{
                 width: props.block.width,
                 height: props.block.height,
-                zIndex: -1,
-                pointerEvents: 'none'
+                zIndex: 1,
             }} 
             src={props.block.content.imageBase64} alt=""></img>
         );

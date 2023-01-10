@@ -25,7 +25,7 @@ function Slide(props: SlideProps) {
     if (props.slide.backgroundImage !== "") {
         slideStyle = {
             background: '',
-            backgroundImage: props.slide.backgroundImage,
+            backgroundImage: `url(${props.slide.backgroundImage})`,
         } as CSSProperties;
     }
 

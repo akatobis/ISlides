@@ -1,12 +1,12 @@
 import logo from "../../images/logoISlides.svg";
 import arrowDown from "../../images/arrow_down.svg";
-import {useState, useEffect} from "react";
-import styles from "./ToolsPanel.module.css"
+import {useState} from "react";
+import styles from "./ToolsPanel.module.css";
 import {deleteSlides} from "../../actions/slide";
 import {dispatch, rollBack, returnCancel, getState, setState} from "../../state";
 import {addBlock, changeStyleText} from "../../actions/block";
 import {addNewSlide} from "../../actions/navigation/navigation";
-import {Block, Figure, FigureType, PresentationMaker, SlideType, TextBlock, TextStyles, TypeBlock, Image} from "../../types";
+import {Block, Figure, FigureType, PresentationMaker, SlideType, TextBlock, TextStyles, TypeBlock, ImageType} from "../../types";
 import {changeColorFigure} from "../../actions/figure/figure";
 import { PopupBackgroundColor } from "./PopupBackgroundColor/PopupBackgroundColor";
 import SetColor from "./SetColor/SetColor";
@@ -42,13 +42,12 @@ function ToolsPanel() {
     const [isOpenPopupTextColor, setIsOpenPopupTextColor] = useState(false);
     const handleOpenPopupTextColor = () => setIsOpenPopupTextColor(!isOpenPopupTextColor);
 
+    function verifyExtensionImg(file: any): boolean {
+        const extensionSelectedFile = file.type.split("/").pop();
+        return extensionSelectedFile === "png" || extensionSelectedFile === "jpg" || extensionSelectedFile === "jpeg" || extensionSelectedFile === "svg";
+    }
+
     function downloadImg(input: any): any {
-
-        function verifyExtensionImg(file: any): boolean {
-            const extensionSelectedFile = file.type.split("/").pop();
-            return extensionSelectedFile === "png" || extensionSelectedFile === "jpg" || extensionSelectedFile === "jpeg" || extensionSelectedFile === "svg";
-        }
-
         const imgFile = input.files[0];
 
         if (!verifyExtensionImg(imgFile)) {
@@ -58,12 +57,17 @@ function ToolsPanel() {
         const reader = new FileReader();
         reader.readAsDataURL(imgFile);
         reader.onload = () => {
-            if (reader.result) {
-                input.value = '';
-                dispatch(addBlock, {img: reader.result.toString()})
-            } else {
-                console.log("Ошибка обработки файла");
-            }
+            const img: HTMLImageElement = new Image();
+            img.src = window.URL.createObjectURL(imgFile)
+            img.onload = function () {
+                if (reader.result) {
+                    input.value = '';
+                    const aspectRatioImg = img.width / img.height;
+                    dispatch(addBlock, {img: reader.result.toString(), aspectRatioImg: aspectRatioImg})
+                } else {
+                    console.log("Ошибка обработки файла");
+                }
+            };
         };
         reader.onerror = () => {
             console.log("Ошибка открытия файла");
@@ -120,22 +124,112 @@ function ToolsPanel() {
         file.value = '';
     }
 
-    let coordinatesSlides: DOMRect;
-    useEffect(() =>  {
-        const slide = document.querySelector('#slide');
-        if (slide === null) {
-            return;
+    function getExtensionImg(base64: string): string {
+        const extensionImg = base64.split("/").pop();
+        if (extensionImg === 'jpg' || extensionImg === 'jpeg') {
+            return 'JPEG';
         }
-        coordinatesSlides = slide.getBoundingClientRect();
-        console.log(coordinatesSlides);
-    })
+        if (extensionImg === 'png') {
+            return 'PNG';
+        } 
+        return '';
+    }
+
+    function addBackgroundSlideToPdfPage(doc: jsPDF, slide: SlideType, widthPage: number, heightPage: number): void {
+        if (slide.backgroundImage !== '') {
+            const extensionImg = getExtensionImg(slide.backgroundImage);
+            doc.addImage(slide.backgroundImage, extensionImg, 0, 0, widthPage, heightPage)
+        }
+        if (slide.backgroundColor !== '') {
+            doc.setFillColor(slide.backgroundColor);
+            doc.rect(0, 0, widthPage, heightPage, 'F');
+        }
+    }
+
+    function addImgToPdfPage(doc: jsPDF, img: ImageType, blockCoordinateXToPdfPages: number, blockCoordinateYToPdfPages: number, blockWidthToPdfPages: number, blockHeigthToPdfPages: number) {
+        const extensionImg = getExtensionImg(img.imageBase64);
+        doc.addImage(img.imageBase64, extensionImg, blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages, blockHeigthToPdfPages);
+    }
+
+    function getTextWidth(text: string, font: string, fontSize: number): number {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        if (!context) { return 0; }
+
+        context.font = `${fontSize}px ${font}`;
+        context.fillText(text, 0, 0);
+
+        return context.measureText(text).width;
+    }
+
+    function addTextToPdfPage(doc: jsPDF, text: TextBlock, blockCoordinateXToPdfPages: number, blockCoordinateYToPdfPages: number, rationX: number, blockWidthToPdfPages: number, blockHeigthToPdfPages: number): void {
+        doc.addFont(text.font, text.font, 'normal');
+        doc.setFont(text.font);
+        doc.setFontSize(text.fontSize);
+        doc.setTextColor(text.color);
+        doc.text(text.innerString, blockCoordinateXToPdfPages, blockCoordinateYToPdfPages);
+    }
+
+    function addFigureToPdfPage(doc: jsPDF, figure: Figure, blockCoordinateXToPdfPages: number, blockCoordinateYToPdfPages: number, blockWidthToPdfPages: number, blockHeigthToPdfPages: number) {
+        const typeFigure = figure.type;
+        doc.setFillColor(figure.colorFill);
+        doc.setDrawColor(figure.colorBorder);
+
+        if (typeFigure.figureType === FigureType.ellipse) {
+            doc.ellipse(blockCoordinateXToPdfPages + blockWidthToPdfPages/2, blockCoordinateYToPdfPages + blockHeigthToPdfPages/2, blockWidthToPdfPages/2, blockHeigthToPdfPages/2, 'FD');
+        }
+        if (typeFigure.figureType === FigureType.rectangle) {
+            doc.rect(blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages, blockHeigthToPdfPages, 'FD');
+        }
+        if (typeFigure.figureType === FigureType.triangle) {
+            const x1: number = blockCoordinateXToPdfPages + blockWidthToPdfPages / 2;
+            const y1: number = blockCoordinateYToPdfPages;
+            const x2: number = blockCoordinateXToPdfPages;
+            const y2: number = blockCoordinateYToPdfPages + blockHeigthToPdfPages;
+            const x3: number = blockCoordinateXToPdfPages + blockWidthToPdfPages;
+            const y3: number = blockCoordinateYToPdfPages + blockHeigthToPdfPages;
+            doc.triangle(x1, y1, x2, y2, x3, y3, 'FD');
+        }
+    }
+
+    function addBlocksToPdfPage(doc: jsPDF, blocks: Block[], coordinatesSlides: DOMRect, rationX: number, rationY: number): void {
+        blocks.forEach(block => {
+            const blockCoordinateXRelaiveToSlide = block.coordinatesX - coordinatesSlides.x;
+            const blockCoordinateYRelaiveToSlide = block.coordinatesY - coordinatesSlides.y;
+
+            const blockCoordinateXToPdfPages = blockCoordinateXRelaiveToSlide * rationX;
+            const blockCoordinateYToPdfPages = blockCoordinateYRelaiveToSlide * rationY;
+            const blockWidthToPdfPages = block.width * rationX;
+            const blockHeigthToPdfPages = block.height * rationY;
+
+            const contentBlock: TextBlock | ImageType | Figure = block.content;
+            if (contentBlock.typeBlock === TypeBlock.image) {
+                addImgToPdfPage(doc, contentBlock, blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages, blockHeigthToPdfPages);
+            }
+            if (contentBlock.typeBlock === TypeBlock.text) {
+                addTextToPdfPage(doc, contentBlock, blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, rationX, blockWidthToPdfPages, blockHeigthToPdfPages)
+            }
+            if (contentBlock.typeBlock === TypeBlock.figure) {
+                addFigureToPdfPage(doc, contentBlock, blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages, blockHeigthToPdfPages);
+            }
+        })
+    }
 
     function exportPresentationToPDF(): void {
+        const slide = document.querySelector('#slide');
+        if (slide === null) { return }
+        const coordinatesSlides: DOMRect = slide.getBoundingClientRect();
+
         const presentationMaker: PresentationMaker = getState();
         const slides: SlideType[] = presentationMaker.presentation.slides;
 
         const widthPage: number = 1920;
         const heightPage: number = 1080;
+
+        const widthSlide: number = coordinatesSlides.right - coordinatesSlides.left;
+        const heigthSlide: number = coordinatesSlides.bottom - coordinatesSlides.top;
+        const rationX: number = widthPage / widthSlide;
+        const rationY: number = heightPage / heigthSlide;
 
         const doc = new jsPDF({
             orientation: "landscape",
@@ -143,66 +237,13 @@ function ToolsPanel() {
             format: [heightPage, widthPage],
         });
 
-        const widthSlide: number = coordinatesSlides.right - coordinatesSlides.left;
-        const heigthSlide: number = coordinatesSlides.bottom - coordinatesSlides.top;
-        const rationX: number = widthPage / widthSlide;
-        const rationY: number = heightPage / heigthSlide;
-
         slides.forEach(slide => {
-            if (slide.backgroundImage !== '') {
-                doc.addImage(slide.backgroundImage, 'JPEG', 0, 0, widthPage, heightPage)
-            }
-            if (slide.backgroundColor !== '') {
-                doc.setFillColor(slide.backgroundColor);
-                doc.rect(0, 0, widthPage, heightPage, 'F');
-            }
-            
-            const blocks: Block[] = slide.blocks;
-            blocks.forEach(block => {
-                const blockCoordinateXRelaiveToSlide = block.coordinatesX - coordinatesSlides.x;
-                const blockCoordinateYRelaiveToSlide = block.coordinatesY - coordinatesSlides.y;
-
-                const blockCoordinateXToPdfPages = blockCoordinateXRelaiveToSlide * rationX;
-                const blockCoordinateYToPdfPages = blockCoordinateYRelaiveToSlide * rationY;
-                const blockWidthToPdfPages = block.width * rationX;
-                const blockHeigthToPdfPages = block.height * rationY;
-
-                const contentBlock: TextBlock | Image | Figure = block.content;
-                if (contentBlock.typeBlock === TypeBlock.image) {
-                    doc.addImage(contentBlock.imageBase64, 'JPEG', blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages, blockHeigthToPdfPages);
-                }
-                if (contentBlock.typeBlock === TypeBlock.text) {
-                    doc.setFont(contentBlock.font);
-                    doc.setFontSize(contentBlock.fontSize * rationX);
-                    doc.setTextColor(contentBlock.color);
-                    // doc.setFontStyle()
-                    doc.text(contentBlock.innerString, blockCoordinateXToPdfPages, blockCoordinateYToPdfPages);
-                }
-                if (contentBlock.typeBlock === TypeBlock.figure) {
-                    const typeFigure = contentBlock.type;
-                    doc.setFillColor(contentBlock.colorFill);
-                    doc.setDrawColor(contentBlock.colorBorder);
-
-                    if (typeFigure.figureType === FigureType.ellipse) {
-                        doc.ellipse(blockCoordinateXToPdfPages + blockWidthToPdfPages/2, blockCoordinateYToPdfPages + blockHeigthToPdfPages/2, blockWidthToPdfPages/2, blockHeigthToPdfPages/2, 'FD');
-                    }
-                    if (typeFigure.figureType === FigureType.rectangle) {
-                        doc.rect(blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages, blockHeigthToPdfPages, 'FD');
-                    }
-                    if (typeFigure.figureType === FigureType.triangle) {
-                        const x1: number = blockCoordinateXToPdfPages + blockWidthToPdfPages / 2;
-                        const y1: number = blockCoordinateYToPdfPages;
-                        const x2: number = blockCoordinateXToPdfPages;
-                        const y2: number = blockCoordinateYToPdfPages + blockHeigthToPdfPages;
-                        const x3: number = blockCoordinateXToPdfPages + blockWidthToPdfPages;
-                        const y3: number = blockCoordinateYToPdfPages + blockHeigthToPdfPages;
-                        doc.triangle(x1, y1, x2, y2, x3, y3, 'FD');
-                    }
-                }
-            })
+            addBackgroundSlideToPdfPage(doc, slide, widthPage, heightPage);
+            addBlocksToPdfPage(doc, slide.blocks, coordinatesSlides, rationX, rationY);
             doc.addPage();
         });
         doc.deletePage(slides.length + 1);
+
         doc.save(`${namePresentation}.pdf`);
     }
 
