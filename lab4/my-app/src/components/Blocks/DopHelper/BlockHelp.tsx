@@ -130,8 +130,8 @@ export function BlockHelper(props:propsBlockHelp) {
     } else {
         id += "-nav";
         let slideCoordinates = {} as DOMRect;
-        if (document.getElementById(props.slideId)) {
-            slideCoordinates = document.getElementById(props.slideId)!.getBoundingClientRect();
+        if (document.getElementById("slide")) {
+            slideCoordinates = document.getElementById("slide")!.getBoundingClientRect();
         }
         blockStyle = {
             position: "absolute",
