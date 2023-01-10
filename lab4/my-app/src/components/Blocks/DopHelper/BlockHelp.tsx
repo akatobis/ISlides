@@ -221,11 +221,12 @@ export function BlockHelper(props:propsBlockHelp) {
             </div>
             <div className={styles.block}  ref={ref} onClick={(event)=>{
                 if(!props.idsSelectedBlocks.includes(props.block.id))
-                    if (!event.ctrlKey){
+                {
+                    if (!event.ctrlKey)
                         dispatch(selectBlock,props.block.id)
-                    }
                     if(event.ctrlKey)
                         dispatch(selectBlocks,props.block.id)
+                }
             }} onContextMenu={(e) => {
                     e.preventDefault();
                     // dispatch(selectBlock,props.block.id)

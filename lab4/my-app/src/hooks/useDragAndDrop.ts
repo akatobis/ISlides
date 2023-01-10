@@ -59,7 +59,7 @@ function useDragAndDrop(props: propsUseDragAndDrop): void {
       if (!Moved.current) {
         setTimeout(() => {
           dispatch(selectBlock, props.block.id);
-        }, 100);
+        }, 150);
         return;
       }
       Moved.current = false;
