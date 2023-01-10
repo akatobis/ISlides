@@ -163,28 +163,11 @@ function ToolsPanel() {
     }
 
     function addTextToPdfPage(doc: jsPDF, text: TextBlock, blockCoordinateXToPdfPages: number, blockCoordinateYToPdfPages: number, rationX: number, blockWidthToPdfPages: number, blockHeigthToPdfPages: number): void {
-        // doc.addFont(text.font, text.font, 'normal');
-        // doc.setFont(text.font);
-        // doc.setFontSize(text.fontSize);
-        // doc.setTextColor(text.color);
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        if (!context) { return }
-
-        if (text.isBold) {
-            context.font = `bold ${text.fontSize * rationX}px ${text.font}`;
-        }
-        if (text.isItalic) {
-            context.font = `italic ${text.fontSize * rationX}px ${text.font}`;
-        }
-        if (text.isItalic && text.isBold) {
-            context.font = `italic bold ${text.fontSize * rationX}px ${text.font}`;
-        }
-        context.fillText(text.innerString, blockCoordinateXToPdfPages + 2, blockCoordinateYToPdfPages + 2, blockWidthToPdfPages);
-
-        const imgCanvas = canvas.toDataURL('image/png');
-        doc.addImage(imgCanvas, "PNG", blockCoordinateXToPdfPages, blockCoordinateYToPdfPages, blockWidthToPdfPages, blockHeigthToPdfPages)
-        // doc.text(text.innerString, blockCoordinateXToPdfPages, blockCoordinateYToPdfPages);
+        doc.addFont(text.font, text.font, 'normal');
+        doc.setFont(text.font);
+        doc.setFontSize(text.fontSize);
+        doc.setTextColor(text.color);
+        doc.text(text.innerString, blockCoordinateXToPdfPages, blockCoordinateYToPdfPages);
     }
 
     function addFigureToPdfPage(doc: jsPDF, figure: Figure, blockCoordinateXToPdfPages: number, blockCoordinateYToPdfPages: number, blockWidthToPdfPages: number, blockHeigthToPdfPages: number) {

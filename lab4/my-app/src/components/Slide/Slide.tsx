@@ -89,7 +89,7 @@ function Slide(props: SlideProps) {
     }
 
     return (
-        <div className={styles.slide} style={slideStyle} id={id} onClick={() => removeSelectionBlock()}>
+        <div className={styles.slide} style={slideStyle} id={id}>
             <Blocks slideId={props.slide.id} blocks={props.slide.blocks} idsSelectedBlocks={props.idsSelectedBlocks}
                     from={props.from}/>
         </div>

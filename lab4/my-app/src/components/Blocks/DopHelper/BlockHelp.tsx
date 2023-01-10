@@ -214,16 +214,15 @@ export function BlockHelper(props:propsBlockHelp) {
                 }}>
                 <div ref={refBottom} className={styles.resizer_b} style={dragStyle}></div>
             </div>
-            <div className={styles.block}  ref={ref} onClick={(e)=>{
-                e.stopPropagation();
-                dispatch(selectBlock, props.block.id)
-            }} 
-            onContextMenu={(e) => {
+            <div className={styles.block}  ref={ref} onClick={()=>{
+                if(!props.idsSelectedBlocks.includes(props.block.id))
+                    dispatch(selectBlock,props.block.id)
+            }} onContextMenu={(e) => {
                     e.preventDefault();
+                    // dispatch(selectBlock,props.block.id)
                     handleContextMenu();
                     handlePointsContextMenu(e.pageY, e.pageX);
-            }}
-            >
+            }}>
                 <SlideBlock slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
                 {contextMenu && (<ContextMenu top={pointsContextMenu.y} left={pointsContextMenu.x} handleContextMenu={handleContextMenu} />)}
             </div>
