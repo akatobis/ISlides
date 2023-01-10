@@ -2,7 +2,7 @@ import {SlideBlock} from "../Block/Block";
 import styles from './BlockHelp.module.css'
 import {Block} from "../../../types";
 import React, {CSSProperties, useState} from 'react'
-import {selectBlock} from "../../../actions/block";
+import {selectBlocks, selectBlock} from "../../../actions/block";
 import {dispatch} from "../../../state";
 import useDragAndDrop from "../../../hooks/useDragAndDrop";
 import useResizer from "../../../hooks/useResizer";
@@ -122,6 +122,7 @@ export function BlockHelper(props:propsBlockHelp) {
             width: "0px",
             height: "0px",
             position:"absolute",
+            zIndex: 10,
         }
     } else {
         borderStyle = {
@@ -130,6 +131,7 @@ export function BlockHelper(props:propsBlockHelp) {
             justifyContent: `center`,
             alignItems: `center`,
             position:"absolute",
+            zIndex: 1,
         }
     }
 
@@ -166,7 +168,6 @@ export function BlockHelper(props:propsBlockHelp) {
                 ...blockStyle,
                 ...dragStyle,
                 position: "absolute",
-                zIndex: 10,
             }
         }>
             <div style={
@@ -218,9 +219,13 @@ export function BlockHelper(props:propsBlockHelp) {
                 }}>
                 <div ref={refBottom} className={styles.resizer_b} style={dragStyle}></div>
             </div>
-            <div className={styles.block}  ref={ref} onClick={()=>{
+            <div className={styles.block}  ref={ref} onClick={(event)=>{
                 if(!props.idsSelectedBlocks.includes(props.block.id))
-                    dispatch(selectBlock,props.block.id)
+                    if (!event.ctrlKey){
+                        dispatch(selectBlock,props.block.id)
+                    }
+                    if(event.ctrlKey)
+                        dispatch(selectBlocks,props.block.id)
             }} onContextMenu={(e) => {
                     e.preventDefault();
                     // dispatch(selectBlock,props.block.id)

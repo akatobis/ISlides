@@ -72,6 +72,8 @@ function useDragAndDrop(props: propsUseDragAndDrop): void {
 
     const onMouseMove = (e: MouseEvent) => {
       if (!isClicked.current) return;
+      if(!props.idsSelectedBlocks.includes(props.block.id))
+        return;
       e.preventDefault();
       setTimeout(() => {
         Moved.current = true;

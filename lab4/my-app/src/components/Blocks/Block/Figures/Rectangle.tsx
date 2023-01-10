@@ -8,7 +8,7 @@ type FigureProps = {
 
 const Rectangle = (props: FigureProps) => {
     return (
-        <svg width={props.block.width} height={props.block.height}>
+        <svg width={props.block.width} height={props.block.height} >
             <polygon
                 points={props.figure.border + "," + (props.block.height - props.figure.border) + " " + (props.block.width / 2) + "," + props.figure.border + " " + (props.block.width - props.figure.border) + "," + (props.block.height - props.figure.border)}
                 stroke={props.figure.colorBorder}
