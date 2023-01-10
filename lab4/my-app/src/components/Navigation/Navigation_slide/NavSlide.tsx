@@ -77,7 +77,7 @@ const NavSlide = (props: NavigationSlideProps) => {
                 onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
                     dispatch(removeBlockSelection, {});
                     if (e.button === 0 && !e.ctrlKey){
-                        dispatch(selectSlide, props.slide.id);
+                        dispatch(selectSlide, props.slide.id)
                     }
                 }}
             >

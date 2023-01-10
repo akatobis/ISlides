@@ -321,45 +321,36 @@ function changeStyleText(oldPresentationMaker: PresentationMaker, { newTextStyle
 type propsType = {rejectedCoordinateX: number, rejectedCoordinateY: number,id:string}
 
 function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): PresentationMaker {
-   let newSlides: SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
-   let numberSlide = 0;
-   for(let i = 0;i < oldPresentationMaker.presentation.slides.length;i++)
-   {
-       if(oldPresentationMaker.idsSelectedSlides[oldPresentationMaker.idsSelectedSlides.length - 1] == oldPresentationMaker.presentation.slides[i].id)
-       {
-           numberSlide = i;
-           break;
-       }
-       newSlides[i] = oldPresentationMaker.presentation.slides[i];
-   }
-   let insertedNewBlock = false;
-   let newBlocks: Block[] = new Array(oldPresentationMaker.presentation.slides[numberSlide].blocks.length);
-   for(let int = 0;int < oldPresentationMaker.presentation.slides[numberSlide].blocks.length; int++)
-   {
-      if(oldPresentationMaker.presentation.slides[numberSlide].blocks[int].id == props.id)
+   let newSlides: SlideType[] = [];
+   oldPresentationMaker.presentation.slides.forEach(slide=>{
+      if(slide.id === oldPresentationMaker.idsSelectedSlides[oldPresentationMaker.idsSelectedSlides.length - 1])
       {
-          newBlocks[int] = {
-              ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
-              coordinatesX : props.rejectedCoordinateX,
-              coordinatesY : props.rejectedCoordinateY,
-          };
-          insertedNewBlock = true;
+         let newBlocks: Block[] = []
+         slide.blocks.forEach(block=>{
+            if(block.id === props.id)
+            {
+               newBlocks.push(
+               {
+                  ...block,
+                  coordinatesX : props.rejectedCoordinateX,
+                  coordinatesY : props.rejectedCoordinateY,
+               })
+            }
+            if(block.id !== props.id)
+            {
+               newBlocks.push(block)
+            }
+         })
+         newSlides.push({
+            ...slide,
+            blocks: newBlocks,
+         })
       }
-       if(!insertedNewBlock) newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int];
-       insertedNewBlock = false;
-   }
-
-   const newSlide: SlideType = {
-       ...oldPresentationMaker.presentation.slides[numberSlide],
-       blocks: [] = newBlocks,
-   }
-
-   newSlides[numberSlide] = newSlide;
-
-   for(let i = numberSlide + 1;i < oldPresentationMaker.presentation.slides.length;i++)
-   {
-       newSlides[i] = oldPresentationMaker.presentation.slides[i];
-   }
+      if(slide.id !== oldPresentationMaker.idsSelectedSlides[oldPresentationMaker.idsSelectedSlides.length - 1])
+      {
+         newSlides.push(slide)
+      }
+   })
 
    return {
        ...oldPresentationMaker,
@@ -373,56 +364,45 @@ function moveBlock(oldPresentationMaker: PresentationMaker, props:propsType): Pr
 type propsTypeResize = {width: number, height: number, id: string, rejectedCoordinateX: number, rejectedCoordinateY: number}
 
 function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsTypeResize): PresentationMaker {
-   let newSlides:SlideType[] = new Array(oldPresentationMaker.presentation.slides.length);
-   let numberSlide = 0;
-   for(let i = 0;i < oldPresentationMaker.presentation.slides.length;i++)
-   {
-       if(oldPresentationMaker.idsSelectedSlides[oldPresentationMaker.idsSelectedSlides.length - 1] == oldPresentationMaker.presentation.slides[i].id)
-       {
-           numberSlide = i;
-           break;
-       }
-       newSlides[i] = oldPresentationMaker.presentation.slides[i];
-   }
-   let insertedNewBlock = false;
-   let newBlocks:Block[] = new Array(oldPresentationMaker.presentation.slides[numberSlide].blocks.length);
-   for(let int = 0;int < oldPresentationMaker.presentation.slides[numberSlide].blocks.length;int++)
-   {
-      if(oldPresentationMaker.presentation.slides[numberSlide].blocks[int].id == props.id)
+   let newSlides: SlideType[] = [];
+   oldPresentationMaker.presentation.slides.forEach(slide=>{
+      if(slide.id === oldPresentationMaker.idsSelectedSlides[oldPresentationMaker.idsSelectedSlides.length - 1])
       {
-          newBlocks[int] = {
-              ...newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int],
-              width :props.width,
-              height :props.height,
-              coordinatesX: props.rejectedCoordinateX,
-              coordinatesY: props.rejectedCoordinateY,
-          };
-          insertedNewBlock = true;
+         let newBlocks: Block[] = []
+         slide.blocks.forEach(block=>{
+            if(block.id === props.id)
+            {
+               newBlocks.push(
+                   {
+                      ...block,
+                      width :props.width,
+                      height :props.height,
+                      coordinatesX: props.rejectedCoordinateX,
+                      coordinatesY: props.rejectedCoordinateY,
+                   })
+            }
+            if(block.id !== props.id)
+            {
+               newBlocks.push(block)
+            }
+         })
+         newSlides.push({
+            ...slide,
+            blocks: newBlocks,
+         })
       }
-       if(!insertedNewBlock) newBlocks[int] = oldPresentationMaker.presentation.slides[numberSlide].blocks[int];
-       insertedNewBlock = false;
-   }
-
-   const newSlide: SlideType = {
-       ...oldPresentationMaker.presentation.slides[numberSlide],
-       blocks: [] = newBlocks,
-   }
-
-   newSlides[numberSlide] = newSlide;
-
-   for(let i = numberSlide + 1;i < oldPresentationMaker.presentation.slides.length;i++)
-   {
-       newSlides[i] = oldPresentationMaker.presentation.slides[i];
-   }
-
-   const newPresentation: Presentation = {
-       ...oldPresentationMaker.presentation,
-       slides: [] = newSlides,
-   }
+      if(slide.id !== oldPresentationMaker.idsSelectedSlides[oldPresentationMaker.idsSelectedSlides.length - 1])
+      {
+         newSlides.push(slide)
+      }
+   })
 
    return {
-       ...oldPresentationMaker,
-       presentation: newPresentation,
+      ...oldPresentationMaker,
+      presentation: {
+         ...oldPresentationMaker.presentation,
+         slides: [] = newSlides,
+      },
    }
 }
 
