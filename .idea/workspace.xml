@@ -2,26 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7dd0c07c-65a9-408b-aaed-3f9a44f09f6a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lab4/my-app/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab4/my-app/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab4/my-app/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab4/my-app/.idea/my-app.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab4/my-app/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab4/my-app/src/hooks/useAnimations.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/actions/block.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/actions/block.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/actions/navigation/navigation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/actions/navigation/navigation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/DopHelper/BlockHelp.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/DopHelper/BlockHelp.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/DopHelper/BlockHelp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/DopHelper/BlockHelp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/HideShowNavButton/HideShowNavButton.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/HideShowNavButton/HideShowNavButton.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/HideShowNavButton/HideShowNavButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/HideShowNavButton/HideShowNavButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation_slide/NavSlide.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation_slide/NavSlide.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation_slide/NavSlide.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation_slide/NavSlide.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/hooks/useDragAndDrop.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/hooks/useDragAndDrop.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/hooks/useDragger.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/hooks/useResizer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/hooks/useResizer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Slide/Slide.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Slide/Slide.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

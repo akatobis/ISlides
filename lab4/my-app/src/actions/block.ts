@@ -27,6 +27,7 @@ function selectBlock(oldPresentationMaker: PresentationMaker, idSelectedBlock: s
    return {
       ...oldPresentationMaker,
       idsSelectedBlocks: newIds,
+      idsSelectedSlides: [oldPresentationMaker.idsSelectedSlides[0]],
    }
 }
 
