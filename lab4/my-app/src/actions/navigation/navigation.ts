@@ -35,15 +35,45 @@ export function addNewSlide(oldPresentationMaker: PresentationMaker): Presentati
 }
 
 
+// export function moveSlides(oldPresentationMaker: PresentationMaker, slide: SlideType): PresentationMaker {
+//     // const index = oldPresentationMaker.presentation.slides.indexOf(slide)
+//     //
+//     //
+//     // let i = 0;
+//     // for(i; i < oldPresentationMaker.presentation.slides.length; i++)
+//     // {
+//     //     if(oldPresentationMaker.presentation.slides[i].id === oldPresentationMaker.idsSelectedSlides[0])
+//     //         break;
+//     // }
+//     //
+//     // const movableSlides: SlideType[] = oldPresentationMaker.presentation.slides.filter(slide=>oldPresentationMaker.idsSelectedSlides.includes(slide.id))
+//     // let slides: SlideType[]  = oldPresentationMaker.presentation.slides.filter(slide=>!oldPresentationMaker.idsSelectedSlides.includes(slide.id))
+//     //
+//     // if(i > index)
+//     // {
+//     //     console.log(index,i)
+//     // }
+//     //
+//     // if(i < index)
+//     // {
+//     //
+//     // }
+//     //
+//     // return {
+//     //     ...oldPresentationMaker,
+//     // }
+//
+//  }
+
 export function moveSlides(oldPresentationMaker: PresentationMaker, insertionIndex: number): PresentationMaker {
     const slides: SlideType[] = [...oldPresentationMaker.presentation.slides]
- 
+
     const movableSlides: SlideType[] = slides.filter((slide) => {
         return oldPresentationMaker.idsSelectedSlides.indexOf(slide.id) !== -1;
     })
- 
+
     let inIndex: number = insertionIndex;
- 
+
     movableSlides.forEach((slide) => {
         if (inIndex >= slides.indexOf(slide)) {
             inIndex--;
@@ -51,9 +81,9 @@ export function moveSlides(oldPresentationMaker: PresentationMaker, insertionInd
         slides.splice(slides.indexOf(slide), 1);
         inIndex++;
     });
- 
+
     slides.splice(insertionIndex, 0, ...movableSlides)
- 
+
     return {
         ...oldPresentationMaker,
         presentation: {
@@ -61,7 +91,7 @@ export function moveSlides(oldPresentationMaker: PresentationMaker, insertionInd
             slides: slides
         }
     }
- }
+}
 
  function selectSlide(oldPresentationMaker: PresentationMaker, idNewSlide: string): PresentationMaker {
     return {

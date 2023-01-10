@@ -199,8 +199,9 @@ export function BlockHelper(props:propsBlockHelp) {
                 }}>
                 <div ref={refBottom} className={styles.resizer_b} style={dragStyle}></div>
             </div>
-            <div className={styles.block}  ref={ref} onDoubleClick={()=>{
-                dispatch(selectBlock, props.block.id)
+            <div className={styles.block}  ref={ref} onClick={()=>{
+                if(!props.idsSelectedBlocks.includes(props.block.id))
+                    dispatch(selectBlock,props.block.id)
             }}>
                 <SlideBlock slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
             </div>
