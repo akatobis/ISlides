@@ -1,9 +1,9 @@
 import styles from "./Slide.module.css"
 import {PresentationMaker, SlideType} from "../../types"
 import {Blocks} from "../Blocks/Blocks";
-import React, {CSSProperties} from "react";
+import React, {CSSProperties, useEffect, useState} from "react";
 import { removeBlockSelection } from "../../actions/slide";
-import { dispatch } from "../../state";
+import {dispatch, setState} from "../../state";
 
 let sizeFactor = 1;
 
@@ -33,6 +33,21 @@ function Slide(props: SlideProps) {
     let targetNode = document.getElementById("WorkZone");
     let innerWidth = 0;
     let innerHeight = 0;
+
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
+
+    function setSize() {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+    }
+
+    useEffect(() => {
+        if (props.from !== "navigation") {
+            window.addEventListener("resize", setSize);
+            return (() => {window.removeEventListener("resize", setSize)});
+        }
+    }, [width, height]);
 
     function getSlideSize() {
         innerWidth = Number(targetNode?.clientWidth);

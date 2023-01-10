@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7dd0c07c-65a9-408b-aaed-3f9a44f09f6a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Slide/Slide.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Slide/Slide.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Slide/Slide.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Slide/Slide.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
