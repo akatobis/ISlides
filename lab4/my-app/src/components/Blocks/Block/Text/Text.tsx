@@ -14,8 +14,8 @@ function Text(props: TextProps) {
     if (props.block.content.typeBlock === TypeBlock.text) {
         const textBlock = props.block.content;
         textBlockStyle = {
-            width: `${props.block.width}px`,
-            height: `${props.block.height}px`,
+            width: `${props.block.width+4}px`,
+            height: `${props.block.height+2}px`,
             top:`${props.block.coordinatesY}px`,
             left:`${props.block.coordinatesX}px`,
             fontFamily: textBlock.font,
@@ -58,7 +58,7 @@ function Text(props: TextProps) {
         if (props.idsSelectedBlocks.includes(props.block.id)) {
             textBlockStyle = {
                 ...textBlockStyle,
-                border: '1px solid #000',
+                //border: '1px solid #000',
             }
         }
     }

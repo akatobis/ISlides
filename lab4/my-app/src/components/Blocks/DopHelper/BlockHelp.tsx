@@ -85,15 +85,15 @@ export function BlockHelper(props:propsBlockHelp) {
             refRight: refRight,
             refTop: refTop,
         },
-        setSize,
-        setPos,
+        setSize: setSize,
+        setPos: setPos,
     })
 
     useDragAndDrop(
     {
         block: props.block,
         ref: ref,
-        setPos,
+        setPos: setPos,
         idsSelectedBlocks: props.idsSelectedBlocks,
     })
 
@@ -135,6 +135,9 @@ export function BlockHelper(props:propsBlockHelp) {
 
     let blockStyle = {} as CSSProperties;
     let id: string = props.block.id;
+    //const slide = document.getElementById("slide")!
+    //const slideCoordinates: DOMRect = slide!.getBoundingClientRect();
+
     if (props.from !== "navigation") {
         blockStyle = {
             top:`${pos.y}px`,
@@ -163,6 +166,7 @@ export function BlockHelper(props:propsBlockHelp) {
                 ...blockStyle,
                 ...dragStyle,
                 position: "absolute",
+                zIndex: 10,
             }
         }>
             <div style={
