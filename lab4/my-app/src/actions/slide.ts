@@ -1,12 +1,11 @@
 import { Presentation, PresentationMaker, SlideType } from '../types'
-import { elemInArray } from '../auxiliaryFunctions'
 import { v4 as uuidv4 } from "uuid";
 
 function createNewSlide(): SlideType {
     return {
         id : uuidv4(),
-        backgroundColor: "color",
-        backgroundImage: "image",
+        backgroundColor: "",
+        backgroundImage: "",
         blocks: [],
     }
 }
@@ -24,7 +23,7 @@ function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMake
     const oldSlides: SlideType[] = oldPresentationMaker.presentation.slides;
 
     let newSlides: SlideType[] = oldSlides.filter((slide) => {
-        return !elemInArray(oldIdsSelectedSlides, slide.id);
+        return !oldIdsSelectedSlides.includes(slide.id);
     });
 
     let indexLastSelectedSlide: number = 0;
@@ -66,23 +65,23 @@ function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color
   const idsSelectedSlides: string[] = oldPresentantionMaker.idsSelectedSlides;
   const oldSlides: SlideType[] = oldPresentantionMaker.presentation.slides;
   const selectedSlides: SlideType[] = oldSlides.filter((slide) => {
-    return elemInArray(idsSelectedSlides, slide.id);
+    return idsSelectedSlides.includes(slide.id);
   });
 
     let newSlides: SlideType[] = oldSlides.map((slide) => {
-        if (elemInArray(selectedSlides, slide)) {
-            if (color) {
-                return {
-                    ...slide,
-                    backgroundColor: color,
-                    backgroundImage: "",
-                };
-            }
+        if (selectedSlides.includes(slide)) {
+          if (color) {
             return {
-                ...slide,
-                backgroundColor: '',
-                backgroundImage: "url(" + image + ")",
+              ...slide,
+              backgroundColor: color,
+              backgroundImage: "",
             };
+          }
+          return {
+            ...slide,
+            backgroundColor: "",
+            backgroundImage: image + "",
+          };
         }
         return slide;
     });

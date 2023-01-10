@@ -2,7 +2,6 @@ import styles from "./Navigation.module.css";
 import {PresentationMaker} from "../../types";
 import {NavSlide} from "./Navigation_slide/NavSlide";
 import { useState } from "react";
-import {HideShowNavButton} from './HideShowNavButton/HideShowNavButton';
 
 type NavigationProps = {
     presentationMaker: PresentationMaker;
@@ -21,7 +20,6 @@ const Navigation = (props: NavigationProps) => {
                     )
                 })}
             </ol>
-            <HideShowNavButton/>
         </div>
 
     )

@@ -1,7 +1,9 @@
 import styles from "./Slide.module.css"
-import {SlideType} from "../../types"
+import {PresentationMaker, SlideType} from "../../types"
 import {Blocks} from "../Blocks/Blocks";
 import React, {CSSProperties} from "react";
+import { removeBlockSelection } from "../../actions/slide";
+import { dispatch } from "../../state";
 
 let sizeFactor = 1;
 
@@ -23,7 +25,7 @@ function Slide(props: SlideProps) {
     if (props.slide.backgroundImage !== "") {
         slideStyle = {
             background: '',
-            backgroundImage: props.slide.backgroundImage,
+            backgroundImage: `url(${props.slide.backgroundImage})`,
         } as CSSProperties;
     }
 
@@ -77,11 +79,17 @@ function Slide(props: SlideProps) {
             overflow: "hidden",
             pointerEvents: "none",
         }
-        id += "-nav";
+        id += "-nav-slide";
+    }
+
+    function removeSelectionBlock(): void {
+        if (props.idsSelectedBlocks.length !== 0) {
+            dispatch(removeBlockSelection, '');
+        }
     }
 
     return (
-        <div className={styles.slide} style={slideStyle} id={id}>
+        <div className={styles.slide} style={slideStyle} id={id} onClick={() => removeSelectionBlock()}>
             <Blocks slideId={props.slide.id} blocks={props.slide.blocks} idsSelectedBlocks={props.idsSelectedBlocks}
                     from={props.from}/>
         </div>

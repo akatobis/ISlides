@@ -1,4 +1,4 @@
-import {Block, Figure, TypeBlock} from "../../../../types";
+import {Block, Figure} from "../../../../types";
 import React from 'react'
 
 type FigureProps = {

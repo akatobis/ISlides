@@ -8,9 +8,10 @@
     vertical-align: top;
     width: 219px;
     will-change: transform;
-    height: 95.7%;
-    margin: 0px -28px;
+    height: 100%;
+    margin: 0 -28px;
     background-color:#fff;
+    z-index: 100;
 }
 
 .navigation::-webkit-scrollbar {

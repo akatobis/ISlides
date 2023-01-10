@@ -1,6 +1,5 @@
 import styles from "./NavSlide.module.css";
 import {SlideType} from "../../../types";
-import { elemInArray } from "../../../auxiliaryFunctions";
 import {useState} from 'react'
 import {moveSlides, selectSlide, selectSlides} from './../../../actions/navigation/navigation';
 import {removeBlockSelection} from './../../../actions/slide'
@@ -31,7 +30,7 @@ const NavSlide = (props: NavigationSlideProps) => {
         border:'none',
         margin:'0px 0px 0px 10px',
     }
-    if ( elemInArray(props.idsSelectedSlides, props.slide.id)) {
+    if (props.idsSelectedSlides.includes(props.slide.id)) {
         navSlideStyle = {
             border: '2px solid #6600BA',
         }
@@ -70,17 +69,17 @@ const NavSlide = (props: NavigationSlideProps) => {
         setDragOver(false);
     }
 
-    useMousePress(props.slide.id, "", "slide", document.getElementById(props.slide.id));
+    useMousePress(props.slide.id, "", "slide", document.getElementById(props.slide.id+"-nav"));
     
     return(
-        <div className='container' style={parentNavSlideStyle} /*id={props.slide.id}*/>
+        <div className='container' style={parentNavSlideStyle} id={`${props.slide.id}-nav`}>
             <button
                 className={styles.slideButton}
                 style={buttonNavSlideStyle}
                 onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                    dispatch(removeBlockSelection, {});
                     if (e.button === 0 && !e.ctrlKey){
                         dispatch(selectSlide, props.slide.id);
-                        dispatch(removeBlockSelection, {});
                     }
                 }}
             >

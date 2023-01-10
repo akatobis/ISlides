@@ -182,12 +182,12 @@ const deleteOpm: PresentationMaker = {
   idsSelectedSlides: ['1'],
   idsSelectedBlocks: [],
 };
-setState(deleteOpm);
+/*setState(deleteOpm);*/
 
 function render() {
   root.render(
     <React.StrictMode>
-      <App presentationMaker={getState()} />
+        <App presentationMaker={getState()} />
     </React.StrictMode>
   );
 }

@@ -1,0 +1,11 @@
+.textBlock {
+   all: unset;
+   padding-left: 2px;
+   box-sizing: border-box;
+   background: transparent;
+   border: none;
+   word-break: break-all;
+   white-space: pre-wrap;
+   overflow-y: hidden;
+   word-wrap: break-word;
+}
