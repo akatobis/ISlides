@@ -68,7 +68,7 @@ function Slide(props: SlideProps) {
         ...slideSize,
     }
 
-    let id = props.slide.id;
+    let id = "slide";
     if (props.from === "navigation") {
         slideStyle = {
             ...slideStyle,
@@ -79,13 +79,7 @@ function Slide(props: SlideProps) {
             overflow: "hidden",
             pointerEvents: "none",
         }
-        id += "-nav-slide";
-    }
-
-    function removeSelectionBlock(): void {
-        if (props.idsSelectedBlocks.length !== 0) {
-            dispatch(removeBlockSelection, '');
-        }
+        id += `${props.slide.id}-nav-slide`;
     }
 
     return (
