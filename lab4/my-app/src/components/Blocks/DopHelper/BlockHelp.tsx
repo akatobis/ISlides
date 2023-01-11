@@ -1,7 +1,7 @@
 import {SlideBlock} from "../Block/Block";
 import styles from './BlockHelp.module.css'
 import {Block} from "../../../types";
-import React, {CSSProperties, useState} from 'react'
+import React, {CSSProperties, useRef, useState} from 'react'
 import {selectBlocks, selectBlock} from "../../../actions/block";
 import {dispatch} from "../../../state";
 import useDragAndDrop from "../../../hooks/useDragAndDrop";
@@ -75,6 +75,8 @@ export function BlockHelper(props:propsBlockHelp) {
     const refRight = React.useRef<HTMLDivElement>(null)
     const refBottom = React.useRef<HTMLDivElement>(null)
 
+    const edit = useRef<boolean>(false);
+
     useResizer(
     {
         block: props.block,
@@ -87,6 +89,7 @@ export function BlockHelper(props:propsBlockHelp) {
         },
         setSize: setSize,
         setPos: setPos,
+        edit: edit
     })
 
     useDragAndDrop(
@@ -95,8 +98,9 @@ export function BlockHelper(props:propsBlockHelp) {
         ref: ref,
         setPos: setPos,
         idsSelectedBlocks: props.idsSelectedBlocks,
+        edit: edit,
     })
-
+    console.log(edit.current)
     let dragStyle = {} as CSSProperties;
     if (!props.idsSelectedBlocks.includes(props.block.id)) {
         dragStyle = {

@@ -13,6 +13,7 @@ type propsUseDragAndDrop = {
     }>
   >;
   idsSelectedBlocks: string[];
+  edit: React.MutableRefObject<boolean>;
 };
 
 function useDragAndDrop(props: propsUseDragAndDrop): void {
@@ -41,8 +42,8 @@ function useDragAndDrop(props: propsUseDragAndDrop): void {
 
     const onMouseDown = (e: MouseEvent) => {
       if (!props.idsSelectedBlocks.includes(props.block.id)) return;
-      e.preventDefault();
-
+      if(props.edit.current) return;
+      props.edit.current = true;
       isClicked.current = true;
 
       coords.current.X = e.pageX;
@@ -54,7 +55,7 @@ function useDragAndDrop(props: propsUseDragAndDrop): void {
 
     const onMouseUp = (e: MouseEvent) => {
       if (!isClicked.current) return;
-      e.preventDefault();
+      props.edit.current = false;
       isClicked.current = false;
       if (!Moved.current) {
         setTimeout(() => {
@@ -74,7 +75,6 @@ function useDragAndDrop(props: propsUseDragAndDrop): void {
       if (!isClicked.current) return;
       if(!props.idsSelectedBlocks.includes(props.block.id))
         return;
-      e.preventDefault();
       setTimeout(() => {
         Moved.current = true;
       }, 150);
@@ -95,7 +95,7 @@ function useDragAndDrop(props: propsUseDragAndDrop): void {
       container.removeEventListener("mousemove", onMouseMove);
       container.removeEventListener("mouseleave", onMouseUp);
     };
-  }, [props.block.id, props.ref, props.setPos, props.idsSelectedBlocks]);
+  }, [props.block.id, props.ref, props.setPos, props.idsSelectedBlocks, props.edit]);
 }
 
 export default useDragAndDrop;
