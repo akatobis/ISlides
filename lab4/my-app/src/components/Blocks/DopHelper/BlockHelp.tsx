@@ -106,7 +106,6 @@ export function BlockHelper(props:propsBlockHelp) {
         }
     } else {
         dragStyle = {
-            border: `2px solid black`,
             display: `flex`,
             justifyContent: `center`,
             alignItems: `center`,
@@ -173,10 +172,10 @@ export function BlockHelper(props:propsBlockHelp) {
             <div style={
                 {
                     ...borderStyle,
-                    height:`${size.height+2}px`,
+                    height:`${size.height-3}px`,
                     width:`-2x`,
                     top:`-2px`,
-                    left:`-2px`,
+                    left:`0px`,
                     zIndex: 2,
                 }
             }>
@@ -185,11 +184,11 @@ export function BlockHelper(props:propsBlockHelp) {
             <div style={
                 {
                     ...borderStyle,
-                    height:`${size.height+2}px`,
+                    height:`${size.height-3}px`,
                     width:'-2px',
                     top:"-2px",
                     left:"auto",
-                    right:"-2px",
+                    right:"0px",
                     zIndex: 2,
                 }
             }>
@@ -213,7 +212,7 @@ export function BlockHelper(props:propsBlockHelp) {
                     height:`0px`,
                     width:`${size.width}px`,
                     top:"auto",
-                    bottom:"-2px",
+                    bottom:"3px",
                     left:"auto",
                     zIndex: 2,
                 }}>
