@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7dd0c07c-65a9-408b-aaed-3f9a44f09f6a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lab4/my-app/src/testElement.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Figures/Rectangle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Blocks/Block/Figures/Rectangle.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation_slide/NavSlide.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Navigation/Navigation_slide/NavSlide.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/Slide/Slide.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/Slide/Slide.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/actions/slide.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/actions/slide.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/ToolsPanel/ToolsPanel.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/ToolsPanel/ToolsPanel.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/components/ToolsPanel/ToolsPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/components/ToolsPanel/ToolsPanel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab4/my-app/src/shortcuts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab4/my-app/src/shortcuts.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +89,7 @@
       <workItem from="1673094738532" duration="18631000" />
       <workItem from="1673271957577" duration="1281000" />
       <workItem from="1673393446049" duration="2382000" />
+      <workItem from="1673433113179" duration="5335000" />
     </task>
     <servers />
   </component>

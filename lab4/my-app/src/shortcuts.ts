@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import {dispatch, returnCancel, rollBack} from "./state";
 import {selectSlide, selectSlides} from "./actions/navigation/navigation";
 import {deleteBlocks, selectBlock} from "./actions/block";
-import {deleteSlides} from "./actions/slide";
+import {deleteSlides, switchSlide} from "./actions/slide";
 
 const useKeyPress = (node: any = null) => {
     const handleKeyPress = useCallback(
@@ -18,6 +18,14 @@ const useKeyPress = (node: any = null) => {
             if (event.code === "Delete") {
                 dispatch(deleteSlides, {});
                 dispatch(deleteBlocks, {});
+            }
+
+            if (event.keyCode === 38) {
+                dispatch(switchSlide, "up")
+            }
+
+            if (event.keyCode === 40) {
+                dispatch(switchSlide, "down")
             }
         },
         []
