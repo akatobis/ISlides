@@ -54,6 +54,9 @@ function switchSlide(oldPresentationMaker: PresentationMaker, direction: string)
 }
 
 function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMaker {
+    if (oldPresentationMaker.idsSelectedSlides.length === 0) {
+        return  oldPresentationMaker;
+    }
     const oldIdsSelectedSlides: string[] = oldPresentationMaker.idsSelectedSlides;
     const idLastSelectedSlide: string = oldIdsSelectedSlides[oldIdsSelectedSlides.length - 1];
     const oldSlides: SlideType[] = oldPresentationMaker.presentation.slides;
