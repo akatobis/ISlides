@@ -1,11 +1,12 @@
 import styles from "./Navigation.module.css";
 import {PresentationMaker} from "../../types";
 import {NavSlide} from "./Navigation_slide/NavSlide";
-import {useState, CSSProperties, useRef} from "react";
+import React, {useState, CSSProperties, useRef} from "react";
 import {HideShowNavButton} from './HideShowNavButton/HideShowNavButton';
 
 type NavigationProps = {
     presentationMaker: PresentationMaker;
+    workZone: React.RefObject<HTMLDivElement>,
 }
 
 const Navigation = (props: NavigationProps) => {
@@ -26,7 +27,7 @@ const Navigation = (props: NavigationProps) => {
                 {props.presentationMaker.presentation.slides.map(slide => {
                     return (
                         <NavSlide
-                            key={slide.id} slide={slide} idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
+                            workZone={props.workZone} key={slide.id} slide={slide} idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
                         />
                     )
                 })}
