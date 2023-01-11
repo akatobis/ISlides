@@ -16,10 +16,10 @@ function Text(props: TextProps) {
     if (props.block.content.typeBlock === TypeBlock.text) {
         const textBlock = props.block.content;
         textBlockStyle = {
-            width: `${props.block.width+2}px`,
-            height: `${props.block.height+2}px`,
-            top:`${props.block.coordinatesY}px`,
-            left:`${props.block.coordinatesX}px`,
+            width: `${props.size.width+2}px`,
+            height: `${props.size.height+2}px`,
+            top:`${props.pos.y}px`,
+            left:`${props.pos.x}px`,
             fontFamily: textBlock.font,
             color: textBlock.color,
             fontSize: textBlock.fontSize.toString() + 'px',
