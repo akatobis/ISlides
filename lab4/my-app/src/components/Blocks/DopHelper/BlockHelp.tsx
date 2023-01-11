@@ -232,7 +232,7 @@ export function BlockHelper(props:propsBlockHelp) {
                     handleContextMenu();
                     handlePointsContextMenu(e.pageY, e.pageX);
             }}>
-                <SlideBlock slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
+                <SlideBlock pos={pos} size={size} slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
                 {contextMenu && (<ContextMenu top={pointsContextMenu.y} left={pointsContextMenu.x} handleContextMenu={handleContextMenu} />)}
             </div>
         </div>

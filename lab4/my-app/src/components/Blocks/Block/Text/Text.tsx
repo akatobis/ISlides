@@ -6,6 +6,8 @@ import styles from "./Text.module.css"
 type TextProps = {
     block: Block,
     idsSelectedBlocks: string[],
+    pos: {x: number, y: number},
+    size: {width: number, height: number},
 }
 
 function Text(props: TextProps) {
