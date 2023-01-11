@@ -100,7 +100,7 @@ export function BlockHelper(props:propsBlockHelp) {
         idsSelectedBlocks: props.idsSelectedBlocks,
         edit: edit,
     })
-    console.log(edit.current)
+
     let dragStyle = {} as CSSProperties;
     if (!props.idsSelectedBlocks.includes(props.block.id)) {
         dragStyle = {
