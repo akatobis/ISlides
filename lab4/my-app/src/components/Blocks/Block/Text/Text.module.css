@@ -1,5 +1,7 @@
 .textBlock {
    all: unset;
+   padding-top: 3px;
+   padding-left: 5px;
    box-sizing: border-box;
    background: transparent;
    border: none;

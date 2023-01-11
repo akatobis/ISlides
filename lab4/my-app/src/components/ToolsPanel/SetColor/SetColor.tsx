@@ -1,10 +1,14 @@
-import {HexColorPicker} from "react-colorful";
 import { dispatch } from "../../../state";
 import styles from "./SetColor.module.css";
-import {useState} from "react";
+import {useCallback, useState} from "react";
+import { ColorPicker } from "./ColorPicker/ColorPicker";
 
 function SetColor(props: any) {
    const [color, setColor] = useState("#fff");
+
+   const handleChangeColor = useCallback((color: string) => {
+      setColor(color);
+   }, []);
 
    function handleSetColor(): void {
       if (props.type === 'colorText') {
@@ -27,7 +31,10 @@ function SetColor(props: any) {
 
    return (
       <div className={styles.popupColorContent} >
-         <HexColorPicker color={color} onChange={setColor} />
+         <ColorPicker
+            color={color}
+            onChange={handleChangeColor}
+         />
          <button className={styles.buttonComplite} onClick={props.handleClose}>Отмена</button>
          <button className={styles.buttonApplyToAll} onClick={() => handleSetColor()}>Ок</button>
       </div>

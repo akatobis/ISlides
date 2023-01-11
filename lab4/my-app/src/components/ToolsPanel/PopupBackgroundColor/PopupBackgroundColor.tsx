@@ -1,27 +1,31 @@
 import {HexColorPicker} from "react-colorful";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import styles from './PopupBackgroundColor.module.css';
 import { dispatch } from "../../../state";
 import { changeBackgroundAllSlide, changeBackgroundSlide } from "../../../actions/slide";
 import choseColorImg from "../../../images/chose_color.svg";
+import { Selector } from "../SetColor/ColorPicker/Selector/Selector";
+import { ColorPicker } from "../SetColor/ColorPicker/ColorPicker";
 
 function PopupBackgroundColor(props: any) {
-   const [colorBackgroundSlide, setColorBackgroundSlide] = useState("#fff");
+   const [colorBackgroundSlide, setColorBackgroundSlide] = useState<string>("#fff");
 
-   const [isOpenPopupColorBackgroundSlide, setIsOpenPopupColorBackgroundSlide] = useState(false);
+   const handleChangeColor = useCallback((color: string) => {
+      setColorBackgroundSlide(color);
+   }, []);
 
-   function downloadImg(input: any): any {
+   const [isOpenPopupColorBackgroundSlide, setIsOpenPopupColorBackgroundSlide] = useState<boolean>(false);
 
-        function verifyExtensionImg(file: any): boolean {
-            const extensionSelectedFile = file.type.split("/").pop();
-            return extensionSelectedFile === "png" || extensionSelectedFile === "jpg" || extensionSelectedFile === "jpeg";
-        }
+   function verifyExtensionImg(file: File): boolean {
+      const extensionSelectedFile = file.type.split("/").pop();
+      return extensionSelectedFile === "png" || extensionSelectedFile === "jpg" || extensionSelectedFile === "jpeg";
+   }
+   
+   function downloadImg(input: EventTarget & HTMLInputElement): void {
+        if (!input.files) { return };
+        const imgFile: File = input.files[0];
 
-        const imgFile = input.files[0];
-
-        if (!verifyExtensionImg(imgFile)) {
-            return "";
-        }
+        if (!verifyExtensionImg(imgFile)) { return }
 
         const reader = new FileReader();
         reader.readAsDataURL(imgFile);
@@ -50,7 +54,10 @@ function PopupBackgroundColor(props: any) {
             
             {isOpenPopupColorBackgroundSlide &&
             <div className={styles.popupColorContent} >
-               <HexColorPicker color={colorBackgroundSlide} onChange={setColorBackgroundSlide} />
+               <ColorPicker
+                  color={colorBackgroundSlide}
+                  onChange={handleChangeColor}
+               />
                <button className={styles.buttonComplite} onClick={() => setIsOpenPopupColorBackgroundSlide(!isOpenPopupColorBackgroundSlide)}>Отмена</button>
                <button className={styles.buttonApplyToAll} onClick={() => dispatch(changeBackgroundSlide, {color: colorBackgroundSlide})}>Ок</button>
             </div>}
@@ -61,7 +68,7 @@ function PopupBackgroundColor(props: any) {
                   <p className={styles.addImageText}>Добавьте Изображение</p>
                   <input
                      type="file"
-                     onChange={(e) => {const target = e.target as Element; downloadImg(target)}}
+                     onChange={(e) => {downloadImg(e.target)}}
                      className={styles.addImageInput}
                   >
                   </input>
