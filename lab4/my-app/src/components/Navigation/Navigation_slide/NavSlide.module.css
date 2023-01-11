@@ -13,6 +13,7 @@
 
 .slideButton {
     border: none;
+    outline: none;
     color: #fff;
     background-color: #fff;
     width: auto;

@@ -2,7 +2,7 @@ import logo from "../../images/logoISlides.svg";
 import arrowDown from "../../images/arrow_down.svg";
 import {useEffect, useState} from "react";
 import styles from "./ToolsPanel.module.css";
-import {deleteSlides} from "../../actions/slide";
+import {deleteSlides, removeBlockSelection} from "../../actions/slide";
 import {dispatch, rollBack, returnCancel} from "../../state";
 import {addBlock, changeStyleText} from "../../actions/block";
 import {addNewSlide} from "../../actions/navigation/navigation";
@@ -13,6 +13,7 @@ import SetColor from "./SetColor/SetColor";
 import Fonts from "./Fonts/Fonts";
 import { changeNamePresentation } from "../../actions/presentation";
 import SaveAndUpload from "./SaveAndUpload/SaveAndUpload";
+import {keyboardKey} from "@testing-library/user-event";
 
 
 type ToolsPanelProps = {
@@ -122,10 +123,10 @@ function ToolsPanel(props: ToolsPanelProps) {
 
     function requestFullScreen() {
         const slide = document.querySelector('#slide');
-        console.log(slide);
         if (!slide) {return}
         var requestMethod = slide.requestFullscreen;
         if (requestMethod) {
+            dispatch(removeBlockSelection, {});
             requestMethod.call(slide);
         }
     }

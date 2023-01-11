@@ -9,6 +9,8 @@ type BlockProps = {
     block: Block,
     slideId: string,
     idsSelectedBlocks: string[],
+    pos: {x: number, y: number},
+    size: {width: number, height: number}
 }
 
 const SlideBlock = (props: BlockProps) => {
@@ -57,7 +59,7 @@ const SlideBlock = (props: BlockProps) => {
 
     if (props.block.content.typeBlock === TypeBlock.text) {
          return (
-            <Text block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}></Text>
+            <Text size={props.size} pos={props.pos} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}></Text>
         );
     }
     if (props.block.content.typeBlock === TypeBlock.figure) {
@@ -65,19 +67,19 @@ const SlideBlock = (props: BlockProps) => {
 
         if (figure.type.figureType === FigureType.ellipse) {
             return (
-                <Ellipse block={props.block} figure={figure}/>
+                <Ellipse size={props.size} pos={props.pos} block={props.block} figure={figure}/>
             );
         }
 
         if (figure.type.figureType === FigureType.rectangle) {
             return (
-                <Rectangle block={props.block} figure={figure}/>
+                <Rectangle size={props.size} pos={props.pos} block={props.block} figure={figure}/>
             );
         }
 
         if (figure.type.figureType === FigureType.triangle) {
             return (
-                <Triangle block={props.block} figure={figure}/>
+                <Triangle size={props.size} pos={props.pos} block={props.block} figure={figure}/>
             );
         }
          return (
@@ -87,8 +89,8 @@ const SlideBlock = (props: BlockProps) => {
     if (props.block.content.typeBlock === TypeBlock.image) {
          return (
             <img style={{
-                width: props.block.width,
-                height: props.block.height,
+                width: props.size.width,
+                height: props.size.height,
                 zIndex: 1,
             }} 
             src={props.block.content.imageBase64} alt=""></img>

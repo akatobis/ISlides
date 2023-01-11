@@ -17,7 +17,46 @@ function removeBlockSelection(oldPresentationMaker: PresentationMaker): Presenta
     }
 }
 
+function switchSlide(oldPresentationMaker: PresentationMaker, direction: string): PresentationMaker {
+    let switchedSlideId: string
+    let switchedSlide: SlideType
+    let indexSwitchedSlide: number = 0;
+    let newIdSelectedSlide: string = "";
+    switchedSlideId = oldPresentationMaker.idsSelectedSlides[0]
+    oldPresentationMaker.presentation.slides.forEach((slide, index) => {
+        if (slide.id === switchedSlideId) {
+            indexSwitchedSlide = index
+        }
+    });
+    switchedSlide = oldPresentationMaker.presentation.slides[indexSwitchedSlide]
+
+    if (direction === "up") {
+        if (oldPresentationMaker.presentation.slides.indexOf(switchedSlide) > 0) {
+            newIdSelectedSlide = oldPresentationMaker.presentation.slides[indexSwitchedSlide - 1].id
+        } else {
+            newIdSelectedSlide = oldPresentationMaker.presentation.slides[indexSwitchedSlide].id
+        }
+    }
+
+    if (direction === "down") {
+        if (oldPresentationMaker.presentation.slides.indexOf(switchedSlide) < oldPresentationMaker.presentation.slides.length - 1) {
+            newIdSelectedSlide = oldPresentationMaker.presentation.slides[indexSwitchedSlide + 1].id
+        } else {
+            newIdSelectedSlide = oldPresentationMaker.presentation.slides[indexSwitchedSlide].id
+        }
+    }
+
+    return {
+        ...oldPresentationMaker,
+        idsSelectedSlides: [newIdSelectedSlide],
+        idsSelectedBlocks: [],
+    }
+}
+
 function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMaker {
+    if (oldPresentationMaker.idsSelectedSlides.length === 0) {
+        return  oldPresentationMaker;
+    }
     const oldIdsSelectedSlides: string[] = oldPresentationMaker.idsSelectedSlides;
     const idLastSelectedSlide: string = oldIdsSelectedSlides[oldIdsSelectedSlides.length - 1];
     const oldSlides: SlideType[] = oldPresentationMaker.presentation.slides;
@@ -50,11 +89,15 @@ function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMake
       slides: newSlides,
    }
 
-    return {
-        ...oldPresentationMaker,
-        presentation: newPresentation,
-        idsSelectedSlides: newIdsSelectedSlides,
-    };
+   if (oldPresentationMaker.idsSelectedBlocks.length === 0) {
+       return {
+           ...oldPresentationMaker,
+           presentation: newPresentation,
+           idsSelectedSlides: newIdsSelectedSlides,
+       };
+   }
+
+   return oldPresentationMaker;
 }
 
 function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color, image }: {color?: string, image?: string}): PresentationMaker {
@@ -128,4 +171,5 @@ export {
   deleteSlides,
   changeBackgroundSlide,
   changeBackgroundAllSlide,
+    switchSlide
 };

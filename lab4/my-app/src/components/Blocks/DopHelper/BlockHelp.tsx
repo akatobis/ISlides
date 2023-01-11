@@ -1,7 +1,7 @@
 import {SlideBlock} from "../Block/Block";
 import styles from './BlockHelp.module.css'
 import {Block} from "../../../types";
-import React, {CSSProperties, useState} from 'react'
+import React, {CSSProperties, useRef, useState} from 'react'
 import {selectBlocks, selectBlock} from "../../../actions/block";
 import {dispatch} from "../../../state";
 import useDragAndDrop from "../../../hooks/useDragAndDrop";
@@ -75,6 +75,8 @@ export function BlockHelper(props:propsBlockHelp) {
     const refRight = React.useRef<HTMLDivElement>(null)
     const refBottom = React.useRef<HTMLDivElement>(null)
 
+    const edit = useRef<boolean>(false);
+
     useResizer(
     {
         block: props.block,
@@ -87,6 +89,7 @@ export function BlockHelper(props:propsBlockHelp) {
         },
         setSize: setSize,
         setPos: setPos,
+        edit: edit
     })
 
     useDragAndDrop(
@@ -95,8 +98,9 @@ export function BlockHelper(props:propsBlockHelp) {
         ref: ref,
         setPos: setPos,
         idsSelectedBlocks: props.idsSelectedBlocks,
+        edit: edit,
     })
-
+    console.log(edit.current)
     let dragStyle = {} as CSSProperties;
     if (!props.idsSelectedBlocks.includes(props.block.id)) {
         dragStyle = {
@@ -212,7 +216,7 @@ export function BlockHelper(props:propsBlockHelp) {
                     height:`0px`,
                     width:`${size.width-2}px`,
                     top:"auto",
-                    bottom:"3px",
+                    bottom:"2px",
                     left:"auto",
                     zIndex: 2,
                 }}>
@@ -232,7 +236,7 @@ export function BlockHelper(props:propsBlockHelp) {
                     handleContextMenu();
                     handlePointsContextMenu(e.pageY, e.pageX);
             }}>
-                <SlideBlock slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
+                <SlideBlock pos={pos} size={size} slideId={props.slideId} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}/>
                 {contextMenu && (<ContextMenu top={pointsContextMenu.y} left={pointsContextMenu.x} handleContextMenu={handleContextMenu} />)}
             </div>
         </div>

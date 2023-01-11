@@ -244,3 +244,7 @@
    text-overflow: ellipsis;
    overflow: hidden;
 }
+
+.blockedEvents {
+   pointer-events: none;
+}

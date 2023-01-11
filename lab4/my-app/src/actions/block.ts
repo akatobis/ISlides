@@ -170,6 +170,9 @@ function addBlock(oldPresentationMaker: PresentationMaker,{ img, figureType, asp
 }
 
 function deleteBlocks(oldPresentationMaker: PresentationMaker): PresentationMaker {
+    if (oldPresentationMaker.idsSelectedBlocks.length === 0) {
+        return oldPresentationMaker;
+    }
    const oldSlides: SlideType[] = oldPresentationMaker.presentation.slides;
    const idSelectedSlide: string = oldPresentationMaker.idsSelectedSlides[0];
    const selectedSlide: SlideType = oldSlides.filter((slide) => {
@@ -197,16 +200,12 @@ function deleteBlocks(oldPresentationMaker: PresentationMaker): PresentationMake
       slides: newSlides,
    };
 
-   if (oldPresentationMaker.idsSelectedSlides.length === 1)
-   {
-      return {
-         ...oldPresentationMaker,
-         presentation: newPresentation,
-         idsSelectedBlocks: [],
-      };
-   } else {
-      return {...oldPresentationMaker}
-   }
+
+    return {
+        ...oldPresentationMaker,
+        presentation: newPresentation,
+        idsSelectedBlocks: [],
+    };
 }
 
 function changeText(oldPresentationMaker: PresentationMaker, text: string): PresentationMaker {
