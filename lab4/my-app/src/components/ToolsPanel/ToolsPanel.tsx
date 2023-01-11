@@ -1,12 +1,12 @@
 import logo from "../../images/logoISlides.svg";
 import arrowDown from "../../images/arrow_down.svg";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import styles from "./ToolsPanel.module.css";
 import {deleteSlides} from "../../actions/slide";
 import {dispatch, rollBack, returnCancel} from "../../state";
 import {addBlock, changeStyleText} from "../../actions/block";
 import {addNewSlide} from "../../actions/navigation/navigation";
-import {FigureType, TextStyles} from "../../types";
+import {Block, Figure, FigureType, ImageType, Presentation, PresentationMaker, SlideType, TextBlock, TextStyles, TypeBlock} from "../../types";
 import {changeColorFigure} from "../../actions/figure/figure";
 import { PopupBackgroundColor } from "./PopupBackgroundColor/PopupBackgroundColor";
 import SetColor from "./SetColor/SetColor";
@@ -16,7 +16,7 @@ import SaveAndUpload from "./SaveAndUpload/SaveAndUpload";
 
 
 type ToolsPanelProps = {
-    idsSelectedBlocks: string[]
+    presentationMaker: PresentationMaker,
 }
 function ToolsPanel(props: ToolsPanelProps) {
     const [fontSize, setFontSize] = useState<string>('16');
@@ -32,6 +32,52 @@ function ToolsPanel(props: ToolsPanelProps) {
 
     const [isFontOpen, setFontOpen] = useState<boolean>(false);
     const handleFontOpen = () => setFontOpen(!isFontOpen);
+
+    const [colorText, setColorText] = useState("#fff");
+    function handleChangeColorText(color: string) {
+        setColorText(color);
+    }
+
+    const [colorBorder, setColorBorder] = useState("#fff");
+    function handleChangeColorBorder(color: string) {
+        setColorBorder(color);
+    }
+
+    const [colorFill, setColorFill] = useState("#fff");
+    function handleChangeColorFill(color: string) {
+        setColorFill(color);
+    }
+
+    useEffect(() => {
+        const idsSelectedBlocks: string[] = props.presentationMaker.idsSelectedBlocks;
+        const idsSelectedSlides: string[] = props.presentationMaker.idsSelectedSlides;
+        const presentation: Presentation = props.presentationMaker.presentation;
+        const slides: SlideType[] = presentation.slides;
+
+        if (presentation.namePresentation !== namePresentation) {
+            setNamePresentation(presentation.namePresentation);
+        }
+
+        slides.forEach(slide => {
+            if (idsSelectedSlides.includes(slide.id)) {
+                const blocks: Block[] = slide.blocks;
+                blocks.forEach(block => {
+                    if (idsSelectedBlocks.includes(block.id)) {
+                        const contentBlock: TextBlock | ImageType | Figure = block.content;
+                        if (contentBlock.typeBlock === TypeBlock.text) {
+                            setFontSize(contentBlock.fontSize.toString());
+                            setFontFamily(contentBlock.font)
+                            setColorText(contentBlock.color)
+                        }
+                        if (contentBlock.typeBlock === TypeBlock.figure) {
+                            setColorBorder(contentBlock.colorBorder);
+                            setColorFill(contentBlock.colorFill);
+                        }
+                    }
+                })
+            }
+        })
+    }, [props.presentationMaker])
 
     const [isOpenPopupBackgroundColor, setIsOpenPopupBackgroundColor] = useState<boolean>(false);
     const handleOpenPopupBackgroundColor = () => setIsOpenPopupBackgroundColor(!isOpenPopupBackgroundColor);
@@ -107,10 +153,26 @@ function ToolsPanel(props: ToolsPanelProps) {
                 <button className={[styles.slideButtons, styles.triangle].join(" ")} onClick={() =>dispatch(addBlock, {figureType: FigureType.triangle})}></button>
 
                 <button className={[styles.slideButtons, styles.ellipseBorder].join(" ")} onClick={handleOpenPopupBorderColorFigure}></button>
-                {isOpenPopupBorderColorFigure && <SetColor handleClose={handleOpenPopupBorderColorFigure} changeColor={changeColorFigure} type="colorBorderFigure" />}
+                {isOpenPopupBorderColorFigure && 
+                    <SetColor 
+                        handleClose={handleOpenPopupBorderColorFigure} 
+                        changeColor={changeColorFigure} 
+                        type="colorBorderFigure" 
+                        color={colorBorder}
+                        handleChangeColorToolsPanal={handleChangeColorBorder}
+                    />
+                }
 
                 <button className={[styles.slideButtons, styles.ellipseFill].join(" ")} onClick={handleOpenPopupFillColorFigure}></button>
-                {isOpenPopupFillColorFigure && <SetColor handleClose={handleOpenPopupFillColorFigure} changeColor={changeColorFigure} type="colorFillFigure"/>}
+                {isOpenPopupFillColorFigure && 
+                    <SetColor 
+                        handleClose={handleOpenPopupFillColorFigure} 
+                        changeColor={changeColorFigure}
+                        type="colorFillFigure"
+                        color={colorFill}
+                        handleChangeColorToolsPanal={handleChangeColorFill}
+                    />
+                }
 
                 <div className={[styles.slideButtons, styles.addImage].join(" ")}>
                     <input
@@ -127,16 +189,25 @@ function ToolsPanel(props: ToolsPanelProps) {
                 <button className={[styles.slideButtons, styles.changeUnderline].join(" ")} onClick={() => dispatch(changeStyleText, {newTextStyle: TextStyles.underline})}></button>
                 <button className={[styles.slideButtons, styles.changeStrikethrought].join(" ")} onClick={() => dispatch(changeStyleText, {newTextStyle: TextStyles.strikethrough})}></button>
                 <button className={[styles.slideButtons, styles.changeColorText].join(" ")} onClick={handleOpenPopupTextColor}></button>
-                {isOpenPopupTextColor && <SetColor handleClose={handleOpenPopupTextColor} changeColor={changeStyleText} type="colorText" />}
+                {isOpenPopupTextColor && 
+                    <SetColor 
+                        handleClose={handleOpenPopupTextColor} 
+                        changeColor={changeStyleText} 
+                        type="colorText"
+                        color={colorText}
+                        handleChangeColorToolsPanal={handleChangeColorText}
+                    />
+                }
 
-                <button className={[styles.slideButtons, styles.increaseSizeText].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.increaseSizeText].join(" ")} onClick={() => dispatch(changeStyleText, {newFontSize: Number(fontSize) + 1})}></button>
                 <input
                     type="text"
+                    value={fontSize}
                     onChange={(e) => dispatch(changeStyleText, {newFontSize: e.target.value})}
                     className={[styles.slideButtons, styles.fontSize].join(" ")}
                     placeholder="16"
                 />
-                <button className={[styles.slideButtons, styles.decreaseSizeText].join(" ")}></button>
+                <button className={[styles.slideButtons, styles.decreaseSizeText].join(" ")} onClick={() => dispatch(changeStyleText, {newFontSize: Number(fontSize) - 1})}></button>
 
                 <button onClick={handleFontOpen} className={[styles.slideButtons, styles.fontFamily].join(" ")}>
                     <p className={styles.fontFamilyText}>{fontFamily}</p>

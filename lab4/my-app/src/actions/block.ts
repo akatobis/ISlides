@@ -75,9 +75,9 @@ function createFigure(figureType: FigureType): Figure {
          rx: 10,
          ry: 5,
          },
-         colorFill: "white",
+         colorFill: "#fff",
          border: 1,
-         colorBorder: "black",
+         colorBorder: "#000",
       };
    }
 
@@ -88,9 +88,9 @@ function createFigure(figureType: FigureType): Figure {
          figureType: FigureType.triangle,
          topX: 10,
          },
-         colorFill: "white",
+         colorFill: "#fff",
          border: 1,
-         colorBorder: "black",
+         colorBorder: "#000",
       };
    }
 
@@ -99,9 +99,9 @@ function createFigure(figureType: FigureType): Figure {
       type: {
          figureType: FigureType.rectangle,
       },
-      colorFill: "white",
+      colorFill: "#fff",
       border: 1,
-      colorBorder: "black",
+      colorBorder: "#000",
    };
 }
 

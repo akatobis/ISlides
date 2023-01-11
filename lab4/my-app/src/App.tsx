@@ -64,7 +64,7 @@ function App(props: AppProps) {
 
     return (
         <div className={styles.app} id="main">
-            <ToolsPanel idsSelectedBlocks={props.presentationMaker.idsSelectedBlocks} />
+            <ToolsPanel presentationMaker={props.presentationMaker} />
             <div className={styles.navAndSlides}>
                 <Navigation workZone={ref} presentationMaker={props.presentationMaker}/>
                 <div ref={ref} className={stylesSlide.workZone} id="WorkZone">
