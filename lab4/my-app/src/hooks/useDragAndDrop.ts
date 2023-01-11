@@ -59,7 +59,7 @@ function useDragAndDrop(props: propsUseDragAndDrop): void {
       if (!Moved.current) {
         setTimeout(() => {
           dispatch(selectBlock, props.block.id);
-        }, 100);
+        }, 150);
         return;
       }
       Moved.current = false;
@@ -72,10 +72,11 @@ function useDragAndDrop(props: propsUseDragAndDrop): void {
 
     const onMouseMove = (e: MouseEvent) => {
       if (!isClicked.current) return;
+      if(!props.idsSelectedBlocks.includes(props.block.id))
+        return;
       e.preventDefault();
       setTimeout(() => {
         Moved.current = true;
-        console.log(1);
       }, 100);
       props.setPos({
         x: e.pageX - coords.current.X + coords.current.oldX,

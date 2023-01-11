@@ -10,6 +10,7 @@
     will-change: transform;
     height: 96%;
     background-color: #fff;
+    transition: width .3s;
     z-index: 100;
 }
 

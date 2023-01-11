@@ -12,7 +12,16 @@ import {
   TypeBlock,
 } from "../types";
 
-function selectBlock(oldPresentationMaker: PresentationMaker, idSelectedBlock: string): PresentationMaker {
+function selectBlock(oldPresentationMaker: PresentationMaker, idSelectedBlock: string)
+{
+    return {
+        ...oldPresentationMaker,
+        idsSelectedBlocks: [idSelectedBlock],
+        idsSelectedSlides: [oldPresentationMaker.idsSelectedSlides[0]],
+    }
+}
+
+function selectBlocks(oldPresentationMaker: PresentationMaker, idSelectedBlock: string): PresentationMaker {
    let newIds: string[] = oldPresentationMaker.idsSelectedBlocks.filter(() => {
       return true;
    });
@@ -419,11 +428,12 @@ function resizeBlock(oldPresentationMaker: PresentationMaker, props:propsTypeRes
 
 
 export {
-   moveBlock,
-   addBlock,
-   deleteBlocks,
-   changeText,
-   changeStyleText,
-   resizeBlock,
-   selectBlock,
+    moveBlock,
+    addBlock,
+    deleteBlocks,
+    changeText,
+    changeStyleText,
+    resizeBlock,
+    selectBlock,
+    selectBlocks,
 }

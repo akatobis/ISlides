@@ -79,7 +79,7 @@ function ToolsPanel() {
         return rg.test(nameFile);
     }
 
-    const savePresentatinoWithJSON = () => {
+    const savePresentationWithJSON = () => {
         const presentation = getState().presentation;
         console.log(presentation);
         const fileData = JSON.stringify(presentation);
@@ -274,7 +274,7 @@ function ToolsPanel() {
                         <div>
                             <div className={styles.backgroundFileList} onClick={handleOpenFileList}></div>
                             <div className={styles.fileList}>
-                                <button className={styles.fileListPoint} onClick={() => savePresentatinoWithJSON()}>Скачать в формате JSON</button>
+                                <button className={styles.fileListPoint} onClick={() => savePresentationWithJSON()}>Скачать в формате JSON</button>
                                 <button className={styles.fileListPoint} onClick={() => exportPresentationToPDF()}>Скачать в формате PDF</button>
                                 <button className={styles.fileListPoint}>
                                     Загрузить
