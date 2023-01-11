@@ -18,6 +18,9 @@ function removeBlockSelection(oldPresentationMaker: PresentationMaker): Presenta
 }
 
 function switchSlide(oldPresentationMaker: PresentationMaker, direction: string): PresentationMaker {
+    if (oldPresentationMaker.presentation.slides.length === 0) {
+        return oldPresentationMaker;
+    }
     let switchedSlideId: string
     let switchedSlide: SlideType
     let indexSwitchedSlide: number = 0;
@@ -53,8 +56,8 @@ function switchSlide(oldPresentationMaker: PresentationMaker, direction: string)
     }
 }
 
-function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMaker {
-    if (oldPresentationMaker.idsSelectedSlides.length === 0) {
+function deleteSlides(oldPresentationMaker: PresentationMaker, from: string): PresentationMaker {
+    if (oldPresentationMaker.idsSelectedSlides.length === 0 || from === 'hotkey' && oldPresentationMaker.idsSelectedBlocks.length !== 0) {
         return  oldPresentationMaker;
     }
     const oldIdsSelectedSlides: string[] = oldPresentationMaker.idsSelectedSlides;
@@ -89,13 +92,12 @@ function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMake
       slides: newSlides,
    }
 
-   if (oldPresentationMaker.idsSelectedBlocks.length === 0) {
-       return {
-           ...oldPresentationMaker,
-           presentation: newPresentation,
-           idsSelectedSlides: newIdsSelectedSlides,
-       };
-   }
+    return {
+        ...oldPresentationMaker,
+        presentation: newPresentation,
+        idsSelectedSlides: newIdsSelectedSlides,
+        idsSelectedBlocks: [],
+    };
 
    return oldPresentationMaker;
 }

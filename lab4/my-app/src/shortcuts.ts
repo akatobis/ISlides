@@ -16,7 +16,7 @@ const useKeyPress = (node: any = null) => {
             }
 
             if (event.code === "Delete") {
-                dispatch(deleteSlides, {});
+                dispatch(deleteSlides, 'hotkey');
                 dispatch(deleteBlocks, {});
             }
 
