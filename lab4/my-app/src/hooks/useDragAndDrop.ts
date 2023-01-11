@@ -77,7 +77,7 @@ function useDragAndDrop(props: propsUseDragAndDrop): void {
       e.preventDefault();
       setTimeout(() => {
         Moved.current = true;
-      }, 100);
+      }, 150);
       props.setPos({
         x: e.pageX - coords.current.X + coords.current.oldX,
         y: e.pageY - coords.current.Y + coords.current.oldY,

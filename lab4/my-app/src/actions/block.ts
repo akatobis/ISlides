@@ -14,6 +14,12 @@ import {
 
 function selectBlock(oldPresentationMaker: PresentationMaker, idSelectedBlock: string)
 {
+    if(oldPresentationMaker.idsSelectedBlocks.includes(idSelectedBlock))
+        return {
+            ...oldPresentationMaker,
+            idsSelectedBlocks: [],
+            idsSelectedSlides: [oldPresentationMaker.idsSelectedSlides[0]],
+        }
     return {
         ...oldPresentationMaker,
         idsSelectedBlocks: [idSelectedBlock],
