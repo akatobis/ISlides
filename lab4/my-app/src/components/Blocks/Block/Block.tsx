@@ -92,6 +92,7 @@ const SlideBlock = (props: BlockProps) => {
                 width: props.size.width,
                 height: props.size.height,
                 zIndex: 1,
+                pointerEvents: "fill"
             }} 
             src={props.block.content.imageBase64} alt=""></img>
         );
