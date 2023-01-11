@@ -212,7 +212,7 @@ export function BlockHelper(props:propsBlockHelp) {
                     height:`0px`,
                     width:`${size.width-2}px`,
                     top:"auto",
-                    bottom:"3px",
+                    bottom:"2px",
                     left:"auto",
                     zIndex: 2,
                 }}>
