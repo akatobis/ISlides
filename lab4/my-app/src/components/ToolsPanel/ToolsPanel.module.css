@@ -89,6 +89,7 @@
 .slideButtons {
    border-radius: 2px;
    border: none;
+   outline: none;
    width: 52px;
    height: 24px;
    background-color: #F1EFF1;
