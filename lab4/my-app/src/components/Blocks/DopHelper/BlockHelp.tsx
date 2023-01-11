@@ -198,7 +198,7 @@ export function BlockHelper(props:propsBlockHelp) {
                 {
                     ...borderStyle,
                     height:`0px`,
-                    width:`${size.width}px`,
+                    width:`${size.width-2}px`,
                     top:"-2px",
                     left:"auto",
                     zIndex: 2,
@@ -210,7 +210,7 @@ export function BlockHelper(props:propsBlockHelp) {
                 {
                     ...borderStyle,
                     height:`0px`,
-                    width:`${size.width}px`,
+                    width:`${size.width-2}px`,
                     top:"auto",
                     bottom:"3px",
                     left:"auto",
