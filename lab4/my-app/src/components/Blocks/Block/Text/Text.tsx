@@ -16,8 +16,8 @@ function Text(props: TextProps) {
     if (props.block.content.typeBlock === TypeBlock.text) {
         const textBlock = props.block.content;
         textBlockStyle = {
-            width: `${props.size.width+2}px`,
-            height: `${props.size.height+2}px`,
+            width: `${props.size.width}px`,
+            height: `${props.size.height}px`,
             top:`${props.pos.y}px`,
             left:`${props.pos.x}px`,
             fontFamily: textBlock.font,
