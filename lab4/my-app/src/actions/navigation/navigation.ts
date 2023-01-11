@@ -18,10 +18,10 @@ export function addNewSlide(oldPresentationMaker: PresentationMaker): Presentati
 
     for(let slide of oldPresentationMaker.presentation.slides)
     {
-        if(slide.id === oldPresentationMaker.idsSelectedSlides.at(-1)) {
+        newSlides.push(slide)
+        if(slide.id === oldPresentationMaker.idsSelectedSlides[0]) {
             newSlides.push(newSlide)
         }
-        newSlides.push(slide)
     }
 
     return {
