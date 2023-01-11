@@ -24,6 +24,7 @@ type propsUseResizer = {
       y: number;
     }>
   >;
+  edit: React.MutableRefObject<boolean>;
 };
 
 function useResizer(props: propsUseResizer): void {
@@ -65,7 +66,6 @@ function useResizer(props: propsUseResizer): void {
     // Right resize
     const onMouseMoveRightResize = (event: MouseEvent) => {
       if (!isClickedR.current) return;
-
       coords.current.delta = event.pageX - coords.current.x;
       coords.current.x = event.pageX;
       size.current.width = size.current.width + coords.current.delta;
@@ -98,6 +98,7 @@ function useResizer(props: propsUseResizer): void {
 
     const onMouseUpRightResize = () => {
       if (!isClickedR.current) return;
+      props.edit.current = false;
       isClickedR.current = false;
       dispatch(resizeBlock, {
         width: size.current.width,
@@ -110,7 +111,7 @@ function useResizer(props: propsUseResizer): void {
     };
 
     const onMouseDownRightResize = (event: MouseEvent) => {
-      event.preventDefault();
+      props.edit.current = true;
       isClickedR.current = true;
       coords.current.x = event.pageX;
       document.addEventListener("mousemove", onMouseMoveRightResize);
@@ -159,6 +160,7 @@ function useResizer(props: propsUseResizer): void {
 
     const onMouseUpLeftResize = () => {
       if (!isClickedL) return;
+      props.edit.current = false;
       isClickedL.current = false;
       dispatch(resizeBlock, {
         width: size.current.width,
@@ -171,7 +173,7 @@ function useResizer(props: propsUseResizer): void {
     };
 
     const onMouseDownLeftResize = (event: MouseEvent) => {
-      event.preventDefault();
+      props.edit.current = true;
       isClickedL.current = true;
       coords.current.x = event.pageX;
       document.addEventListener("mousemove", onMouseMoveLeftResize);
@@ -215,6 +217,7 @@ function useResizer(props: propsUseResizer): void {
 
     const onMouseUpBottomResize = () => {
       if (!isClickedB) return;
+      props.edit.current = false;
       isClickedB.current = false;
       dispatch(resizeBlock, {
         width: size.current.width,
@@ -227,7 +230,7 @@ function useResizer(props: propsUseResizer): void {
     };
 
     const onMouseDownBottomResize = (event: MouseEvent) => {
-      event.preventDefault();
+      props.edit.current = true;
       isClickedB.current = true;
       coords.current.y = event.pageY;
       document.addEventListener("mousemove", onMouseMoveBottomResize);
@@ -276,6 +279,7 @@ function useResizer(props: propsUseResizer): void {
 
     const onMouseUpTopResize = () => {
       if (!isClickedT) return;
+      props.edit.current = false;
       isClickedT.current = false;
       dispatch(resizeBlock, {
         width: size.current.width,
@@ -288,7 +292,7 @@ function useResizer(props: propsUseResizer): void {
     };
 
     const onMouseDownTopResize = (event: MouseEvent) => {
-      event.preventDefault();
+      props.edit.current = true;
       isClickedT.current = true;
       coords.current.y = event.pageY;
       document.addEventListener("mousemove", onMouseMoveTopResize);
@@ -311,7 +315,7 @@ function useResizer(props: propsUseResizer): void {
       elLeft.removeEventListener("mouseup", onMouseUpLeftResize);
       elRight.removeEventListener("mouseup", onMouseUpRightResize);
     };
-  }, [props.block, props.refs, props.setPos, props.setSize]);
+  }, [props.block, props.refs, props.setPos, props.setSize, props.edit]);
 }
 
 export default useResizer;
