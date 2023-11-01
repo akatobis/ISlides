@@ -15,7 +15,11 @@ function getState(): PresentationMaker {
 function setState(newPresentationMaker: PresentationMaker) {
   presentationMaker = newPresentationMaker;
   if (!cancelled) {
-    historyCommand.splice(historyCommand.length - rollBackCount, rollBackCount, presentationMaker)
+    historyCommand.splice(
+      historyCommand.length - rollBackCount,
+      rollBackCount,
+      presentationMaker
+    );
     rollBackCount = 0;
   }
   changePresentationMakerHandler();
@@ -24,7 +28,7 @@ function setState(newPresentationMaker: PresentationMaker) {
 
 function dispatch(modifyFn: Function, payload: Object) {
   cancelled = false;
-  if (payload !== '') {
+  if (payload !== "") {
     setState(modifyFn(presentationMaker, payload));
   } else {
     setState(modifyFn(presentationMaker));
@@ -77,6 +81,6 @@ export {
   dispatch,
   addChangePresentationMakerHandler,
   getSlides,
-    rollBack,
-    returnCancel,
+  rollBack,
+  returnCancel,
 };

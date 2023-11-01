@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import styles from "./App.module.css";
 import stylesSlide from "./components/Slide/Slide.module.css";
 import {Slide} from './components/Slide/Slide';
@@ -59,21 +59,24 @@ function App(props: AppProps) {
       const stopResize = (e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setDrag({ ...drag, active: false });
       };
-    
+
+      const ref = useRef<HTMLDivElement>(null);
 
     return (
         <div className={styles.app} id="main">
-            <ToolsPanel/>
+            <ToolsPanel presentationMaker={props.presentationMaker} />
             <div className={styles.navAndSlides}>
-                <Navigation presentationMaker={props.presentationMaker}/>
-                <div className={stylesSlide.workZone} id="WorkZone">
+                <Navigation workZone={ref} presentationMaker={props.presentationMaker}/>
+                <div ref={ref} className={stylesSlide.workZone} id="WorkZone">
                     {slides.map(slide => {
                         if (slide.id === idCurrSlide) {
                             return <Slide
+                                workZone={ref}
                                 key={slide.id}
                                 slide={slide}
                                 idsSelectedSlides={props.presentationMaker.idsSelectedSlides}
                                 idsSelectedBlocks={props.presentationMaker.idsSelectedBlocks}
+                                from=""
                             />
                         }
                     })}

@@ -1,19 +1,12 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import {dispatch, returnCancel, rollBack} from "./state";
-import {selectSlides} from "./actions/navigation/navigation";
+import {selectSlide, selectSlides} from "./actions/navigation/navigation";
+import {deleteBlocks, selectBlock} from "./actions/block";
+import {deleteSlides, switchSlide} from "./actions/slide";
 
-const useKeyPress = (/*keys: string[], callback: Function, */node: any = null) => {
-    // implement the callback ref pattern
-    /*const callbackRef = useRef(callback);
-    useLayoutEffect(() => {
-        callbackRef.current = callback;
-    });*/
-
-    // handle what happens on key press
+const useKeyPress = (node: any = null) => {
     const handleKeyPress = useCallback(
         (event: KeyboardEvent) => {
-            /*console.log(event.code);*/
-            // check if one of the key is part of the ones we want
             if ((event.metaKey || event.ctrlKey) && event.code === 'KeyZ') {
                 dispatch(rollBack, {});
             }
@@ -21,50 +14,56 @@ const useKeyPress = (/*keys: string[], callback: Function, */node: any = null) =
             if ((event.metaKey || event.ctrlKey) && event.code === 'KeyY') {
                 dispatch(returnCancel, {});
             }
-        },
-        []
-    );
 
-    useEffect(() => {
-        // target is either the provided node or the document
-        const targetNode = node ?? document;
-        // attach the event listener
-        targetNode &&
-        targetNode.addEventListener("keydown", handleKeyPress);
+            if (event.code === "Delete") {
+                dispatch(deleteSlides, 'hotkey');
+                dispatch(deleteBlocks, {});
+            }
 
-        // remove the event listener
-        return () =>
-            targetNode &&
-            targetNode.removeEventListener("keydown", handleKeyPress);
-    }, [handleKeyPress, node]);
-};
+            if (event.keyCode === 38) {
+                dispatch(switchSlide, "up")
+            }
 
-const useMousePress = (/*keys: string[], callback: Function, */payload: string = "", node: any = null) => {
-    // implement the callback ref pattern
-    /*const callbackRef = useRef(callback);
-    useLayoutEffect(() => {
-        callbackRef.current = callback;
-    });*/
-
-    // handle what happens on key press
-    const handleKeyPress = useCallback(
-        (event: MouseEvent) => {
-            // check if one of the key is part of the ones we want
-            if (event.button === 0 && event.ctrlKey) {
-                dispatch(selectSlides, payload)
+            if (event.keyCode === 40) {
+                dispatch(switchSlide, "down")
             }
         },
         []
     );
 
     useEffect(() => {
-        // target is either the provided node or the document
         const targetNode = node ?? document;
-        // attach the event listener
+        targetNode &&
+        targetNode.addEventListener("keydown", handleKeyPress);
+
+        return () =>
+            targetNode &&
+            targetNode.removeEventListener("keydown", handleKeyPress);
+    }, [handleKeyPress, node]);
+};
+
+const useMousePress = (slideId: string = "", blockId: string = "", from: string = "", node: any = null) => {
+    const handleKeyPress = useCallback(
+        (event: MouseEvent) => {
+            if (event.button === 0 && event.ctrlKey) {
+                if (from === "slide") {
+                    dispatch(selectSlides, slideId);
+                }
+
+                if (from === "block") {
+                    dispatch(selectSlide, slideId);
+                    dispatch(selectBlock, blockId);
+                }
+            }
+        },
+        []
+    );
+
+    useEffect(() => {
+        const targetNode = node ?? document;
         targetNode &&
         targetNode.addEventListener("mousedown", handleKeyPress);
 
-        // remove the event listener
         return () =>
             targetNode &&
             targetNode.removeEventListener("mousedown", handleKeyPress);

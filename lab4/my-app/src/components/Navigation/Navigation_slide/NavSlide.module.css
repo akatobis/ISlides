@@ -1,14 +1,19 @@
 .navSlide {
     width: 160px;
-    height: 85px;
-    background-color: #fff;
+    height: 88px;
     cursor: pointer;
     border:solid 1px rgb(0, 0, 0);
     border-radius: 10px;
+    margin: 5px 0 2.5px 15px;
+    left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .slideButton {
     border: none;
+    outline: none;
     color: #fff;
     background-color: #fff;
     width: auto;
@@ -19,13 +24,9 @@
     display: flex;    
 }
 
-
 ol {
-    padding: 0px 0 0 20px;
-    margin: 0.5em 0 1.571em 1.9em;
     color: #2E2E2E;
     list-style-type: none;
-    font: 15px/17px Verdana, Arial, Helvetica, sans-serif;
     z-index: 2;
     counter-reset: point;
     }
@@ -43,7 +44,7 @@ ol {
     line-height: 1.6;
     height: 24px;
     margin-left: -20px;
-    left: 0px;
+    left: 0;
     width: 24px;
     margin-top: 1px;
     content: counter(point);

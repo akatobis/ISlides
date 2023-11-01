@@ -1,190 +1,302 @@
 import React, { useEffect, useRef } from "react";
-import {Block} from "./../types";
-import {dispatch} from './../state'
-import {resizeBlock} from './../actions/block';
-import {moveBlock} from './../actions/block'
+import { Block } from "../types";
+import { dispatch } from "../state";
+import { resizeBlock } from "../actions/block";
 
-type propsUseResizer =  {
-  block:Block,
-  refs:{
-    ref: React.RefObject<HTMLDivElement>,
-    refLeft:React.RefObject<HTMLDivElement>,
-    refTop:React.RefObject<HTMLDivElement>,
-    refRight:React.RefObject<HTMLDivElement>,
-    refBottom:React.RefObject<HTMLDivElement>,
-  }
-}
+type propsUseResizer = {
+  block: Block;
+  refs: {
+    ref: React.RefObject<HTMLDivElement>;
+    refLeft: React.RefObject<HTMLDivElement>;
+    refTop: React.RefObject<HTMLDivElement>;
+    refRight: React.RefObject<HTMLDivElement>;
+    refBottom: React.RefObject<HTMLDivElement>;
+  };
+  setSize: React.Dispatch<
+    React.SetStateAction<{
+      width: number;
+      height: number;
+    }>
+  >;
+  setPos: React.Dispatch<
+    React.SetStateAction<{
+      x: number;
+      y: number;
+    }>
+  >;
+  edit: React.MutableRefObject<boolean>;
+};
 
 function useResizer(props: propsUseResizer): void {
-
   const coords = useRef<{
-    startX: number,
-    startY: number,
+    x: number;
+    y: number;
+    delta: number;
   }>({
-    startX: props.block.coordinatesX,
-    startY: props.block.coordinatesY,
-  })
+    x: props.block.coordinatesX,
+    y: props.block.coordinatesY,
+    delta: 0,
+  });
 
   const size = useRef<{
-    height: number,
-    width: number,
+    height: number;
+    width: number;
   }>({
     height: props.block.height,
     width: props.block.width,
-  })
+  });
 
-  React.useEffect(() => {
+  const isClickedR = useRef<boolean>(false);
+  const isClickedL = useRef<boolean>(false);
+  const isClickedB = useRef<boolean>(false);
+  const isClickedT = useRef<boolean>(false);
+
+  useEffect(() => {
     const main = document.getElementById("main")!;
     const styleMain = window.getComputedStyle(main);
     const width = parseInt(styleMain.width, 10);
     const height = parseInt(styleMain.height, 10);
 
-    const el = props.refs.ref.current!;
+    const el = document.getElementById(props.block.id)!;
     const elRight = props.refs.refRight.current!;
     const elBottom = props.refs.refBottom.current!;
     const elLeft = props.refs.refLeft.current!;
     const elTop = props.refs.refTop.current!;
 
     // Right resize
-    const onMouseMoveRightResize = (event:MouseEvent) => {
-        if(event.clientX > el.getBoundingClientRect().left)
-        {
-          const dx = event.clientX - coords.current.startX;
-          coords.current.startX = event.clientX;
-          if(size.current.width <= 5) 
-            size.current.width = 5;
-          size.current.width = size.current.width + dx;
-          el.style.width = `${size.current.width}px`;
-          const a = event.clientX - size.current.width;
-          el.style.left = `${a}px`;
-          el.style.top = `${props.block.coordinatesY}px`;
-          const b = height - (props.block.coordinatesY + size.current.height);
-          el.style.bottom = `${b}px`;
-        }
-    };
-
-    const onMouseUpRightResize = (event:MouseEvent) => {
-        props.block.coordinatesX = el.getBoundingClientRect().left;
-        dispatch(resizeBlock,{
-          width:size.current.width, 
-          height:size.current.height, 
-          id:props.block.id,
-          rejectedCoordinatY:el.getBoundingClientRect().top,
-          rejectedCoordinatX:el.getBoundingClientRect().left,
+    const onMouseMoveRightResize = (event: MouseEvent) => {
+      if (!isClickedR.current) return;
+      coords.current.delta = event.pageX - coords.current.x;
+      coords.current.x = event.pageX;
+      size.current.width = size.current.width + coords.current.delta;
+      if (size.current.width <= 8) {
+        size.current.width = 8;
+        isClickedR.current = false;
+        dispatch(resizeBlock, {
+          width: size.current.width,
+          height: size.current.height,
+          id: props.block.id,
+          rejectedCoordinateY: el.getBoundingClientRect().top,
+          rejectedCoordinateX: el.getBoundingClientRect().left,
         });
         document.removeEventListener("mousemove", onMouseMoveRightResize);
+        return;
+      }
+
+      el.style.left = `${event.pageX - size.current.width}px`;
+      el.style.top = `${props.block.coordinatesY}px`;
+      el.style.right = `${event.pageX}px`;
+      el.style.bottom = `${
+        height - (props.block.coordinatesY + size.current.height)
+      }px`;
+
+      props.setSize((sizer) => ({
+        ...sizer,
+        width: size.current.width,
+      }));
     };
 
-    const onMouseDownRightResize = (event:MouseEvent) => {
-        coords.current.startX = event.clientX;
-        document.addEventListener("mousemove", onMouseMoveRightResize);
-        el.addEventListener("mouseup", onMouseUpRightResize);
+    const onMouseUpRightResize = () => {
+      if (!isClickedR.current) return;
+      props.edit.current = false;
+      isClickedR.current = false;
+      dispatch(resizeBlock, {
+        width: size.current.width,
+        height: size.current.height,
+        id: props.block.id,
+        rejectedCoordinateY: el.getBoundingClientRect().top,
+        rejectedCoordinateX: el.getBoundingClientRect().left,
+      });
+      document.removeEventListener("mousemove", onMouseMoveRightResize);
+    };
+
+    const onMouseDownRightResize = (event: MouseEvent) => {
+      props.edit.current = true;
+      isClickedR.current = true;
+      coords.current.x = event.pageX;
+      document.addEventListener("mousemove", onMouseMoveRightResize);
+      elRight.addEventListener("mouseup", onMouseUpRightResize);
     };
 
     // Left resize
-    const onMouseMoveLeftResize = (event:MouseEvent) => {
-      if(event.clientX < el.getBoundingClientRect().right)
-      {
-        const dx = event.clientX - coords.current.startX;
-        if(size.current.width <= 5) 
-            size.current.width = 5;
-        coords.current.startX = event.clientX;
-        size.current.width = size.current.width - dx;
-        el.style.width = `${size.current.width}px`;
-        el.style.left = `${event.clientX}px`;
-        el.style.top = `${props.block.coordinatesY}px`;
-        const b = height - (props.block.coordinatesY + size.current.height);
-        el.style.bottom = `${b}px`;
-      }
-    };
+    const onMouseMoveLeftResize = (event: MouseEvent) => {
+      if (!isClickedL.current) return;
 
-    const onMouseUpLeftResize = (event:MouseEvent) => {
-        props.block.coordinatesX = el.getBoundingClientRect().left;
-        dispatch(resizeBlock,{
-          width:size.current.width, 
-          height:size.current.height, 
-          id:props.block.id,
-          rejectedCoordinatY:el.getBoundingClientRect().top,
-          rejectedCoordinatX:el.getBoundingClientRect().left
+      coords.current.delta = event.pageX - coords.current.x;
+      coords.current.x = event.pageX;
+      size.current.width = size.current.width - coords.current.delta;
+
+      if (size.current.width <= 8) {
+        size.current.width = 8;
+        isClickedL.current = false;
+        dispatch(resizeBlock, {
+          width: size.current.width,
+          height: size.current.height,
+          id: props.block.id,
+          rejectedCoordinateY: el.getBoundingClientRect().top,
+          rejectedCoordinateX: el.getBoundingClientRect().left,
         });
-        document.removeEventListener("mousemove", onMouseMoveLeftResize);
+        document.removeEventListener("mousemove", onMouseMoveRightResize);
+        return;
+      }
+
+      el.style.left = `${event.pageX}px`;
+      el.style.top = `${props.block.coordinatesY}px`;
+      el.style.bottom = `${
+        height - (props.block.coordinatesY + size.current.height)
+      }px`;
+      el.style.right = `${event.pageX + size.current.width}px`;
+
+      props.setSize((sizer) => ({
+        ...sizer,
+        width: size.current.width,
+      }));
+
+      props.setPos((pos) => ({
+        ...pos,
+        x: event.pageX,
+      }));
     };
 
-    const onMouseDownLeftResize = (event:MouseEvent) => {
-        coords.current.startX = event.clientX;
-        document.addEventListener("mousemove", onMouseMoveLeftResize);
-        el.addEventListener("mouseup", onMouseUpLeftResize);
+    const onMouseUpLeftResize = () => {
+      if (!isClickedL) return;
+      props.edit.current = false;
+      isClickedL.current = false;
+      dispatch(resizeBlock, {
+        width: size.current.width,
+        height: size.current.height,
+        id: props.block.id,
+        rejectedCoordinateY: el.getBoundingClientRect().top,
+        rejectedCoordinateX: el.getBoundingClientRect().left,
+      });
+      document.removeEventListener("mousemove", onMouseMoveLeftResize);
+    };
+
+    const onMouseDownLeftResize = (event: MouseEvent) => {
+      props.edit.current = true;
+      isClickedL.current = true;
+      coords.current.x = event.pageX;
+      document.addEventListener("mousemove", onMouseMoveLeftResize);
+      elLeft.addEventListener("mouseup", onMouseUpLeftResize);
     };
 
     // Bottom resize
-    const onMouseMoveBottomResize = (event:MouseEvent) => {
-      if(event.clientY > el.getBoundingClientRect().top)
-      {
-        const dy = event.clientY - coords.current.startY;
-        if(size.current.height <= 5) 
-            size.current.height = 5;
-        size.current.height = size.current.height + dy;
-        coords.current.startY = event.clientY;
-        el.style.height = `${size.current.height}px`;
-        const a = event.clientY - size.current.height;
-        el.style.top = `${a}px`;
-        el.style.left = `${props.block.coordinatesX}px`;
-        const b = width - (props.block.coordinatesX + size.current.width);
-        el.style.right = `${b}px`;
-      }
-    };
+    const onMouseMoveBottomResize = (event: MouseEvent) => {
+      if (!isClickedB.current) return;
 
-    const onMouseUpBottomResize = (event:MouseEvent) => {
-        props.block.coordinatesY = el.getBoundingClientRect().top;
-        dispatch(resizeBlock,{
-          width:size.current.width, 
-          height:size.current.height, 
-          id:props.block.id,
-          rejectedCoordinatY:el.getBoundingClientRect().top,
-          rejectedCoordinatX:el.getBoundingClientRect().left
-        });
-        document.removeEventListener("mousemove", onMouseMoveBottomResize);
-    };
+      coords.current.delta = event.pageY - coords.current.y;
+      coords.current.y = event.pageY;
+      size.current.height = size.current.height + coords.current.delta;
 
-    const onMouseDownBottomResize = (event:MouseEvent) => {
-        coords.current.startY = event.clientY;
-        document.addEventListener("mousemove", onMouseMoveBottomResize);
-        el.addEventListener("mouseup", onMouseUpBottomResize);
-    };
-    
-    // Top resize
-    const onMouseMoveTopResize = (event:MouseEvent) => {
-      if(event.clientY < el.getBoundingClientRect().bottom)
-      {
-        const dy = event.clientY - coords.current.startY;
-        if(size.current.height <= 5) 
-            size.current.height = 5;
-        size.current.height = size.current.height - dy;
-        coords.current.startY = event.clientY;
-        el.style.height = `${size.current.height}px`;
-        el.style.top = `${coords.current.startY}px`;
-        el.style.left = `${props.block.coordinatesX}px`;
-        const b = width - (props.block.coordinatesX + size.current.width);
-        el.style.right = `${b}px`;
-      }
-    };
-
-    const onMouseUpTopResize = (event:MouseEvent) => {
-        props.block.coordinatesY = el.getBoundingClientRect().top;
-        dispatch(resizeBlock,{
-          width: size.current.width, 
-          height: size.current.height, 
+      if (size.current.height <= 8) {
+        size.current.height = 8;
+        isClickedB.current = false;
+        dispatch(resizeBlock, {
+          width: size.current.width,
+          height: size.current.height,
           id: props.block.id,
-          rejectedCoordinatY: el.getBoundingClientRect().top,
-          rejectedCoordinatX: el.getBoundingClientRect().left,
+          rejectedCoordinateY: el.getBoundingClientRect().top,
+          rejectedCoordinateX: el.getBoundingClientRect().left,
         });
-        document.removeEventListener("mousemove", onMouseMoveTopResize);
+        document.removeEventListener("mousemove", onMouseMoveRightResize);
+        return;
+      }
+
+      el.style.top = `${event.pageY - size.current.height}px`;
+      el.style.left = `${props.block.coordinatesX}px`;
+      el.style.right = `${
+        width - (props.block.coordinatesX + size.current.width)
+      }px`;
+      el.style.bottom = `${height - event.pageY}px`;
+
+      props.setSize((sizer) => ({
+        ...sizer,
+        height: size.current.height,
+      }));
     };
 
-    const onMouseDownTopResize = (event:MouseEvent) => {
-        coords.current.startY = event.clientY;
-        document.addEventListener("mousemove", onMouseMoveTopResize);
-        el.addEventListener("mouseup", onMouseUpTopResize);
+    const onMouseUpBottomResize = () => {
+      if (!isClickedB) return;
+      props.edit.current = false;
+      isClickedB.current = false;
+      dispatch(resizeBlock, {
+        width: size.current.width,
+        height: size.current.height,
+        id: props.block.id,
+        rejectedCoordinateY: el.getBoundingClientRect().top,
+        rejectedCoordinateX: el.getBoundingClientRect().left,
+      });
+      document.removeEventListener("mousemove", onMouseMoveBottomResize);
+    };
+
+    const onMouseDownBottomResize = (event: MouseEvent) => {
+      props.edit.current = true;
+      isClickedB.current = true;
+      coords.current.y = event.pageY;
+      document.addEventListener("mousemove", onMouseMoveBottomResize);
+      elBottom.addEventListener("mouseup", onMouseUpBottomResize);
+    };
+
+    // Top resize
+    const onMouseMoveTopResize = (event: MouseEvent) => {
+      if (!isClickedT.current) return;
+
+      coords.current.delta = event.pageY - coords.current.y;
+      coords.current.y = event.pageY;
+      size.current.height = size.current.height - coords.current.delta;
+
+      if (size.current.height <= 8) {
+        size.current.height = 8;
+        isClickedT.current = false;
+        dispatch(resizeBlock, {
+          width: size.current.width,
+          height: size.current.height,
+          id: props.block.id,
+          rejectedCoordinateY: el.getBoundingClientRect().top,
+          rejectedCoordinateX: el.getBoundingClientRect().left,
+        });
+        document.removeEventListener("mousemove", onMouseMoveRightResize);
+        return;
+      }
+
+      el.style.top = `${event.pageY}px`;
+      el.style.left = `${props.block.coordinatesX}px`;
+      el.style.right = `${
+        width - (props.block.coordinatesX + size.current.width)
+      }px`;
+      el.style.bottom = `${event.pageY + size.current.height}px`;
+
+      props.setSize((sizer) => ({
+        ...sizer,
+        height: size.current.height,
+      }));
+
+      props.setPos((pos) => ({
+        ...pos,
+        y: event.pageY,
+      }));
+    };
+
+    const onMouseUpTopResize = () => {
+      if (!isClickedT) return;
+      props.edit.current = false;
+      isClickedT.current = false;
+      dispatch(resizeBlock, {
+        width: size.current.width,
+        height: size.current.height,
+        id: props.block.id,
+        rejectedCoordinateY: el.getBoundingClientRect().top,
+        rejectedCoordinateX: el.getBoundingClientRect().left,
+      });
+      document.removeEventListener("mousemove", onMouseMoveTopResize);
+    };
+
+    const onMouseDownTopResize = (event: MouseEvent) => {
+      props.edit.current = true;
+      isClickedT.current = true;
+      coords.current.y = event.pageY;
+      document.addEventListener("mousemove", onMouseMoveTopResize);
+      elTop.addEventListener("mouseup", onMouseUpTopResize);
     };
 
     elRight.addEventListener("mousedown", onMouseDownRightResize);
@@ -192,17 +304,18 @@ function useResizer(props: propsUseResizer): void {
     elBottom.addEventListener("mousedown", onMouseDownBottomResize);
     elLeft.addEventListener("mousedown", onMouseDownLeftResize);
 
-    return () => {    
+    return () => {
       elRight.removeEventListener("mousedown", onMouseDownRightResize);
       elTop.removeEventListener("mousedown", onMouseDownTopResize);
       elBottom.removeEventListener("mousedown", onMouseDownBottomResize);
       elLeft.removeEventListener("mousedown", onMouseDownLeftResize);
-      el.removeEventListener("mouseup", onMouseUpTopResize);
-      el.removeEventListener("mouseup", onMouseUpBottomResize);
-      el.removeEventListener("mouseup", onMouseUpLeftResize);
-      el.removeEventListener("mouseup", onMouseUpRightResize);
+
+      elTop.removeEventListener("mouseup", onMouseUpTopResize);
+      elBottom.removeEventListener("mouseup", onMouseUpBottomResize);
+      elLeft.removeEventListener("mouseup", onMouseUpLeftResize);
+      elRight.removeEventListener("mouseup", onMouseUpRightResize);
     };
-  }, []);
+  }, [props.block, props.refs, props.setPos, props.setSize, props.edit]);
 }
 
 export default useResizer;

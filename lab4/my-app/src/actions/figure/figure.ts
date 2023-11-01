@@ -1,4 +1,3 @@
-import { elemInArray } from "../../auxiliaryFunctions";
 import { PresentationMaker, Presentation, SlideType, Block, Figure, TypeBlock } from "../../types";
 
 function changeColorFigure(oldPresentationMaker: PresentationMaker, {colorFill, colorBorder}: {colorFill?: string, colorBorder?: string}): PresentationMaker {
@@ -12,30 +11,30 @@ function changeColorFigure(oldPresentationMaker: PresentationMaker, {colorFill, 
     const idsSelectedBlocks: string[] = oldPresentationMaker.idsSelectedBlocks;
 
     const newBlocks: Block[] = oldBlocks.map(block => {
-        if (elemInArray(idsSelectedBlocks, block.id)) {
-            let oldFigure: Figure;
-            if (block.content.typeBlock === TypeBlock.figure) {
-                oldFigure = {
-                    ...block.content,
-                };
-                let newFigure: Figure = {...oldFigure};
-                if (colorFill) {
-                    newFigure = {
-                        ...oldFigure,
-                        colorFill: colorFill,
-                    };
-                }
-                if (colorBorder) {
-                    newFigure = {
-                        ...oldFigure,
-                        colorBorder: colorBorder,
-                    };
-                }
-                return {
-                    ...block,
-                    content: newFigure,
-                };
+        if (idsSelectedBlocks.includes(block.id)) {
+          let oldFigure: Figure;
+          if (block.content.typeBlock === TypeBlock.figure) {
+            oldFigure = {
+              ...block.content,
+            };
+            let newFigure: Figure = { ...oldFigure };
+            if (colorFill) {
+              newFigure = {
+                ...oldFigure,
+                colorFill: colorFill,
+              };
             }
+            if (colorBorder) {
+              newFigure = {
+                ...oldFigure,
+                colorBorder: colorBorder,
+              };
+            }
+            return {
+              ...block,
+              content: newFigure,
+            };
+          }
         }
         return block;
     })

@@ -1,12 +1,11 @@
 import { Presentation, PresentationMaker, SlideType } from '../types'
-import { elemInArray } from '../auxiliaryFunctions'
 import { v4 as uuidv4 } from "uuid";
 
 function createNewSlide(): SlideType {
     return {
         id : uuidv4(),
-        backgroundColor: "color",
-        backgroundImage: "image",
+        backgroundColor: "",
+        backgroundImage: "",
         blocks: [],
     }
 }
@@ -18,13 +17,55 @@ function removeBlockSelection(oldPresentationMaker: PresentationMaker): Presenta
     }
 }
 
-function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMaker {
+function switchSlide(oldPresentationMaker: PresentationMaker, direction: string): PresentationMaker {
+    if (oldPresentationMaker.presentation.slides.length === 0) {
+        return oldPresentationMaker;
+    }
+    let switchedSlideId: string
+    let switchedSlide: SlideType
+    let indexSwitchedSlide: number = 0;
+    let newIdSelectedSlide: string = "";
+    switchedSlideId = oldPresentationMaker.idsSelectedSlides[0]
+    oldPresentationMaker.presentation.slides.forEach((slide, index) => {
+        if (slide.id === switchedSlideId) {
+            indexSwitchedSlide = index
+        }
+    });
+    switchedSlide = oldPresentationMaker.presentation.slides[indexSwitchedSlide]
+
+    if (direction === "up") {
+        if (oldPresentationMaker.presentation.slides.indexOf(switchedSlide) > 0) {
+            newIdSelectedSlide = oldPresentationMaker.presentation.slides[indexSwitchedSlide - 1].id
+        } else {
+            newIdSelectedSlide = oldPresentationMaker.presentation.slides[indexSwitchedSlide].id
+        }
+    }
+
+    if (direction === "down") {
+        if (oldPresentationMaker.presentation.slides.indexOf(switchedSlide) < oldPresentationMaker.presentation.slides.length - 1) {
+            newIdSelectedSlide = oldPresentationMaker.presentation.slides[indexSwitchedSlide + 1].id
+        } else {
+            newIdSelectedSlide = oldPresentationMaker.presentation.slides[indexSwitchedSlide].id
+        }
+    }
+
+    return {
+        ...oldPresentationMaker,
+        idsSelectedSlides: [newIdSelectedSlide],
+        idsSelectedBlocks: [],
+    }
+}
+
+function deleteSlides(oldPresentationMaker: PresentationMaker, from: string): PresentationMaker {
+    if (oldPresentationMaker.idsSelectedSlides.length === 0 || from === 'hotkey' && oldPresentationMaker.idsSelectedBlocks.length !== 0) {
+        return  oldPresentationMaker;
+    }
     const oldIdsSelectedSlides: string[] = oldPresentationMaker.idsSelectedSlides;
     const idLastSelectedSlide: string = oldIdsSelectedSlides[oldIdsSelectedSlides.length - 1];
     const oldSlides: SlideType[] = oldPresentationMaker.presentation.slides;
 
     let newSlides: SlideType[] = oldSlides.filter((slide) => {
-        return !elemInArray(oldIdsSelectedSlides, slide.id);
+        return !oldIdsSelectedSlides.includes(slide.id);
     });
 
     let indexLastSelectedSlide: number = 0;
@@ -51,34 +92,37 @@ function deleteSlides(oldPresentationMaker: PresentationMaker): PresentationMake
       slides: newSlides,
    }
 
-   return {
-     ...oldPresentationMaker,
-     presentation: newPresentation,
-     idsSelectedSlides: newIdsSelectedSlides,
-   };
+    return {
+        ...oldPresentationMaker,
+        presentation: newPresentation,
+        idsSelectedSlides: newIdsSelectedSlides,
+        idsSelectedBlocks: [],
+    };
+
+   return oldPresentationMaker;
 }
 
 function changeBackgroundSlide(oldPresentantionMaker: PresentationMaker, { color, image }: {color?: string, image?: string}): PresentationMaker {
   const idsSelectedSlides: string[] = oldPresentantionMaker.idsSelectedSlides;
   const oldSlides: SlideType[] = oldPresentantionMaker.presentation.slides;
   const selectedSlides: SlideType[] = oldSlides.filter((slide) => {
-    return elemInArray(idsSelectedSlides, slide.id);
+    return idsSelectedSlides.includes(slide.id);
   });
 
     let newSlides: SlideType[] = oldSlides.map((slide) => {
-        if (elemInArray(selectedSlides, slide)) {
-            if (color) {
-                return {
-                    ...slide,
-                    backgroundColor: color,
-                    backgroundImage: "",
-                };
-            }
+        if (selectedSlides.includes(slide)) {
+          if (color) {
             return {
-                ...slide,
-                backgroundColor: '',
-                backgroundImage: "url(" + image + ")",
+              ...slide,
+              backgroundColor: color,
+              backgroundImage: "",
             };
+          }
+          return {
+            ...slide,
+            backgroundColor: "",
+            backgroundImage: image + "",
+          };
         }
         return slide;
     });
@@ -129,4 +173,5 @@ export {
   deleteSlides,
   changeBackgroundSlide,
   changeBackgroundAllSlide,
+    switchSlide
 };

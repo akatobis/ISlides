@@ -111,10 +111,10 @@ const blockWithRectangle: Block = {
     border: 30,
     colorBorder: "#000000",
   },
-  coordinatesX: 200,
-  coordinatesY: 200,
-  width: 400,
-  height: 250,
+  coordinatesX: 400,
+  coordinatesY: 400,
+  width: 500,
+  height: 800,
 }
 
 const blockWithTriangle: Block = {
@@ -182,12 +182,12 @@ const deleteOpm: PresentationMaker = {
   idsSelectedSlides: ['1'],
   idsSelectedBlocks: [],
 };
-setState(deleteOpm);
+/*setState(deleteOpm);*/
 
 function render() {
   root.render(
     <React.StrictMode>
-      <App presentationMaker={getState()} />
+        <App presentationMaker={getState()} />
     </React.StrictMode>
   );
 }

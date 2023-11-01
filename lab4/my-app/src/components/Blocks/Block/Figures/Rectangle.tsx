@@ -4,24 +4,23 @@ import React from 'react'
 type FigureProps = {
     block: Block;
     figure: Figure;
+    pos: {x: number, y: number};
+    size: {width: number, height: number};
 }
 
 const Rectangle = (props: FigureProps) => {
     return (
-        <div >
-
-        <svg width={props.block.width} height={props.block.height}>
+        <svg width={props.size.width} height={props.size.height}>
             <rect
                 x={props.figure.border}
                 y={props.figure.border}
-                width={props.block.width - props.figure.border * 2}
-                height={props.block.height - props.figure.border * 2}
+                width={props.size.width - props.figure.border * 2}
+                height={props.size.height - props.figure.border * 2}
                 stroke={props.figure.colorBorder}
                 fill={props.figure.colorFill}
                 strokeWidth={props.figure.border}
             />
         </svg>
-        </div>
     );
 }
 

@@ -1,22 +1,19 @@
-import {elemInArray} from "../../../auxiliaryFunctions";
 import {Block, FigureType, TypeBlock, Figure} from "../../../types";
 import {Ellipse} from "./Figures/Ellipse";
 import {Rectangle} from "./Figures/Rectangle";
 import {Triangle} from "./Figures/Triangle";
-import { changeText } from "../../../actions/block";
-import { dispatch } from "../../../state";
-import styles from "./Block.module.css"
+import styles from "./Block.module.css";
+import {Text} from "./Text/Text";
 
 type BlockProps = {
     block: Block,
+    slideId: string,
     idsSelectedBlocks: string[],
+    pos: {x: number, y: number},
+    size: {width: number, height: number}
 }
 
 const SlideBlock = (props: BlockProps) => {
-    const imageStyle = {
-        width: props.block.width,
-        height: props.block.height,
-    };
 
     let textBlockStyle = {};
     if (props.block.content.typeBlock === TypeBlock.text) {
@@ -52,7 +49,7 @@ const SlideBlock = (props: BlockProps) => {
             }
         }
 
-        if (elemInArray(props.idsSelectedBlocks, props.block.id) || props.block.content.innerString === '' || props.block.content.innerString === undefined) {
+        if (props.idsSelectedBlocks.includes(props.block.id) || props.block.content.innerString === '' || props.block.content.innerString === undefined) {
             textBlockStyle = {
                 ...textBlockStyle,
                 border: '1px solid #000',
@@ -62,8 +59,7 @@ const SlideBlock = (props: BlockProps) => {
 
     if (props.block.content.typeBlock === TypeBlock.text) {
          return (
-            //лучше текси=т ареа использовать и в отдельный компонент вынести
-            <input className={styles.textBlock} style={textBlockStyle} onChange={(e) => dispatch(changeText, e.target.value)}></input>
+            <Text size={props.size} pos={props.pos} block={props.block} idsSelectedBlocks={props.idsSelectedBlocks}></Text>
         );
     }
     if (props.block.content.typeBlock === TypeBlock.figure) {
@@ -71,19 +67,19 @@ const SlideBlock = (props: BlockProps) => {
 
         if (figure.type.figureType === FigureType.ellipse) {
             return (
-                <Ellipse block={props.block} figure={figure}/>
+                <Ellipse size={props.size} pos={props.pos} block={props.block} figure={figure}/>
             );
         }
 
         if (figure.type.figureType === FigureType.rectangle) {
             return (
-                <Rectangle block={props.block} figure={figure}/>
+                <Rectangle size={props.size} pos={props.pos} block={props.block} figure={figure}/>
             );
         }
 
         if (figure.type.figureType === FigureType.triangle) {
             return (
-                <Triangle block={props.block} figure={figure}/>
+                <Triangle size={props.size} pos={props.pos} block={props.block} figure={figure}/>
             );
         }
          return (
@@ -92,7 +88,13 @@ const SlideBlock = (props: BlockProps) => {
     }
     if (props.block.content.typeBlock === TypeBlock.image) {
          return (
-            <img style={imageStyle} src={props.block.content.imageBase64}></img>
+            <img style={{
+                width: props.size.width,
+                height: props.size.height,
+                zIndex: 1,
+                pointerEvents: "fill"
+            }} 
+            src={props.block.content.imageBase64} alt=""></img>
         );
     }
     return (
